@@ -1,13 +1,31 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_pages.dart';
+import '../../../shared/errors/no_internet_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/auth_data.dart';
 
 class MainController extends GetxController {
   late AuthData _authData;
+  late StreamSubscription connectionStream;
+  RxBool isLoading = true.obs;
 
+  bool isWelcomeViewed = false;
   @override
-  onReady() {
+  Future<void> onReady() async {
+    await getIsWelcomeViewed();
+    connectionStream =
+        Connectivity().onConnectivityChanged.listen((connection) {
+      if (connection == ConnectivityResult.none) {
+        Get.offAll(() => const NoInternetScreen());
+      } else {
+        Get.offAllNamed(Routes.MAIN);
+      }
+      isLoading.value = false;
+    });
     getAuthData().then((AuthData authData) => _authData = authData);
     super.onReady();
   }
@@ -33,5 +51,15 @@ class MainController extends GetxController {
       isVisitor: isVisitor,
     );
     return authData;
+  }
+
+  Future<bool> isConnected() async {
+    var result = await Connectivity().checkConnectivity();
+    return result.name != "none";
+  }
+
+  Future<void> getIsWelcomeViewed() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    isWelcomeViewed = pref.getBool("isViewed") ?? false;
   }
 }
