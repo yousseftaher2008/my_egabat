@@ -61,5 +61,6 @@ class MainController extends GetxController {
   Future<void> getIsWelcomeViewed() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     isWelcomeViewed = pref.getBool("isViewed") ?? false;
+    // isWelcomeViewed = false;
   }
 }

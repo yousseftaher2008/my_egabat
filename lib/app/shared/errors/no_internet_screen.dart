@@ -30,39 +30,41 @@ class NoInternetScreen extends StatelessWidget {
             ),
           ],
         );
-
     return SafeArea(
-        child: Scaffold(
-      body: Align(
-        alignment: Alignment.center,
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.wifi_off,
-                color: Colors.grey,
-                size: 80,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "لايوجد اتصال بالانترنت",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 107, 105, 105),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+      child: Scaffold(
+        body:
+            // RefreshIndicator(
+            // onRefresh: () async {
+            //   await Get.offAllNamed(Routes.MAIN);
+            // },
+            // child:
+            Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.wifi_off,
+              color: Colors.grey,
+              size: 80,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                "لايوجد اتصال بالانترنت",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 107, 105, 105),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              stepWidget("(router or modem) تحقق من جهاز"),
-              SizedBox(height: 15),
-              stepWidget(' او أعد الاتصال بشبكة Wifi او بيانات الهاتف او'),
-            ],
-          ),
+            ),
+            stepWidget("(router or modem) تحقق من جهاز"),
+            SizedBox(height: 15),
+            stepWidget(' او أعد الاتصال بشبكة Wifi او بيانات الهاتف او'),
+          ],
         ),
+        // ),
       ),
-    ));
+    );
   }
 }

@@ -1,7 +1,11 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:introduction_screen/introduction_screen.dart";
-import "package:my_egabat/app/modules/welcome/controllers/welcome_controller.dart";
+import "../../welcome/controllers/welcome_controller.dart";
+import "../../../shared/styles/colors.dart";
+
+import "../../../shared/styles/button_styles.dart";
+import "../../../shared/styles/text_styles.dart";
 
 class WelcomeView extends GetView<WelcomeController> {
   const WelcomeView({super.key});
@@ -9,131 +13,65 @@ class WelcomeView extends GetView<WelcomeController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Stack(
-        children: [
-          IntroductionScreen(
-            globalBackgroundColor: const Color(0xFF666D73),
-            pages: [
-              PageViewModel(
-                decoration: const PageDecoration(
-                  pageColor: Color(0xFF666D73),
-                ),
-                titleWidget: const Text(
-                  "Explore your new skills Today",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-                bodyWidget: const Text(
-                  "You can learn various kinds of courses in your hand",
-                  style: TextStyle(
-                    color: Color(0xFF949FA6),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                image: Container(
-                  margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Image.asset("assets/first_welcome_image.png"),
-                ),
-              ),
-              PageViewModel(
-                decoration: const PageDecoration(),
-                titleWidget: const Text(
-                  "Explore your new skills Today",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-                bodyWidget: const Text(
-                  "You can learn various kinds of courses in your hand",
-                  style: TextStyle(
-                    color: Color(0xFF949FA6),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                image: Container(
-                  margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Image.asset("assets/second_welcome_image.png"),
-                ),
-              ),
-            ],
-            showBackButton: true,
-            showNextButton: true,
-            back: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                const Color(0xFF232426),
-              )),
-              onPressed: null,
-              child: const Text(
-                "Back",
-                style: TextStyle(color: Colors.white),
-              ),
+      child: IntroductionScreen(
+        globalBackgroundColor: primaryColor,
+        pages: [
+          PageViewModel(
+            titleWidget: const Text(
+              "تعلم من افضل المدرسين",
+              style: welcomeTitleTextStyle,
             ),
-            next: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                const Color(0xFF232426),
-              )),
-              onPressed: null,
-              child: const Text(
-                "Next",
-                style: TextStyle(color: Colors.white),
-              ),
+            bodyWidget: const Text(
+              "استمع لافضل المدرسين في كل المواد وانت في بيتك",
+              style: welcomeBodyTextStyle,
             ),
-            done: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                const Color(0xFF232426),
-              )),
-              onPressed: null,
-              child: const Text(
-                "Done",
-                style: TextStyle(color: Colors.white),
+            image: Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: primaryColorTransparent,
+
+                // color: const Color(0xF0F2F2F2),
               ),
-            ),
-            onDone: controller.done,
-            dotsDecorator: DotsDecorator(
-              color: Colors.white,
-              activeColor: Colors.white,
-              activeSize: const Size(30, 7),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              size: const Size.square(7),
+              child: Image.asset("assets/first_welcome_image.png"),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                onPressed: controller.done,
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
+          PageViewModel(
+            decoration: const PageDecoration(),
+            titleWidget: const Text(
+              "اسال زملائك ومدرسينك",
+              style: welcomeTitleTextStyle,
+            ),
+            bodyWidget: const Text(
+              "تواصل مع زملائك ومدرسينك واسالهم عن كل ما يعارضك في طريقك",
+              style: welcomeBodyTextStyle,
+            ),
+            image: Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: primaryColorTransparent,
               ),
+              child: Image.asset("assets/second_welcome_image.png"),
             ),
           ),
         ],
+        showBackButton: true,
+        showNextButton: true,
+        back: welcomeButton("Back"),
+        next: welcomeButton("Next"),
+        done: welcomeButton("Done"),
+        onDone: controller.done,
+        dotsDecorator: DotsDecorator(
+          color: Colors.white,
+          activeColor: Colors.white,
+          activeSize: const Size(30, 7),
+          activeShape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          size: const Size.square(7),
+        ),
       ),
     );
   }
