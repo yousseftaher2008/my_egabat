@@ -30,7 +30,6 @@ class WelcomeView extends GetView<WelcomeController> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: primaryColorTransparent,
 
                 // color: const Color(0xF0F2F2F2),
               ),
@@ -40,11 +39,11 @@ class WelcomeView extends GetView<WelcomeController> {
           PageViewModel(
             decoration: const PageDecoration(),
             titleWidget: const Text(
-              "اسال زملائك ومدرسينك",
+              "اسال زملائك و مدرسينك",
               style: welcomeTitleTextStyle,
             ),
             bodyWidget: const Text(
-              "تواصل مع زملائك ومدرسينك واسالهم عن كل ما يعارضك في طريقك",
+              "تواصل مع زملائك و مدرسينك واسالهم عن كل ما يعارضك في طريقك",
               style: welcomeBodyTextStyle,
             ),
             image: Container(
@@ -52,7 +51,6 @@ class WelcomeView extends GetView<WelcomeController> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: primaryColorTransparent,
               ),
               child: Image.asset("assets/second_welcome_image.png"),
             ),
@@ -60,9 +58,9 @@ class WelcomeView extends GetView<WelcomeController> {
         ],
         showBackButton: true,
         showNextButton: true,
-        back: welcomeButton("Back"),
-        next: welcomeButton("Next"),
-        done: welcomeButton("Done"),
+        back: welcomeButton("السابق"),
+        next: welcomeButton("التالي"),
+        done: welcomeButton("تم"),
         onDone: controller.done,
         dotsDecorator: DotsDecorator(
           color: Colors.white,

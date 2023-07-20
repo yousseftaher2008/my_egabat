@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:my_egabat/app/shared/styles/button_styles.dart';
+import '../../../../shared/styles/button_styles.dart';
 import '../../../../shared/styles/colors.dart';
 
 import '../../../../shared/styles/text_styles.dart';
 import '../../controllers/auth_controller.dart';
+import '../widgets/choose_country.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final TextEditingController phoneController = TextEditingController();
-    final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
-    void fun() {
-      phoneKey.currentState!.validate();
-    }
+    final double pageHeight =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: true,
-          backgroundColor: primaryColorTransparent,
-          body: Stack(
+        backgroundColor: primaryColorTransparent,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               ClipPath(
                 clipper: OvalBottomBorderClipper(),
                 child: ColoredBox(
                   color: primaryColor,
                   child: SizedBox(
+                    height: pageHeight / 3,
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.all(40.0),
@@ -36,52 +36,57 @@ class AuthView extends GetView<AuthController> {
                   ),
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  width: 250,
-                  child: TextFormField(
-                    key: phoneKey,
-                    controller: phoneController,
-                    keyboardType: TextInputType.phone,
-                    style: textFormFieldStyle,
-                    decoration: InputDecoration(
-                      hintText: "رقم الهاتف",
-                      hintStyle: textFormFieldStyle,
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.white),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.white),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: pageHeight / 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      child: TextFormField(
+                        key: controller.phoneKey,
+                        controller: controller.phoneController,
+                        keyboardType: TextInputType.phone,
+                        style: textFormFieldStyle,
+                        decoration: InputDecoration(
+                          labelText: "رقم الهاتف",
+                          labelStyle: textFormFieldStyle,
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide:
+                                const BorderSide(width: 3, color: Colors.white),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide:
+                                const BorderSide(width: 3, color: Colors.white),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide:
+                                const BorderSide(width: 3, color: Colors.white),
+                          ),
+                        ),
+                        validator: (_) => controller.errorText,
                       ),
                     ),
-                    validator: (va) => "error",
-                  ),
+                    const ChooseCountry()
+                  ],
                 ),
               ),
-              Positioned(
-                bottom: 200,
-                right: Get.size.width / 2 - 50,
-                child: SizedBox(
-                  width: 100,
-                  child: ElevatedButton(
-                    style: primaryButtonStyle,
-                    onPressed: () {},
-                    child: const Text("Login"),
-                  ),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  style: primaryButtonStyle,
+                  onPressed: controller.login,
+                  child: const Text("Login"),
                 ),
-              )
+              ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
