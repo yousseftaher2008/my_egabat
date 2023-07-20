@@ -52,9 +52,7 @@ class AuthController extends GetxController {
   }
 
   Future<bool> isValidPhone() async {
-    print("get");
     if (selectedCountry == null) {
-      print("get out");
       errorText = "اختر دولتك اولا";
       return false;
     }
@@ -70,7 +68,6 @@ class AuthController extends GetxController {
       errorText = "أدخل رقما صحيحا";
       return false;
     }
-    print("get in");
     phoneNumber = phone;
     return true;
   }

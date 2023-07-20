@@ -16,7 +16,6 @@ class Country {
     } else if (code == "+965") {
       isoCode = "KW";
     }
-    print("$code $isoCode");
   }
 
   Country.fromJson(Map<String, dynamic> json) {
@@ -29,7 +28,6 @@ class Country {
     } else if (code == "+965") {
       isoCode = "KW";
     }
-    print("$code $isoCode");
   }
 
   Map<String, dynamic> toJson() {
