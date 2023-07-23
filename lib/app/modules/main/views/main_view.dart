@@ -18,6 +18,10 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     try {
+      // return const ErrorScreen();
+
+      // WelcomeBinding().dependencies();
+      // return const WelcomeView();
       return Scaffold(
         body: FutureBuilder<bool>(
             future: controller.isConnected(),

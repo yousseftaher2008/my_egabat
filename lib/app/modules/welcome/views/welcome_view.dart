@@ -14,6 +14,8 @@ class WelcomeView extends GetView<WelcomeController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: IntroductionScreen(
+        // rtl: true,
+        rtl: true,
         globalBackgroundColor: primaryColor,
         pages: [
           PageViewModel(

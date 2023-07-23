@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:libphonenumber/libphonenumber.dart';
+import 'package:my_egabat/app/modules/auth/bindings/register_binding.dart';
+import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
 import 'package:my_egabat/app/routes/app_pages.dart';
 import 'package:my_egabat/app/shared/errors/error_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,15 +18,11 @@ class AuthController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   String phoneNumber = "";
   String? errorText;
-  final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
-
-  final RxBool isFocus = false.obs;
-  final RxBool isError = false.obs;
+  RegisterController? registerController;
   final RxBool isRegister = false.obs;
-
   final RxBool isGettingCountries = false.obs;
+  final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
   List<Country> countries = [];
-
   Country? selectedCountry;
   final RxString selectedCountryCode = "اختر دولتك".obs;
 
@@ -50,6 +48,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
+    if (isRegister.value) {
+      await registerController?.register();
+      return;
+    }
     final isValidPhon = await isValidPhone();
     phoneKey.currentState!.validate();
     if (!isValidPhon) {
@@ -60,7 +62,7 @@ class AuthController extends GetxController {
     final Uri url = Uri.parse('${baseUrl}Student/Login');
     final fbm = FirebaseMessaging.instance;
     final String? deviceToken = await fbm.getToken();
-    final body = jsonEncode({
+    final body = json.encode({
       'mobile': phoneNumber,
       'deviceToken': deviceToken,
     });
@@ -83,26 +85,25 @@ class AuthController extends GetxController {
       //going to home
     } else {
       // going to register page
-      // Get.toNamed();
+      RegisterBinding().dependencies();
+      registerController = Get.find<RegisterController>();
+      isRegister.value = true;
     }
   }
 
   Future<bool> isValidPhone() async {
     if (selectedCountry == null) {
       errorText = "اختر دولتك اولا";
-      isError.value = true;
       return false;
     }
     if (phoneController.value.text == "") {
       errorText = "أدخل رقما ";
-      isError.value = true;
       return false;
     }
     final String? phone = await PhoneNumberUtil.normalizePhoneNumber(
         phoneNumber: phoneController.text, isoCode: selectedCountry!.isoCode);
     if (phone == null) {
       errorText = "أدخل رقما صحيحا";
-      isError.value = true;
 
       return false;
     }
@@ -111,12 +112,10 @@ class AuthController extends GetxController {
         phoneNumber: phone, isoCode: selectedCountry!.isoCode);
     if (!(isValid ?? false)) {
       errorText = "أدخل رقما صحيحا";
-      isError.value = true;
       return false;
     }
 
     errorText = null;
-    isError.value = false;
     phoneNumber = phone;
     return true;
   }

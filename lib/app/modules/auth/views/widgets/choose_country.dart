@@ -65,9 +65,6 @@ class ChooseCountry extends GetView<AuthController> {
                                 ),
                               ],
                             ),
-                            onTap: () {
-                              // controller.filterOption.value = FilterOption.favorites;
-                            },
                           ),
                         )
                         .toList(),

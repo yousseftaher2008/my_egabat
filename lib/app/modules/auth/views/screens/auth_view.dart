@@ -32,31 +32,40 @@ class AuthView extends GetView<AuthController> {
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.all(40.0),
-                        child: Obx(() => Image.asset(controller.isRegister.value
-                            ? "assets/register_image.png"
-                            : "assets/login_image.png")),
+                        child: Obx(
+                          () => Image.asset(controller.isRegister.value
+                              ? "assets/register_image.png"
+                              : "assets/login_image.png"),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: pageHeight - (pageHeight / 2),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      controller.isRegister.value
-                          ? const Register()
-                          : const AuthCard(),
-                      SizedBox(
-                        width: 100,
-                        child: ElevatedButton(
-                          style: primaryButtonStyle,
-                          onPressed: controller.login,
-                          child: const Text("Login"),
+                Expanded(
+                  child: Obx(
+                    () => Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        controller.isRegister.value
+                            ? const Register()
+                            : const AuthCard(),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: primaryButtonStyle,
+                            onPressed: controller.isRegister.value
+                                ? controller.registerController?.register
+                                : controller.login,
+                            child: Text(
+                              controller.isRegister.value
+                                  ? "Register"
+                                  : "Login",
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

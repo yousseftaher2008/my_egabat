@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -9,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/auth_data.dart';
 
 class MainController extends GetxController {
-  late AuthData _authData;
+  late AuthData authData;
   late StreamSubscription connectionStream;
   RxBool isLoading = true.obs;
 
@@ -26,13 +28,13 @@ class MainController extends GetxController {
       }
       isLoading.value = false;
     });
-    getAuthData().then((AuthData authData) => _authData = authData);
+    getAuthData().then((AuthData _authData) => authData = _authData);
     super.onReady();
   }
 
   Future<bool> isAuth() async {
-    _authData = await getAuthData();
-    return _authData.isLogin && _authData.token.isNotEmpty;
+    authData = await getAuthData();
+    return authData.isLogin && authData.token.isNotEmpty;
   }
 
   Future<AuthData> getAuthData() async {
@@ -43,14 +45,14 @@ class MainController extends GetxController {
     final bool isLogin = pref.getBool('isLogin') ?? false;
     final bool isVisitor = pref.getBool('isVisitingTeacher') ?? false;
 
-    AuthData authData = AuthData(
+    AuthData _authData = AuthData(
       token: token,
       teacherName: teacherName,
       id: userId,
       isLogin: isLogin,
       isVisitor: isVisitor,
     );
-    return authData;
+    return _authData;
   }
 
   Future<bool> isConnected() async {
