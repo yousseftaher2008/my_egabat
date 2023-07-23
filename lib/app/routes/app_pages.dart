@@ -39,5 +39,6 @@ class AppPages {
       page: () => const WelcomeView(),
       binding: WelcomeBinding(),
     ),
+    
   ];
 }

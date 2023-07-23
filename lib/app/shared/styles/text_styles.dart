@@ -14,6 +14,6 @@ const TextStyle welcomeBodyTextStyle = TextStyle(
   fontWeight: FontWeight.w400,
 );
 const TextStyle textFormFieldStyle = TextStyle(
-  color: Colors.white,
+  color: primaryColorTransparent,
   fontWeight: FontWeight.bold,
 );

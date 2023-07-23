@@ -4,7 +4,7 @@ import 'package:my_egabat/app/modules/auth/controllers/auth_controller.dart';
 import 'package:my_egabat/app/modules/auth/models/country_model.dart';
 
 import '../../../../shared/base_url.dart';
-import '../../../../shared/styles/text_styles.dart';
+import '../../../../shared/styles/colors.dart';
 
 class ChooseCountry extends GetView<AuthController> {
   const ChooseCountry({super.key});
@@ -15,49 +15,35 @@ class ChooseCountry extends GetView<AuthController> {
 
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 3, color: Colors.white)),
-      width: 250,
-      alignment: Alignment.centerLeft,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 1,
+        ),
+      ),
       child: Obx(
         () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                controller.selectedCountryCode.value,
-                style: textFormFieldStyle,
-                textDirection: TextDirection.ltr,
-              ),
-            ),
             controller.isGettingCountries.value
                 ? const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: primaryColorTransparent,
+                    ),
                   )
                 : PopupMenuButton(
                     icon: const Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
+                      Icons.arrow_drop_down_sharp,
                     ),
-                    onSelected: (value) {
-                      for (int i = 0; i < controller.countries.length; i++) {
-                        if (controller.countries[i].code != value ||
-                            controller.selectedCountryCode.value == value) {
-                          continue;
-                        }
-                        controller.selectedCountry = controller.countries[i];
-                        controller.selectedCountryCode.value = value;
-                      }
-                    },
+                    onSelected: controller.selectCountryByCode,
                     initialValue: "",
                     itemBuilder: (_) => (controller.countries)
                         .map(
                           (Country country) => PopupMenuItem(
                             value: country.code,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(country.name),
                                 Text(
@@ -65,11 +51,17 @@ class ChooseCountry extends GetView<AuthController> {
                                   textDirection: TextDirection.ltr,
                                 ),
                                 CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage: NetworkImage(
-                                    "$imageUrl${country.flag}",
-                                  ),
                                   radius: 15,
+                                  backgroundColor: Colors.transparent,
+                                  child: FadeInImage(
+                                    placeholder: const AssetImage(
+                                      "assets/unknown_flag.png",
+                                    ),
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      "$imageUrl${country.flag}",
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -80,6 +72,13 @@ class ChooseCountry extends GetView<AuthController> {
                         )
                         .toList(),
                   ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                controller.selectedCountryCode.value,
+                textDirection: TextDirection.ltr,
+              ),
+            ),
           ],
         ),
       ),

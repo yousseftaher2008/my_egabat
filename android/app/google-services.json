@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "45690189157",
+    "project_id": "egabat-bf354",
+    "storage_bucket": "egabat-bf354.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45690189157:android:29af754cf49ed0bb661d8c",
+        "android_client_info": {
+          "package_name": "com.algo.egabat.v2.my_egabat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45690189157-ojmbbc1mgkl42hq38cd45d15de0jr377.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZiFdPPaNTw0NFfrjn4fChaWJQyySqlys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45690189157-ojmbbc1mgkl42hq38cd45d15de0jr377.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
