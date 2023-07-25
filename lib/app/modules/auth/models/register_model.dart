@@ -1,8 +1,8 @@
-class Section {
+class Register {
   final String name;
   final String id;
 
-  Section({
+  Register({
     required this.name,
     required this.id,
   });

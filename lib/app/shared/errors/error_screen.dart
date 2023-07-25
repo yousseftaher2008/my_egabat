@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/routes/app_pages.dart';
-import 'package:my_egabat/app/shared/styles/colors.dart';
 
 import 'help_button.dart';
+import '../styles/colors.dart';
 import '../styles/text_styles.dart';
+import '../../routes/app_pages.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});

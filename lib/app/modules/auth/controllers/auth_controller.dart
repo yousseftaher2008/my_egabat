@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:libphonenumber/libphonenumber.dart';
-import 'package:my_egabat/app/modules/auth/bindings/register_binding.dart';
-import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
-import 'package:my_egabat/app/routes/app_pages.dart';
-import 'package:my_egabat/app/shared/errors/error_screen.dart';
+import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
+import '../bindings/register_binding.dart';
+import 'image_input_controller.dart';
+import 'register_controller.dart';
+import '../../../routes/app_pages.dart';
+import '../../../shared/errors/error_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../shared/base_url.dart';
@@ -19,7 +21,9 @@ class AuthController extends GetxController {
   String phoneNumber = "";
   String? errorText;
   RegisterController? registerController;
+  MainController mainController = Get.find<MainController>();
   final RxBool isRegister = false.obs;
+  final RxBool isFirstRegisterStep = false.obs;
   final RxBool isGettingCountries = false.obs;
   final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
   List<Country> countries = [];
@@ -76,18 +80,15 @@ class AuthController extends GetxController {
       Get.offAll(const ErrorScreen());
       return;
     }
-    final pref = await SharedPreferences.getInstance();
-    pref.setString("userId", responseData["studentId"] ?? "");
-    pref.setString("token", responseData["token"] ?? "");
-    pref.setBool("isLogin", responseData["isExist"] ?? false);
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("userId", responseData["studentId"] ?? "");
+    await pref.setString("token", responseData["token"] ?? "");
+    await pref.setBool("isLogin", responseData["isExist"] ?? false);
+    await mainController.getAuthData();
     if ((responseData["isExist"] ?? false) == true) {
       Get.offAllNamed(Routes.HOME);
-      //going to home
     } else {
-      // going to register page
-      RegisterBinding().dependencies();
-      registerController = Get.find<RegisterController>();
-      isRegister.value = true;
+      nextRegisterStep();
     }
   }
 
@@ -127,6 +128,33 @@ class AuthController extends GetxController {
       }
       selectedCountry = countries[i];
       selectedCountryCode.value = value;
+    }
+  }
+
+  void nextRegisterStep() {
+    // going to register page
+    if (!isRegister.value) {
+      RegisterBinding().dependencies();
+      registerController = Get.find<RegisterController>();
+      isFirstRegisterStep.value = true;
+      isRegister.value = true;
+    } else {
+      if (!(registerController!.formKey.currentState?.validate() ?? true)) {
+        return;
+      }
+      isFirstRegisterStep.value = false;
+    }
+  }
+
+  void backFromRegister() {
+    // back to register page
+    if (isFirstRegisterStep.value) {
+      Get.delete<RegisterController>();
+      Get.delete<ImageInputController>();
+      isRegister.value = false;
+      isFirstRegisterStep.value = false;
+    } else {
+      isFirstRegisterStep.value = true;
     }
   }
 }

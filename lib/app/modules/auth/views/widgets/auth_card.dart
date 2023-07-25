@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 import '../../../../shared/styles/text_field_styles.dart';
 import 'choose_country.dart';
