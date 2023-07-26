@@ -77,6 +77,16 @@ class AuthView extends GetView<AuthController> {
                         ),
                       ),
                     ),
+                    Obx(
+                      () => TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          controller.isTeacher.value
+                              ? "انا طالب ولست مدرس؟"
+                              : "انا مدرس ولست طالبا؟",
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

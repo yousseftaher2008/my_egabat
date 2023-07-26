@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:http/http.dart' as http;
 import 'auth_controller.dart';
 import '../../main/controllers/main_controller.dart';
 import '../../../routes/app_pages.dart';
@@ -49,8 +48,6 @@ class RegisterController extends GetxController {
   }
 
   Future<void> getSections() async {
-    print("token: ${mainController.authData.token}");
-
     isLoadingSections.value = true;
     final Uri uri = Uri.parse(
         '${baseUrl}Section/GetSections?countryId=${authController.selectedCountry!.id}');
@@ -64,8 +61,6 @@ class RegisterController extends GetxController {
   }
 
   Future<void> getStages() async {
-    print("token: ${mainController.authData.token}");
-
     isLoadingStages.value = true;
 
     final Uri uri = Uri.parse(
@@ -79,7 +74,6 @@ class RegisterController extends GetxController {
   }
 
   Future<void> getGrades() async {
-    print("token: ${mainController.authData.token}");
     isLoadingGrades.value = true;
     grades.clear();
     final Uri uri = Uri.parse('${baseUrl}Grade/GetGradesByStageId/$stageId');
@@ -95,8 +89,9 @@ class RegisterController extends GetxController {
   Future<List<Register>> _getRegisterData(
       Map<String, String> headers, Uri uri, String registerType) async {
     try {
-      final response = await http.get(uri, headers: headers);
-      final List registerData = json.decode(response.body);
+      final response =
+          await dio.Dio().getUri(uri, options: dio.Options(headers: headers));
+      final List registerData = json.decode(response.data);
       final List<Register> registerList = [];
       for (final register in registerData) {
         registerList.add(
@@ -114,7 +109,6 @@ class RegisterController extends GetxController {
   }
 
   Future<void> register() async {
-    print("token: ${mainController.authData.token}");
     try {
       if (!(formKey.currentState?.validate() ?? false)) {
         return;
@@ -123,7 +117,6 @@ class RegisterController extends GetxController {
         "Authorization": "Bearer ${mainController.authData.token}",
         "Content-Type": "multipart/form-data",
       };
-      print(storedImage.value);
       dio.MultipartFile? image = storedImage.value != null
           ? await dio.MultipartFile.fromFile(storedImage.value!.path.toString())
           : null;
@@ -147,38 +140,7 @@ class RegisterController extends GetxController {
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
-      print(e);
-      // Get.offAll(const ErrorScreen());
+      Get.offAll(const ErrorScreen());
     }
-  }
-
-  Future<void> duo() async {
-    // setState(() {
-    //   clicked = true;
-    // });
-
-    // Map<String, String> headers = {
-    //   "Content-Type": "multipart/form-data",
-    //   "Authorization": "Bearer ${_token!}",
-    //   'Accept-Language': lang!,
-    // };
-
-    Future<http.MultipartFile> imgfile;
-    List<http.MultipartFile> multidata = [];
-    if (storedImage.value != null) {
-      imgfile = http.MultipartFile.fromPath(
-          'Ticket', storedImage.value!.path.toString());
-      multidata.add(await imgfile);
-      // tripRequestBody['Ticket'] =
-      //     await dio.MultipartFile.fromFile(tripIimage1!.path.toString());
-    }
-
-    // dio.FormData formData = dio.FormData.fromMap(tripRequestBody);
-
-    // var response = await Dio().post(
-    //   '${baseurl}Trip/Create',
-    //   data: formData,
-    //   options: Options(headers: headers),
-    // );
   }
 }

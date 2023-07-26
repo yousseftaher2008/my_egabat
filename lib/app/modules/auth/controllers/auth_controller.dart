@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:libphonenumber/libphonenumber.dart';
 import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
 import '../bindings/register_binding.dart';
@@ -30,6 +30,8 @@ class AuthController extends GetxController {
   Country? selectedCountry;
   final RxString selectedCountryCode = "اختر دولتك".obs;
 
+  final RxBool isTeacher = false.obs;
+
   Future<void> getCountries() async {
     if (countries.isNotEmpty) {
       return;
@@ -37,9 +39,11 @@ class AuthController extends GetxController {
     isGettingCountries.value = true;
     final Uri url = Uri.parse("${baseUrl}Countries/GetAllCountries");
     try {
-      final response = await http.get(url);
-      if (response.statusCode <= 400) {
-        final jsonCountries = json.decode(response.body);
+      final response = await dio.Dio().getUri(url);
+
+      print(response.statusCode);
+      if ((response.statusCode ?? 200) <= 400) {
+        final jsonCountries = json.decode(response.data);
 
         for (final country in jsonCountries) {
           countries.add(Country.fromJson(country));
@@ -74,8 +78,9 @@ class AuthController extends GetxController {
       "Content-Type": "application/json",
       'accept': "*/*",
     };
-    final response = await http.post(url, body: body, headers: head);
-    final Map<String, dynamic> responseData = json.decode(response.body);
+    final response = await dio.Dio()
+        .postUri(url, data: body, options: dio.Options(headers: head));
+    final Map<String, dynamic> responseData = json.decode(response.data);
     if ((responseData["isActive"] ?? false) == false) {
       Get.offAll(const ErrorScreen());
       return;

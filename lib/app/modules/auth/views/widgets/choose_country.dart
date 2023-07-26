@@ -13,15 +13,18 @@ class ChooseCountry extends GetView<AuthController> {
   Widget build(BuildContext context) {
     controller.getCountries();
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 1,
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: 1.5,
+            color: controller.selectedCountryCode.value != "اختر دولتك"
+                ? primaryColorTransparent
+                : Colors.black,
+          ),
         ),
-      ),
-      child: Obx(
-        () => Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             controller.isGettingCountries.value
@@ -32,8 +35,12 @@ class ChooseCountry extends GetView<AuthController> {
                     ),
                   )
                 : PopupMenuButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_drop_down_sharp,
+                      color:
+                          controller.selectedCountryCode.value != "اختر دولتك"
+                              ? primaryColorTransparent
+                              : Colors.black,
                     ),
                     onSelected: controller.selectCountryByCode,
                     initialValue: "",
