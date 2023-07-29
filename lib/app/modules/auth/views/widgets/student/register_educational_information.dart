@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports, unnecessary_import
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import '../../controllers/register_controller.dart';
-import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/text_field_styles.dart';
-import '../../../../shared/styles/text_styles.dart';
+import '../../../controllers/register_controller.dart';
+import '../../../../../shared/styles/colors.dart';
+import '../../../../../shared/styles/text_field_styles.dart';
+import '../../../../../shared/styles/text_styles.dart';
 
 class RegisterEducationalInformation extends GetView<RegisterController> {
   const RegisterEducationalInformation({super.key});

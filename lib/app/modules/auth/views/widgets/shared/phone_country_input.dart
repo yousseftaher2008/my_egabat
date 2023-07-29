@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../controllers/auth_controller.dart';
 
-import '../../../../shared/styles/text_field_styles.dart';
+import '../../../../../shared/styles/text_field_styles.dart';
 import 'choose_country.dart';
 
-class AuthCard extends GetView<AuthController> {
-  const AuthCard({super.key});
-
+class PhoneCountryInput extends StatelessWidget {
+  const PhoneCountryInput(this.controller, {super.key});
+  final dynamic controller;
   @override
   Widget build(BuildContext context) {
     return Row(

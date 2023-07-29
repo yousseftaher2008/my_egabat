@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/auth_controller.dart';
-import '../../models/country_model.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../models/country_model.dart';
 
-import '../../../../shared/base_url.dart';
-import '../../../../shared/styles/colors.dart';
+import '../../../../../shared/base_url.dart';
+import '../../../../../shared/styles/colors.dart';
 
 class ChooseCountry extends GetView<AuthController> {
   const ChooseCountry({super.key});

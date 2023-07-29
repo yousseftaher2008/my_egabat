@@ -28,8 +28,6 @@ class HelpButton extends StatelessWidget {
       onPressed: () async {
         final Uri whatsappLink =
             Uri.parse("whatsapp://send?phone=$phoneNumber&text=$startMessage");
-        // final Uri whatsappLink =
-        // Uri.parse("whatsapp://send?phone=$phoneNumber&text=$startMessage");
         try {
           await launch.canLaunchUrl(whatsappLink)
               ? await launch.launchUrl(whatsappLink)

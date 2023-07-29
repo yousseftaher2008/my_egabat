@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:my_egabat/app/modules/auth/views/widgets/register_educational_information.dart';
-import '../widgets/auth_card.dart';
-import '../../../../shared/styles/button_styles.dart';
 import '../../../../shared/styles/colors.dart';
 
 import '../../controllers/auth_controller.dart';
-import '../widgets/register_personal_information.dart';
+import '../widgets/student/student_auth.dart';
+import '../widgets/teacher/teacher_auth.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
@@ -44,42 +42,16 @@ class AuthView extends GetView<AuthController> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Obx(
-                        () => Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            controller.isRegister.value
-                                ? controller.isFirstRegisterStep.value
-                                    ? const RegisterPersonalInformation()
-                                    : const RegisterEducationalInformation()
-                                : const AuthCard(),
-                            SizedBox(
-                              child: ElevatedButton(
-                                style: primaryButtonStyle,
-                                onPressed: controller.isRegister.value
-                                    ? controller.isFirstRegisterStep.value
-                                        ? controller.nextRegisterStep
-                                        : controller
-                                            .registerController?.register
-                                    : controller.login,
-                                child: Text(
-                                  controller.isRegister.value
-                                      ? controller.isFirstRegisterStep.value
-                                          ? "التالي"
-                                          : "تسجيل حساب جديد"
-                                      : "تسجيل الدخول",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    Obx(
+                      () => controller.isTeacher.value
+                          ? const TeacherAuth()
+                          : const StudentAuth(),
                     ),
                     Obx(
                       () => TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.changeUserType();
+                        },
                         child: Text(
                           controller.isTeacher.value
                               ? "انا طالب ولست مدرس؟"

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/errors/no_internet_screen.dart';
@@ -14,10 +15,12 @@ class MainController extends GetxController {
   late AuthData authData;
   late StreamSubscription connectionStream;
   RxBool isLoading = true.obs;
-
+  String? deviceToken;
   bool isWelcomeViewed = false;
   @override
   Future<void> onReady() async {
+    final fbm = FirebaseMessaging.instance;
+    deviceToken = await fbm.getToken();
     await getIsWelcomeViewed();
     connectionStream =
         Connectivity().onConnectivityChanged.listen((connection) {

@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'auth_controller.dart';
-import '../../main/controllers/main_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/errors/error_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,12 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../shared/base_url.dart';
 import '../models/register_model.dart';
 
-class RegisterController extends GetxController {
+class RegisterController extends AuthController {
   //image
   Rx<File?> storedImage = Rxn<File?>();
-  // controllers
-  final MainController mainController = Get.find<MainController>();
-  final AuthController authController = Get.find<AuthController>();
   //form key
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   //TextEditingControllers
@@ -42,20 +37,22 @@ class RegisterController extends GetxController {
 
   @override
   onInit() {
-    getSections();
-    getStages();
+    if (selectedCountry != null) {
+      getSections();
+      getStages();
+    }
     super.onInit();
   }
 
   Future<void> getSections() async {
     isLoadingSections.value = true;
-    final Uri uri = Uri.parse(
-        '${baseUrl}Section/GetSections?countryId=${authController.selectedCountry!.id}');
+    final url =
+        ('${baseUrl}Section/GetSections?countryId=${selectedCountry!.id}');
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer ${mainController.authData.token}",
+      "Authorization": "Bearer ${authData.token}",
     };
-    sections.addAll(await _getRegisterData(headers, uri, "section"));
+    sections.addAll(await _getRegisterData(headers, url, "section"));
 
     isLoadingSections.value = false;
   }
@@ -63,37 +60,35 @@ class RegisterController extends GetxController {
   Future<void> getStages() async {
     isLoadingStages.value = true;
 
-    final Uri uri = Uri.parse(
-        '${baseUrl}Stage/GetStages?countryId=${authController.selectedCountry!.id}');
+    final url = ('${baseUrl}Stage/GetStages?countryId=${selectedCountry!.id}');
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer ${mainController.authData.token}",
+      "Authorization": "Bearer ${authData.token}",
     };
-    stages.addAll(await _getRegisterData(headers, uri, "stage"));
+    stages.addAll(await _getRegisterData(headers, url, "stage"));
     isLoadingStages.value = false;
   }
 
   Future<void> getGrades() async {
     isLoadingGrades.value = true;
     grades.clear();
-    final Uri uri = Uri.parse('${baseUrl}Grade/GetGradesByStageId/$stageId');
+    final url = ('${baseUrl}Grade/GetGradesByStageId/$stageId');
     Map<String, String> headers = {
-      "Authorization": "Bearer ${mainController.authData.token}",
+      "Authorization": "Bearer ${authData.token}",
       "Content-Type": "application/json",
     };
-    grades.addAll(await _getRegisterData(headers, uri, "grade"));
+    grades.addAll(await _getRegisterData(headers, url, "grade"));
 
     isLoadingGrades.value = false;
   }
 
   Future<List<Register>> _getRegisterData(
-      Map<String, String> headers, Uri uri, String registerType) async {
+      Map<String, String> headers, url, String registerType) async {
     try {
       final response =
-          await dio.Dio().getUri(uri, options: dio.Options(headers: headers));
-      final List registerData = json.decode(response.data);
+          await dio.Dio().get(url, options: dio.Options(headers: headers));
       final List<Register> registerList = [];
-      for (final register in registerData) {
+      for (final register in response.data) {
         registerList.add(
           Register(
             name: register["${registerType}Name"],
@@ -114,7 +109,7 @@ class RegisterController extends GetxController {
         return;
       }
       Map<String, String> headers = {
-        "Authorization": "Bearer ${mainController.authData.token}",
+        "Authorization": "Bearer ${authData.token}",
         "Content-Type": "multipart/form-data",
       };
       dio.MultipartFile? image = storedImage.value != null
@@ -129,10 +124,10 @@ class RegisterController extends GetxController {
         'StageId': stageId ?? "",
         'GradeId': gradeId,
       });
-      final Uri uri = Uri.parse('${baseUrl}Student/StudentRegistration');
+      const url = ('${baseUrl}Student/StudentRegistration');
       late final dio.Response response;
       response = await dio.Dio()
-          .postUri(uri, data: formData, options: dio.Options(headers: headers));
+          .post(url, data: formData, options: dio.Options(headers: headers));
 
       if (response.statusCode == 200) {
         final pref = await SharedPreferences.getInstance();
