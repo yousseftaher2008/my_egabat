@@ -5,8 +5,8 @@ import '../student/image_input.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 
 class RegisterPersonalInformation extends GetView<RegisterController> {
-  const RegisterPersonalInformation({super.key});
-
+  const RegisterPersonalInformation({this.withImageInput = true, super.key});
+  final bool withImageInput;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -17,7 +17,7 @@ class RegisterPersonalInformation extends GetView<RegisterController> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              const ImageInput(),
+              if (withImageInput) const ImageInput(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(

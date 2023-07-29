@@ -12,6 +12,8 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getSections();
+    controller.getStages();
     final sectionKey = GlobalKey<PopupMenuButtonState>();
     final stageKey = GlobalKey<PopupMenuButtonState>();
     final gradeKey = GlobalKey<PopupMenuButtonState>();

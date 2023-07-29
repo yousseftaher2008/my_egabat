@@ -54,6 +54,7 @@ class RegisterController extends AuthController {
     };
     sections.addAll(await _getRegisterData(headers, url, "section"));
 
+    print(sections);
     isLoadingSections.value = false;
   }
 

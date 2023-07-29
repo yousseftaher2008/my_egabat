@@ -26,15 +26,17 @@ class PhoneCountryInput extends StatelessWidget {
               },
               controller: controller.phoneController,
               keyboardType: TextInputType.phone,
-              decoration: authInputDecoration(labelText: "رقم الهاتف"),
+              decoration: authInputDecoration(labelText: "رقم الهاتف").copyWith(
+                  suffixIcon: const SizedBox(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: ChooseCountry(),
+                ),
+              )),
               validator: (_) => controller.errorText,
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: ChooseCountry(),
-        )
       ],
     );
   }

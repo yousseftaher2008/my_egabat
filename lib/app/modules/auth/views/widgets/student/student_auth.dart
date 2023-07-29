@@ -12,34 +12,36 @@ class StudentAuth extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Obx(
-        () => Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            controller.isRegister.value
-                ? controller.isFirstRegisterStep.value
-                    ? const RegisterPersonalInformation()
-                    : const RegisterEducationalInformation()
-                : PhoneCountryInput(Get.find<AuthController>()),
-            SizedBox(
-              child: ElevatedButton(
-                style: primaryButtonStyle,
-                onPressed: controller.isRegister.value
-                    ? controller.isFirstRegisterStep.value
-                        ? controller.nextRegisterStep
-                        : controller.registerController?.register
-                    : controller.login,
-                child: Text(
-                  controller.isRegister.value
+      child: SizedBox(
+        child: Obx(
+          () => Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              controller.isRegister.value
+                  ? controller.isFirstRegisterStep.value
+                      ? const RegisterPersonalInformation()
+                      : const RegisterEducationalInformation()
+                  : PhoneCountryInput(Get.find<AuthController>()),
+              SizedBox(
+                child: ElevatedButton(
+                  style: primaryButtonStyle,
+                  onPressed: controller.isRegister.value
                       ? controller.isFirstRegisterStep.value
-                          ? "التالي"
-                          : "تسجيل حساب جديد"
-                      : "تسجيل الدخول",
+                          ? controller.nextRegisterStep
+                          : controller.registerController?.register
+                      : controller.login,
+                  child: Text(
+                    controller.isRegister.value
+                        ? controller.isFirstRegisterStep.value
+                            ? "التالي"
+                            : "تسجيل حساب جديد"
+                        : "تسجيل الدخول",
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
