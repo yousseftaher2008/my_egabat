@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/teacher_controller.dart';
+import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/phone_country_input.dart';
+import 'package:my_egabat/app/modules/auth/views/widgets/student/register_educational_information.dart';
 import 'package:my_egabat/app/shared/styles/button_styles.dart';
 
 import '../shared/register_personal_information.dart';
 
-class TeacherRegister extends GetView<TeacherController> {
+class TeacherRegister extends GetView<RegisterController> {
   const TeacherRegister({super.key});
 
   @override
@@ -16,21 +17,27 @@ class TeacherRegister extends GetView<TeacherController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          PhoneCountryInput(Get.find<TeacherController>()),
+          Obx(
+            () => controller.isFirstRegisterStep.value
+                ? const PhoneCountryInput()
+                : const RegisterEducationalInformation(
+                    withSubjectSelector: true),
+          ),
           const RegisterPersonalInformation(
             withImageInput: false,
           ),
           Obx(
             () => ElevatedButton(
-                onPressed: controller.isFirstRegisterStep.value
-                    ? controller.nextRegisterStep
-                    : controller.login,
-                style: primaryButtonStyle,
-                child: Text(
-                  controller.isFirstRegisterStep.value
-                      ? "التالي"
-                      : "انشاء حساب جديد",
-                )),
+              onPressed: controller.isFirstRegisterStep.value
+                  ? controller.nextRegisterStep
+                  : controller.teacherRegister,
+              style: primaryButtonStyle,
+              child: Text(
+                controller.isFirstRegisterStep.value
+                    ? "التالي"
+                    : "انشاء حساب جديد",
+              ),
+            ),
           )
         ],
       ),

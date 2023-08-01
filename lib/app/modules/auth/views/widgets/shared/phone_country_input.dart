@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_egabat/app/modules/auth/controllers/auth_controller.dart';
 
 import '../../../../../shared/styles/text_field_styles.dart';
 import 'choose_country.dart';
 
-class PhoneCountryInput extends StatelessWidget {
-  const PhoneCountryInput(this.controller, {super.key});
-  final dynamic controller;
+class PhoneCountryInput extends GetView<AuthController> {
+  const PhoneCountryInput({this.onSaved, super.key});
+  final Future<void> Function()? onSaved;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,11 +20,11 @@ class PhoneCountryInput extends StatelessWidget {
               key: controller.phoneKey,
               onFieldSubmitted: (_) {
                 FocusScope.of(context).unfocus();
-                controller.login();
+                onSaved != null ? onSaved!() : null;
               },
               onEditingComplete: () {
                 FocusScope.of(context).unfocus();
-                controller.login();
+                onSaved != null ? onSaved!() : null;
               },
               controller: controller.phoneController,
               keyboardType: TextInputType.phone,

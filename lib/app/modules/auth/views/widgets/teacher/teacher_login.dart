@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/teacher_controller.dart';
+import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
 
 import '../../../../../shared/styles/button_styles.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 
-class TeacherLogin extends GetView<TeacherController> {
+class TeacherLogin extends GetView<RegisterController> {
   const TeacherLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final RxBool isVisible = false.obs;
+    void changeVisibility() => isVisible.value = !isVisible.value;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
@@ -24,7 +26,7 @@ class TeacherLogin extends GetView<TeacherController> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: controller.emailController,
+                  controller: controller.teacherEmailController,
                   decoration: authInputDecoration(hintText: "البريد الالكتروني")
                       .copyWith(prefixIcon: const Icon(Icons.email_outlined)),
                   textInputAction: TextInputAction.next,
@@ -39,14 +41,14 @@ class TeacherLogin extends GetView<TeacherController> {
                 padding: const EdgeInsets.all(8.0),
                 child: Obx(
                   () => TextFormField(
-                    controller: controller.passwordController,
-                    obscureText: !controller.isVisible.value,
+                    controller: controller.teacherPassController,
+                    obscureText: isVisible.value,
                     decoration:
                         authInputDecoration(hintText: "رمز المرور").copyWith(
                       prefixIcon: IconButton(
-                        onPressed: controller.changeVisibility,
+                        onPressed: changeVisibility,
                         icon: Icon(
-                          controller.isVisible.value
+                          isVisible.value
                               ? Icons.visibility
                               : Icons.visibility_off,
                         ),
@@ -57,7 +59,7 @@ class TeacherLogin extends GetView<TeacherController> {
                         : value!.length < 8
                             ? "يجب ان يكون رمز المرور 8 حروف على الاقل"
                             : null,
-                    onFieldSubmitted: (_) => controller.login(),
+                    onFieldSubmitted: (_) => controller.teacherLogin(),
                   ),
                 ),
               ),
@@ -69,7 +71,7 @@ class TeacherLogin extends GetView<TeacherController> {
             SizedBox(
               child: ElevatedButton(
                 style: primaryButtonStyle,
-                onPressed: controller.login,
+                onPressed: controller.teacherLogin,
                 child: const Text("تسجيل الدخول"),
               ),
             ),

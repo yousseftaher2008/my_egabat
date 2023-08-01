@@ -14,8 +14,7 @@ class RegisterPersonalInformation extends GetView<RegisterController> {
         key: controller.formKey,
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: ListView(
-            shrinkWrap: true,
+          child: Column(
             children: [
               if (withImageInput) const ImageInput(),
               Padding(
@@ -47,7 +46,7 @@ class RegisterPersonalInformation extends GetView<RegisterController> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  controller: controller.emailController,
+                  controller: controller.studentEmailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration:
                       authInputDecoration(labelText: "البريد الالكتروني"),

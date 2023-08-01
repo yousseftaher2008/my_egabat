@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controllers/auth_controller.dart';
+import 'package:my_egabat/app/modules/auth/controllers/auth_controller.dart';
 import '../../../models/country_model.dart';
 
 import '../../../../../shared/base_url.dart';

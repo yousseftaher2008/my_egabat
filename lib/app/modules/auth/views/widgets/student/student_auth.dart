@@ -11,36 +11,44 @@ class StudentAuth extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SizedBox(
+    final double pageHeight =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    return SizedBox(
+      height: pageHeight * 0.5,
+      child: SingleChildScrollView(
         child: Obx(
-          () => Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              controller.isRegister.value
-                  ? controller.isFirstRegisterStep.value
-                      ? const RegisterPersonalInformation()
-                      : const RegisterEducationalInformation()
-                  : PhoneCountryInput(Get.find<AuthController>()),
-              SizedBox(
-                child: ElevatedButton(
-                  style: primaryButtonStyle,
-                  onPressed: controller.isRegister.value
-                      ? controller.isFirstRegisterStep.value
-                          ? controller.nextRegisterStep
-                          : controller.registerController?.register
-                      : controller.login,
-                  child: Text(
-                    controller.isRegister.value
-                        ? controller.isFirstRegisterStep.value
-                            ? "التالي"
-                            : "تسجيل حساب جديد"
-                        : "تسجيل الدخول",
+          () => Container(
+            constraints: BoxConstraints(minHeight: pageHeight * 0.5),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                controller.registerController.isRegister.value
+                    ? controller.registerController.isFirstRegisterStep.value
+                        ? const RegisterPersonalInformation()
+                        : const RegisterEducationalInformation()
+                    : PhoneCountryInput(onSaved: controller.studentLogin),
+                SizedBox(
+                  child: ElevatedButton(
+                    style: primaryButtonStyle,
+                    onPressed: controller.registerController.isRegister.value
+                        ? controller
+                                .registerController.isFirstRegisterStep.value
+                            ? controller.registerController.nextRegisterStep
+                            : controller.registerController.studentRegister
+                        : controller.studentLogin,
+                    child: Text(
+                      controller.registerController.isRegister.value
+                          ? controller
+                                  .registerController.isFirstRegisterStep.value
+                              ? "التالي"
+                              : "تسجيل حساب جديد"
+                          : "تسجيل الدخول",
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

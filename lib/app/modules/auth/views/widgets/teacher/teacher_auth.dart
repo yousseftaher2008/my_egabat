@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/teacher/teacher_login.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/teacher/teacher_register.dart';
-import '../../../bindings/teacher_binding.dart';
-import '../../../controllers/teacher_controller.dart';
 
-class TeacherAuth extends GetView<TeacherController> {
+class TeacherAuth extends GetView<RegisterController> {
   const TeacherAuth({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TeacherBinding().dependencies();
     return SingleChildScrollView(
       child: Obx(
         () => controller.isRegister.value

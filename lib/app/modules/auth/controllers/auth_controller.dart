@@ -6,8 +6,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
-import '../bindings/register_binding.dart';
-import 'image_input_controller.dart';
 import 'register_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/errors/error_screen.dart';
@@ -17,21 +15,28 @@ import '../../../shared/base_url.dart';
 import '../models/country_model.dart';
 
 class AuthController extends MainController {
+  final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
   final TextEditingController phoneController = TextEditingController();
   String phoneNumber = "";
   String? errorText;
-  RegisterController? registerController;
-  final RxBool isRegister = false.obs;
-  final RxBool isFirstRegisterStep = false.obs;
+  late final RegisterController registerController;
   final RxBool isGettingCountries = false.obs;
-  final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
   List<Country> countries = [];
   Country? _selectedCountry;
   final RxString selectedCountryCode = "اختر دولتك".obs;
-
   final RxBool isTeacher = false.obs;
+  final RxBool isInit = true.obs;
 
   Country? get selectedCountry => _selectedCountry;
+
+  @override
+  onReady() async {
+    super.onReady();
+    Get.put(RegisterController(), permanent: true);
+    registerController = Get.find<RegisterController>();
+    isInit.value = false;
+  }
+
   Future<void> getCountries() async {
     if (countries.isNotEmpty) {
       return;
@@ -46,20 +51,15 @@ class AuthController extends MainController {
         }
       }
     } catch (e) {
-      print(e);
-      // Get.offAll(const ErrorScreen());
+      Get.offAll(const ErrorScreen());
     }
     isGettingCountries.value = false;
   }
 
-  Future<void> login() async {
-    if (isRegister.value) {
-      await registerController?.register();
-      return;
-    }
+  Future<void> studentLogin() async {
     final isValidPhon = await isValidPhone();
-    phoneKey.currentState!.validate();
     if (!isValidPhon) {
+      phoneKey.currentState!.validate();
       return;
     }
     phoneKey.currentState!.save();
@@ -74,8 +74,8 @@ class AuthController extends MainController {
         'accept': "*/*",
       };
       final response = await post(Uri.parse(url), body: body, headers: head);
-      print(response.body);
       if ((response.statusCode) >= 400) {
+        print(response.body);
         Get.offAll(const ErrorScreen());
       }
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -91,13 +91,15 @@ class AuthController extends MainController {
       if ((responseData["isExist"] ?? false) == true) {
         Get.offAllNamed(Routes.HOME);
       } else {
-        nextRegisterStep();
+        registerController.nextRegisterStep();
       }
     } catch (e) {
       print(e);
       Get.offAll(const ErrorScreen());
     }
   }
+
+  Future<void> teacherLogin() async {}
 
   Future<bool> isValidPhone() async {
     if (_selectedCountry == null) {
@@ -129,7 +131,6 @@ class AuthController extends MainController {
   }
 
   void selectCountryByCode(String value) {
-    print("called");
     for (int i = 0; i < countries.length; i++) {
       if (countries[i].code != value || selectedCountryCode.value == value) {
         continue;
@@ -139,36 +140,12 @@ class AuthController extends MainController {
     }
   }
 
-  void nextRegisterStep() {
-    // going to register page
-    if (!isRegister.value) {
-      RegisterBinding().dependencies();
-      registerController = Get.find<RegisterController>();
-      isFirstRegisterStep.value = true;
-      isRegister.value = true;
-    } else {
-      if (!(registerController!.formKey.currentState?.validate() ?? true)) {
-        return;
-      }
-      isFirstRegisterStep.value = false;
-    }
-  }
-
-  void backFromRegister() {
-    // back to register page
-    if (isFirstRegisterStep.value) {
-      Get.delete<RegisterController>();
-      Get.delete<ImageInputController>();
-      isRegister.value = false;
-      isFirstRegisterStep.value = false;
-    } else {
-      isFirstRegisterStep.value = true;
-    }
-  }
-
   void changeUserType() {
-    isRegister.value = false;
-    isFirstRegisterStep.value = false;
+    registerController.isRegister.value = false;
+    registerController.isFirstRegisterStep.value = false;
     isTeacher.value = !isTeacher.value;
+    registerController.clearFirstPageInputs();
+    registerController.clearSecondPageInputs();
+    phoneController.clear();
   }
 }
