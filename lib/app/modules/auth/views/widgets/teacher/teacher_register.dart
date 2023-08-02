@@ -20,12 +20,12 @@ class TeacherRegister extends GetView<RegisterController> {
           Obx(
             () => controller.isFirstRegisterStep.value
                 ? const PhoneCountryInput()
-                : const RegisterEducationalInformation(
-                    withSubjectSelector: true),
+                : const RegisterEducationalInformation(isTeacher: true),
           ),
-          const RegisterPersonalInformation(
-            withImageInput: false,
-          ),
+          if (controller.isFirstRegisterStep.value)
+            const RegisterPersonalInformation(
+              isTeacher: true,
+            ),
           Obx(
             () => ElevatedButton(
               onPressed: controller.isFirstRegisterStep.value

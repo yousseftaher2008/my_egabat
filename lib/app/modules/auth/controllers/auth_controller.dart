@@ -15,15 +15,23 @@ import '../../../shared/base_url.dart';
 import '../models/country_model.dart';
 
 class AuthController extends MainController {
+  //phone properties
   final GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
   final TextEditingController phoneController = TextEditingController();
   String phoneNumber = "";
   String? errorText;
+  // teacher properties
+  final TextEditingController teacherEmailController = TextEditingController();
+  final TextEditingController teacherPassController = TextEditingController();
+  final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
+  //controllers
   late final RegisterController registerController;
-  final RxBool isGettingCountries = false.obs;
+  //country properties
   List<Country> countries = [];
   Country? _selectedCountry;
   final RxString selectedCountryCode = "اختر دولتك".obs;
+  //boolean values
+  final RxBool isGettingCountries = false.obs;
   final RxBool isTeacher = false.obs;
   final RxBool isInit = true.obs;
 
@@ -51,7 +59,7 @@ class AuthController extends MainController {
         }
       }
     } catch (e) {
-      Get.offAll(const ErrorScreen());
+      Get.offAll(() => const ErrorScreen());
     }
     isGettingCountries.value = false;
   }
@@ -99,7 +107,43 @@ class AuthController extends MainController {
     }
   }
 
-  Future<void> teacherLogin() async {}
+  Future<void> teacherLogin() async {
+    if (!(teacherFromKey.currentState?.validate() ?? false)) {
+      return;
+    }
+    try {
+      final body = {
+        "username": teacherEmailController.text.trim(),
+        "password": teacherPassController.text.trim(),
+        "deviceToken": deviceToken,
+      };
+
+      var url = '${baseUrl}Teacher/Login';
+      Map<String, String> head = {"Content-Type": "application/json"};
+      final response = await dio.Dio().post(
+        url,
+        data: json.encode(body),
+        options: dio.Options(headers: head),
+      );
+      if ((response.statusCode ?? 200) < 400) {
+        final String? token = response.data["token"];
+        final String? teacherName = response.data["teacherName"];
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setString('token', token!);
+        pref.setBool('isFreeTrial', response.data['isFreeTrial']);
+        pref.setBool('isVisitingTeacher', response.data['isVisitingTeacher']);
+        pref.setString('TeacherName', teacherName!);
+
+        // (extractedData["isVisitingTeacher"] == true)
+        //     ? Get.to(const VisitorTeacherHome(),
+        //         arguments: [token], duration: const Duration(seconds: 1))
+        //     : Get.to(const HomeTeacher(),
+        //         arguments: [token], duration: const Duration(seconds: 1));
+      }
+    } catch (e) {
+      Get.offAll(() => const ErrorScreen());
+    }
+  }
 
   Future<bool> isValidPhone() async {
     if (_selectedCountry == null) {
@@ -146,6 +190,8 @@ class AuthController extends MainController {
     isTeacher.value = !isTeacher.value;
     registerController.clearFirstPageInputs();
     registerController.clearSecondPageInputs();
+    _selectedCountry = null;
+    selectedCountryCode.value = "اختر دولتك";
     phoneController.clear();
   }
 }

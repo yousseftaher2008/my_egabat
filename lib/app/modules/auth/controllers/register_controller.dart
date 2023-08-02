@@ -26,13 +26,13 @@ class RegisterController extends AuthController {
   final TextEditingController sectionController = TextEditingController();
   final TextEditingController stageController = TextEditingController();
   final TextEditingController gradeController = TextEditingController();
-  // teacher properties
-  final TextEditingController teacherEmailController = TextEditingController();
-  final TextEditingController teacherPassController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
+
   // loadings
   final RxBool isLoadingSections = false.obs;
   final RxBool isLoadingStages = false.obs;
   final RxBool isLoadingGrades = false.obs;
+  final RxBool isLoadingSubjects = false.obs;
   //ui transitions data
   final RxBool isRegister = false.obs;
   final RxBool isFirstRegisterStep = false.obs;
@@ -40,20 +40,16 @@ class RegisterController extends AuthController {
   final List<Register> sections = [];
   final List<Register> stages = [];
   final List<Register> grades = [];
+  final List<Register> subjects = [];
   String? sectionId;
   String? stageId;
   String? gradeId;
-
-  @override
-  onInit() {
-    if (selectedCountry != null) {
-      getSections();
-      getStages();
-    }
-    super.onInit();
-  }
+  String? subjectsId;
 
   Future<void> getSections() async {
+    if (sections.isNotEmpty) {
+      return;
+    }
     isLoadingSections.value = true;
     final url =
         ('${baseUrl}Section/GetSections?countryId=${authController.selectedCountry?.id}');
@@ -67,6 +63,9 @@ class RegisterController extends AuthController {
   }
 
   Future<void> getStages() async {
+    if (stages.isNotEmpty) {
+      return;
+    }
     isLoadingStages.value = true;
 
     final url =
@@ -92,6 +91,21 @@ class RegisterController extends AuthController {
     isLoadingGrades.value = false;
   }
 
+  Future<void> getSubjects() async {
+    if (sectionId == null || gradeId == null) {
+      return;
+    }
+    subjects.clear();
+    isLoadingSubjects.value = true;
+    final url =
+        '${baseUrl}Subject/GetSubjectsByGradeAndSection?SectionId=$sectionId&GradeId=$gradeId';
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+    subjects.addAll(await _getRegisterData(headers, url, "subject"));
+    isLoadingSubjects.value = false;
+  }
+
   Future<List<Register>> _getRegisterData(
       Map<String, String> headers, url, String registerType) async {
     try {
@@ -108,7 +122,8 @@ class RegisterController extends AuthController {
       }
       return registerList;
     } catch (e) {
-      Get.offAll(const ErrorScreen());
+      print(e);
+      Get.offAll(() => const ErrorScreen());
     }
     return [];
   }
@@ -145,12 +160,43 @@ class RegisterController extends AuthController {
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
-      print(e);
-      // Get.offAll(const ErrorScreen());
+      Get.offAll(() => const ErrorScreen());
     }
   }
 
-  Future<void> teacherRegister() async {}
+  Future<void> teacherRegister() async {
+    try {
+      if (!(formKey.currentState?.validate() ?? false)) {
+        return;
+      }
+      Map<String, String> headers = {
+        "Authorization": "Bearer ${authData.token}",
+        "Content-Type": "multipart/form-data",
+      };
+      dio.MultipartFile? image = storedImage.value != null
+          ? await dio.MultipartFile.fromFile(storedImage.value!.path.toString())
+          : null;
+      dio.FormData formData = dio.FormData.fromMap({
+        "ProfileImage": image != null ? [image] : null,
+        'Name': nameController.text,
+        'NickName': nickNameController.text,
+        'Email': studentEmailController.text,
+        'SectionId': sectionId ?? "",
+        'StageId': stageId ?? "",
+        'GradeId': gradeId,
+      });
+      const url = ('${baseUrl}Student/StudentRegistration');
+      late final dio.Response response;
+      response = await dio.Dio()
+          .post(url, data: formData, options: dio.Options(headers: headers));
+
+      if (response.statusCode == 200) {
+        final pref = await SharedPreferences.getInstance();
+        pref.setBool("isLogin", true);
+        Get.offAllNamed(Routes.HOME);
+      }
+    } catch (e) {}
+  }
 
   Future<void> takePicture(
     ImageSource source,
@@ -168,13 +214,14 @@ class RegisterController extends AuthController {
     }
   }
 
-  void nextRegisterStep() {
+  Future<void> nextRegisterStep() async {
     if (!isRegister.value) {
-      print("get here");
       isFirstRegisterStep.value = true;
       isRegister.value = true;
     } else {
-      if (!(formKey.currentState?.validate() ?? false)) {
+      await authController.isValidPhone();
+      if (!(formKey.currentState?.validate() ?? false) ||
+          !(authController.phoneKey.currentState?.validate() ?? false)) {
         return;
       }
       isFirstRegisterStep.value = false;
@@ -201,6 +248,9 @@ class RegisterController extends AuthController {
   }
 
   void clearSecondPageInputs() {
+    sections.clear();
+    stages.clear();
+    grades.clear();
     sectionController.clear();
     stageController.clear();
     gradeController.clear();

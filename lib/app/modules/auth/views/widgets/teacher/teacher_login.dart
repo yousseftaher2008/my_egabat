@@ -17,7 +17,7 @@ class TeacherLogin extends GetView<RegisterController> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Form(
-          key: controller.formKey,
+          key: controller.teacherFromKey,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -42,7 +42,7 @@ class TeacherLogin extends GetView<RegisterController> {
                 child: Obx(
                   () => TextFormField(
                     controller: controller.teacherPassController,
-                    obscureText: isVisible.value,
+                    obscureText: !isVisible.value,
                     decoration:
                         authInputDecoration(hintText: "رمز المرور").copyWith(
                       prefixIcon: IconButton(

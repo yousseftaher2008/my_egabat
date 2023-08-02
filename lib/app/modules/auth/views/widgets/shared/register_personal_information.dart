@@ -5,8 +5,8 @@ import '../student/image_input.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 
 class RegisterPersonalInformation extends GetView<RegisterController> {
-  const RegisterPersonalInformation({this.withImageInput = true, super.key});
-  final bool withImageInput;
+  const RegisterPersonalInformation({this.isTeacher = false, super.key});
+  final bool isTeacher;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -16,7 +16,7 @@ class RegisterPersonalInformation extends GetView<RegisterController> {
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              if (withImageInput) const ImageInput(),
+              if (!isTeacher) const ImageInput(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -30,19 +30,21 @@ class RegisterPersonalInformation extends GetView<RegisterController> {
                           : null,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: controller.nickNameController,
-                  decoration: authInputDecoration(labelText: "الاسم المستعار"),
-                  textInputAction: TextInputAction.next,
-                  validator: (value) => value?.isEmpty ?? true
-                      ? "ادخل اسمك المستعار من فضلك"
-                      : value!.length < 3
-                          ? "يجب ان يكون الاسم المستعار من 3 حروف على الاقل"
-                          : null,
+              if (!isTeacher)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: controller.nickNameController,
+                    decoration:
+                        authInputDecoration(labelText: "الاسم المستعار"),
+                    textInputAction: TextInputAction.next,
+                    validator: (value) => value?.isEmpty ?? true
+                        ? "ادخل اسمك المستعار من فضلك"
+                        : value!.length < 3
+                            ? "يجب ان يكون الاسم المستعار من 3 حروف على الاقل"
+                            : null,
+                  ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
