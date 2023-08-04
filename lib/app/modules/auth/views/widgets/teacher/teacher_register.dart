@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/phone_country_input.dart';
-import 'package:my_egabat/app/modules/auth/views/widgets/student/register_educational_information.dart';
+import 'package:my_egabat/app/modules/auth/views/widgets/shared/register_educational_information.dart';
 import 'package:my_egabat/app/shared/styles/button_styles.dart';
 
 import '../shared/register_personal_information.dart';

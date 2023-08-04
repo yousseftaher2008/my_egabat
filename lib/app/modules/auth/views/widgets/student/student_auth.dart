@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../../../shared/styles/button_styles.dart';
 import '../../../controllers/auth_controller.dart';
 import '../shared/phone_country_input.dart';
-import '../student/register_educational_information.dart';
+import '../shared/register_educational_information.dart';
 import '../shared/register_personal_information.dart';
 
 class StudentAuth extends GetView<AuthController> {

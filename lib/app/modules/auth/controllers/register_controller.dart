@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_egabat/app/modules/auth/models/subject_model.dart';
 import 'auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/errors/error_screen.dart';
@@ -37,10 +38,10 @@ class RegisterController extends AuthController {
   final RxBool isRegister = false.obs;
   final RxBool isFirstRegisterStep = false.obs;
   //data
-  final List<Register> sections = [];
-  final List<Register> stages = [];
-  final List<Register> grades = [];
-  final List<Register> subjects = [];
+  final List sections = [];
+  final List stages = [];
+  final List grades = [];
+  final List subjects = [];
   String? sectionId;
   String? stageId;
   String? gradeId;
@@ -102,22 +103,29 @@ class RegisterController extends AuthController {
     Map<String, String> headers = {
       "Content-Type": "application/json",
     };
-    subjects.addAll(await _getRegisterData(headers, url, "subject"));
+    subjects.addAll(await _getRegisterData(headers, url, "subject", true));
     isLoadingSubjects.value = false;
   }
 
-  Future<List<Register>> _getRegisterData(
-      Map<String, String> headers, url, String registerType) async {
+  Future<List> _getRegisterData(
+      Map<String, String> headers, url, String registerType,
+      [bool isSubject = false]) async {
     try {
       final response =
           await dio.Dio().get(url, options: dio.Options(headers: headers));
-      final List<Register> registerList = [];
+
+      final List registerList = [];
       for (final register in response.data) {
         registerList.add(
-          Register(
-            name: register["${registerType}Name"],
-            id: register["${registerType}Id"],
-          ),
+          isSubject
+              ? Subject(
+                  name: register["${registerType}Name"],
+                  id: register["${registerType}Id"],
+                )
+              : Register(
+                  name: register["${registerType}Name"],
+                  id: register["${registerType}Id"],
+                ),
         );
       }
       return registerList;
@@ -134,7 +142,7 @@ class RegisterController extends AuthController {
         return;
       }
       Map<String, String> headers = {
-        "Authorization": "Bearer ${authData.token}",
+        "Authorization": "Bearer ${authController.authData.token}",
         "Content-Type": "multipart/form-data",
       };
       dio.MultipartFile? image = storedImage.value != null
@@ -160,6 +168,7 @@ class RegisterController extends AuthController {
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
+      print(e);
       Get.offAll(() => const ErrorScreen());
     }
   }
@@ -195,7 +204,9 @@ class RegisterController extends AuthController {
         pref.setBool("isLogin", true);
         Get.offAllNamed(Routes.HOME);
       }
-    } catch (e) {}
+    } catch (e) {
+      Get.offAll(() => const ErrorScreen());
+    }
   }
 
   Future<void> takePicture(
@@ -219,9 +230,14 @@ class RegisterController extends AuthController {
       isFirstRegisterStep.value = true;
       isRegister.value = true;
     } else {
-      await authController.isValidPhone();
-      if (!(formKey.currentState?.validate() ?? false) ||
-          !(authController.phoneKey.currentState?.validate() ?? false)) {
+      if (authController.isTeacher.value) {
+        await authController.isValidPhone();
+        if (!authController.phoneKey.currentState!.validate()) {
+          formKey.currentState?.validate();
+          return;
+        }
+      }
+      if (!(formKey.currentState?.validate() ?? false)) {
         return;
       }
       isFirstRegisterStep.value = false;

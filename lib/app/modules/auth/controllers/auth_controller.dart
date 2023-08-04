@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:libphonenumber/libphonenumber.dart';
 import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
 import 'register_controller.dart';
@@ -59,6 +59,7 @@ class AuthController extends MainController {
         }
       }
     } catch (e) {
+      print(e);
       Get.offAll(() => const ErrorScreen());
     }
     isGettingCountries.value = false;
@@ -81,7 +82,8 @@ class AuthController extends MainController {
         "Content-Type": "application/json",
         'accept': "*/*",
       };
-      final response = await post(Uri.parse(url), body: body, headers: head);
+      final response =
+          await http.post(Uri.parse(url), body: body, headers: head);
       if ((response.statusCode) >= 400) {
         print(response.body);
         Get.offAll(const ErrorScreen());
@@ -118,20 +120,21 @@ class AuthController extends MainController {
         "deviceToken": deviceToken,
       };
 
-      var url = '${baseUrl}Teacher/Login';
+      final Uri url = Uri.parse('${baseUrl}Teacher/Login');
       Map<String, String> head = {"Content-Type": "application/json"};
-      final response = await dio.Dio().post(
+      final response = await http.post(
         url,
-        data: json.encode(body),
-        options: dio.Options(headers: head),
+        body: json.encode(body),
+        headers: head,
       );
-      if ((response.statusCode ?? 200) < 400) {
-        final String? token = response.data["token"];
-        final String? teacherName = response.data["teacherName"];
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if ((response.statusCode) < 400) {
+        final String? token = responseData["token"];
+        final String? teacherName = responseData["teacherName"];
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.setString('token', token!);
-        pref.setBool('isFreeTrial', response.data['isFreeTrial']);
-        pref.setBool('isVisitingTeacher', response.data['isVisitingTeacher']);
+        pref.setBool('isFreeTrial', responseData['isFreeTrial']);
+        pref.setBool('isVisitingTeacher', responseData['isVisitingTeacher']);
         pref.setString('TeacherName', teacherName!);
 
         // (extractedData["isVisitingTeacher"] == true)
@@ -141,7 +144,8 @@ class AuthController extends MainController {
         //         arguments: [token], duration: const Duration(seconds: 1));
       }
     } catch (e) {
-      Get.offAll(() => const ErrorScreen());
+      print(e);
+      // Get.offAll(() => const ErrorScreen());
     }
   }
 

@@ -1,3 +1,4 @@
+// TODO: edit the style (right, left)
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/auth/controllers/auth_controller.dart';
