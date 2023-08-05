@@ -14,21 +14,22 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     bool isSnackBarOpen = false;
-    void showRegisterListBottomSheet(
-        registerList, onSelectedFun, bool isSubjects, String title) {
-      Get.closeCurrentSnackbar();
+    void showRegisterListBottomSheet(registerList, onSelectedFun, String title,
+        {bool isSubjects = false, bool isShowSubjects = false}) {
       if (registerList.isEmpty && !isSnackBarOpen) {
         isSnackBarOpen = true;
         Get.snackbar(
           "",
           "",
           titleText: Text(
-            "لا يوجد اختيارات ",
+            isShowSubjects ? "لا يوجد مواد" : "لا يوجد اختيارات ",
             style: welcomeTitleTextStyle.copyWith(fontSize: 25),
             textAlign: TextAlign.center,
           ),
-          messageText: const Text(
-            "الخانه الدراسيه السابقه لهذه الخانه فارغه او انك لم تختر شئ من الخانه السابقة",
+          messageText: Text(
+            isShowSubjects
+                ? "انت لم تختر المواد التي تدرسها, يرجى اختيار المواد اولا"
+                : "الخانه الدراسيه السابقه لهذه الخانه فارغه او انك لم تختر شئ من الخانه السابقة",
             style: welcomeBodyTextStyle,
             textAlign: TextAlign.center,
           ),
@@ -43,6 +44,7 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
       } else if (registerList.isEmpty) {
         return;
       }
+      Get.closeCurrentSnackbar();
       showModalBottomSheet(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -67,7 +69,7 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "اختر $title",
+                      title,
                       style: welcomeTitleTextStyle,
                     ),
                   ),
@@ -75,20 +77,19 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
               ),
             ),
             Container(
-              // height: Get.size.height / 2 - 100,
               constraints: BoxConstraints(maxHeight: Get.size.height / 2 - 100),
               child: ListView.builder(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(0),
                 itemCount: registerList.length,
                 itemBuilder: (context, index) {
-                  final type = registerList[index];
+                  final item = registerList[index];
                   Widget textButtonChild = SizedBox(
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        type.name,
+                        item.name,
                         style: welcomeTitleTextStyle.copyWith(
                           fontSize: 20,
                         ),
@@ -109,28 +110,36 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                       isSubjects
                           ? Obx(
                               () => TextButton(
-                                onPressed: () {
-                                  (type as Subject).isChosen.value =
-                                      !type.isChosen.value;
-                                },
+                                onPressed: () => onSelectedFun(item),
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor:
                                       Colors.white.withOpacity(0.3),
-                                  backgroundColor: type.isChosen.value == true
+                                  backgroundColor: item.isChosen.value == true
                                       ? Colors.white.withOpacity(0.3)
                                       : null,
-                                  // padding: const EdgeInsets.all(10),
                                 ),
                                 child: textButtonChild,
                               ),
                             )
-                          : TextButton(
-                              onPressed: () {
-                                onSelectedFun(type);
-                                Navigator.of(context).pop();
-                              },
-                              child: textButtonChild,
-                            ),
+                          : isShowSubjects
+                              ? Dismissible(
+                                  key: GlobalKey(),
+                                  background: const ColoredBox(
+                                    color: Colors.red,
+                                    child: SizedBox(width: double.infinity),
+                                  ),
+                                  onDismissed: (_) => onSelectedFun(
+                                    (item as Subject).indexInList,
+                                  ),
+                                  child: textButtonChild,
+                                )
+                              : TextButton(
+                                  onPressed: () {
+                                    onSelectedFun(item);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: textButtonChild,
+                                ),
                     ],
                   );
                 },
@@ -149,9 +158,12 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
         [bool isSubjects = false]) {
       final double pageWidth = Get.size.width;
       return IconButton(
-        key: key,
         onPressed: () => showRegisterListBottomSheet(
-            registerList, onSelectedFun, isSubjects, title),
+          registerList,
+          onSelectedFun,
+          title,
+          isSubjects: isSubjects,
+        ),
         icon: SizedBox(
           width: pageWidth - 20,
           height: 100,
@@ -173,17 +185,35 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Obx(
-                () => controller.isLoadingGrades.value ||
-                        controller.isLoadingSections.value ||
-                        controller.isLoadingStages.value ||
-                        controller.isLoadingSubjects.value
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : const SizedBox(),
+            Obx(
+              () => controller.isLoadingGrades.value ||
+                      controller.isLoadingSections.value ||
+                      controller.isLoadingStages.value ||
+                      controller.isLoadingSubjects.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : const SizedBox(),
+            ),
+            //show the subjects
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  showRegisterListBottomSheet(
+                    controller.selectedSubjects,
+                    (Subject subject) {
+                      subject.isChosen.value && subject.indexInList != null
+                          ? controller.selectedSubjects
+                              .removeAt(subject.indexInList!)
+                          : null;
+                      subject.isChosen.value = false;
+                      subject.indexInList = null;
+                    },
+                    "رؤية المواد المختارة",
+                    isShowSubjects: true,
+                  );
+                },
+                child: const Text("رؤية المواد المختارة"),
               ),
             ),
             // get section
@@ -191,7 +221,6 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 readOnly: true,
-                onTap: () {},
                 validator: (value) =>
                     value?.isEmpty ?? true ? "اختر نوع مدرستك من فضلك" : null,
                 controller: controller.sectionController,
@@ -201,7 +230,7 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                     child: selectTypeWidget(
                       controller.sections,
                       controller.isLoadingSections,
-                      "نوع مدرستك",
+                      "اختر نوع مدرستك",
                       (newSection) async {
                         controller.sectionId = newSection.id;
                         controller.sectionController.text = newSection.name;
@@ -232,7 +261,7 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                   suffixIcon: selectTypeWidget(
                     controller.stages,
                     controller.isLoadingStages,
-                    "مرحلتك الدراسية",
+                    "اختر مرحلتك الدراسية",
                     (newStage) async {
                       controller.stageId = newStage.id;
                       controller.stageController.text = newStage.name;
@@ -264,7 +293,7 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                   suffixIcon: selectTypeWidget(
                     controller.grades,
                     controller.isLoadingGrades,
-                    "صفك الدراسي",
+                    "اختر صفك الدراسي",
                     (newGrade) async {
                       controller.gradeId = newGrade.id;
                       controller.gradeController.text = newGrade.name;
@@ -284,7 +313,6 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                 child: TextFormField(
                   controller: controller.subjectController,
                   readOnly: true,
-                  onTap: () {},
                   validator: (value) =>
                       value?.isEmpty ?? true ? "اختر المواد من فضلك" : null,
                   decoration:
@@ -293,10 +321,13 @@ class RegisterEducationalInformation extends GetView<RegisterController> {
                     suffixIcon: selectTypeWidget(
                       controller.subjects,
                       controller.isLoadingSubjects,
-                      "المواد",
+                      "اختر المواد",
                       (newSubject) async {
-                        controller.subjectsId = newSubject.id;
-                        controller.subjectController.text = newSubject.name;
+                        (newSubject as Subject).isChosen.value =
+                            !newSubject.isChosen.value;
+                        newSubject.indexInList =
+                            controller.selectedSubjects.length;
+                        controller.selectedSubjects.add(newSubject);
                       },
                       true,
                     ),

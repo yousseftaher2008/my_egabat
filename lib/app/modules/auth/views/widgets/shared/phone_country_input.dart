@@ -18,6 +18,7 @@ class PhoneCountryInput extends GetView<AuthController> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TextFormField(
               key: controller.phoneKey,
+              textAlign: TextAlign.left,
               onFieldSubmitted: (_) {
                 FocusScope.of(context).unfocus();
                 onSaved != null ? onSaved!() : null;

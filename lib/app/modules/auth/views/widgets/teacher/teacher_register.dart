@@ -22,10 +22,13 @@ class TeacherRegister extends GetView<RegisterController> {
                 ? const PhoneCountryInput()
                 : const RegisterEducationalInformation(isTeacher: true),
           ),
-          if (controller.isFirstRegisterStep.value)
-            const RegisterPersonalInformation(
-              isTeacher: true,
-            ),
+          Obx(
+            () => (controller.isFirstRegisterStep.value)
+                ? const RegisterPersonalInformation(
+                    isTeacher: true,
+                  )
+                : const SizedBox(),
+          ),
           Obx(
             () => ElevatedButton(
               onPressed: controller.isFirstRegisterStep.value

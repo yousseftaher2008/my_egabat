@@ -42,6 +42,7 @@ class RegisterController extends AuthController {
   final List stages = [];
   final List grades = [];
   final List subjects = [];
+  final List selectedSubjects = [];
   String? sectionId;
   String? stageId;
   String? gradeId;
@@ -56,7 +57,7 @@ class RegisterController extends AuthController {
         ('${baseUrl}Section/GetSections?countryId=${authController.selectedCountry?.id}');
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer ${authData.token}",
+      "Authorization": "Bearer ${authController.authData.token}",
     };
     sections.addAll(await _getRegisterData(headers, url, "section"));
 
@@ -68,12 +69,11 @@ class RegisterController extends AuthController {
       return;
     }
     isLoadingStages.value = true;
-
     final url =
         ('${baseUrl}Stage/GetStages?countryId=${authController.selectedCountry?.id}');
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer ${authData.token}",
+      "Authorization": "Bearer ${authController.authData.token}",
     };
     stages.addAll(await _getRegisterData(headers, url, "stage"));
     isLoadingStages.value = false;
@@ -84,7 +84,7 @@ class RegisterController extends AuthController {
     grades.clear();
     final url = ('${baseUrl}Grade/GetGradesByStageId/$stageId');
     Map<String, String> headers = {
-      "Authorization": "Bearer ${authData.token}",
+      "Authorization": "Bearer ${authController.authData.token}",
       "Content-Type": "application/json",
     };
     grades.addAll(await _getRegisterData(headers, url, "grade"));
@@ -115,6 +115,7 @@ class RegisterController extends AuthController {
           await dio.Dio().get(url, options: dio.Options(headers: headers));
 
       final List registerList = [];
+      print(response.data);
       for (final register in response.data) {
         registerList.add(
           isSubject
@@ -128,6 +129,7 @@ class RegisterController extends AuthController {
                 ),
         );
       }
+      print("get here");
       return registerList;
     } catch (e) {
       print(e);
@@ -173,37 +175,22 @@ class RegisterController extends AuthController {
     }
   }
 
+  // TODO: complete register method
   Future<void> teacherRegister() async {
     try {
       if (!(formKey.currentState?.validate() ?? false)) {
         return;
       }
       Map<String, String> headers = {
-        "Authorization": "Bearer ${authData.token}",
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       };
-      dio.MultipartFile? image = storedImage.value != null
-          ? await dio.MultipartFile.fromFile(storedImage.value!.path.toString())
-          : null;
-      dio.FormData formData = dio.FormData.fromMap({
-        "ProfileImage": image != null ? [image] : null,
-        'Name': nameController.text,
-        'NickName': nickNameController.text,
-        'Email': studentEmailController.text,
-        'SectionId': sectionId ?? "",
-        'StageId': stageId ?? "",
-        'GradeId': gradeId,
-      });
-      const url = ('${baseUrl}Student/StudentRegistration');
-      late final dio.Response response;
-      response = await dio.Dio()
-          .post(url, data: formData, options: dio.Options(headers: headers));
-
-      if (response.statusCode == 200) {
-        final pref = await SharedPreferences.getInstance();
-        pref.setBool("isLogin", true);
-        Get.offAllNamed(Routes.HOME);
-      }
+      // String requestBody = json.encode({
+      //   'name': data['name'],
+      //   'mobile': data['mobile'],
+      //   'email': data['email'],
+      //   'password': data['password'],
+      //   'subjects': selectedSubjects,
+      // });
     } catch (e) {
       Get.offAll(() => const ErrorScreen());
     }
