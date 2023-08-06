@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../shared/styles/button_styles.dart';
-import '../../../controllers/auth_controller.dart';
+import '../../../controllers/state_management/auth_controller.dart';
 import '../shared/phone_country_input.dart';
 import '../shared/register_educational_information.dart';
 import '../shared/register_personal_information.dart';
@@ -26,7 +26,7 @@ class StudentAuth extends GetView<AuthController> {
                 controller.registerController.isRegister.value
                     ? controller.registerController.isFirstRegisterStep.value
                         ? const RegisterPersonalInformation()
-                        : const RegisterEducationalInformation()
+                        : const RegisterEducationalInfo()
                     : PhoneCountryInput(onSaved: controller.studentLogin),
                 SizedBox(
                   child: ElevatedButton(

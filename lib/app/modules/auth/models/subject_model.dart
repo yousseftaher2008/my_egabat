@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
 import 'register_model.dart';
 
-//TODO: add full name property and formJson method
 class Subject extends Register {
   final RxBool isChosen = false.obs;
-  int? indexInList;
-
+  late final String fullName;
   Subject({
     required super.id,
     required super.name,
   });
+
+  fromJson(Map<String, dynamic> json) {
+    fullName = "$name / ${json['gradeName']} / ${json['subjectName']}";
+  }
 }

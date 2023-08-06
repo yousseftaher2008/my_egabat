@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
+import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
 
 import '../../../../../shared/styles/button_styles.dart';
 import '../../../../../shared/styles/text_field_styles.dart';

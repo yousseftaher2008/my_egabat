@@ -14,6 +14,8 @@ import '../models/auth_data.dart';
 class MainController extends GetxController {
   late AuthData authData;
   late StreamSubscription connectionStream;
+  final double pageWidth = Get.size.width;
+  final double pageHeight = Get.size.height;
   RxBool isLoading = true.obs;
   String? deviceToken;
   bool isWelcomeViewed = false;

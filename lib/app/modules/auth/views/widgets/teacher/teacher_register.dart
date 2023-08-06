@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/register_controller.dart';
+import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/phone_country_input.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/register_educational_information.dart';
 import 'package:my_egabat/app/shared/styles/button_styles.dart';
@@ -20,7 +20,7 @@ class TeacherRegister extends GetView<RegisterController> {
           Obx(
             () => controller.isFirstRegisterStep.value
                 ? const PhoneCountryInput()
-                : const RegisterEducationalInformation(isTeacher: true),
+                : const RegisterEducationalInfo(isTeacher: true),
           ),
           Obx(
             () => (controller.isFirstRegisterStep.value)

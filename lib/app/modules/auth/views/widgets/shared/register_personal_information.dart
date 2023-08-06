@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controllers/register_controller.dart';
+import '../../../controllers/state_management/register_controller.dart';
 import '../student/image_input.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 

@@ -6,13 +6,13 @@ import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
-import "register_controller.dart";
-import "../../../routes/app_pages.dart";
-import "../../../shared/errors/error_screen.dart";
+import 'register_controller.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../shared/errors/error_screen.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
-import "../../../shared/base_url.dart";
-import "../models/country_model.dart";
+import '../../../../shared/base_url.dart';
+import '../../models/country_model.dart';
 
 class AuthController extends MainController {
   //phone properties
@@ -56,7 +56,6 @@ class AuthController extends MainController {
       if ((response.statusCode ?? 200) < 400) {
         for (final country in response.data) {
           countries.add(Country.fromJson(country));
-          print(countries[0].id);
         }
       }
     } catch (e) {
@@ -146,7 +145,7 @@ class AuthController extends MainController {
       }
     } catch (e) {
       print(e);
-      // Get.offAll(() => const ErrorScreen());
+      Get.offAll(() => const ErrorScreen());
     }
   }
 

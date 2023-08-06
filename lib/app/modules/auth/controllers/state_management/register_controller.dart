@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:image_picker/image_picker.dart';
-import 'package:my_egabat/app/modules/auth/models/subject_model.dart';
-import 'auth_controller.dart';
-import '../../../routes/app_pages.dart';
-import '../../../shared/errors/error_screen.dart';
+import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../shared/base_url.dart';
-import '../models/register_model.dart';
+import 'auth_controller.dart';
+import '../../models/subject_model.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../shared/errors/error_screen.dart';
+
+import '../../../../shared/base_url.dart';
+import '../../models/register_model.dart';
 
 class RegisterController extends AuthController {
   //image
@@ -28,7 +30,8 @@ class RegisterController extends AuthController {
   final TextEditingController stageController = TextEditingController();
   final TextEditingController gradeController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
-
+  //conditions
+  bool isEduContInitial = false;
   // loadings
   final RxBool isLoadingSections = false.obs;
   final RxBool isLoadingStages = false.obs;
@@ -42,7 +45,7 @@ class RegisterController extends AuthController {
   final List stages = [];
   final List grades = [];
   final List subjects = [];
-  final List selectedSubjects = [];
+  final RxMap<String, Subject> selectedSubjects = RxMap<String, Subject>();
   String? sectionId;
   String? stageId;
   String? gradeId;
@@ -103,7 +106,7 @@ class RegisterController extends AuthController {
     Map<String, String> headers = {
       "Content-Type": "application/json",
     };
-    subjects.addAll(await _getRegisterData(headers, url, "subject", true));
+    subjects.addAll((await _getRegisterData(headers, url, "subject", true)));
     isLoadingSubjects.value = false;
   }
 
@@ -115,8 +118,9 @@ class RegisterController extends AuthController {
           await dio.Dio().get(url, options: dio.Options(headers: headers));
 
       final List registerList = [];
-      print(response.data);
       for (final register in response.data) {
+        print(url);
+
         registerList.add(
           isSubject
               ? Subject(
@@ -129,7 +133,6 @@ class RegisterController extends AuthController {
                 ),
         );
       }
-      print("get here");
       return registerList;
     } catch (e) {
       print(e);
@@ -208,7 +211,7 @@ class RegisterController extends AuthController {
     if (photo != null) {
       final File imageFile = File(photo.path);
 
-      Get.find<RegisterController>().storedImage.value = imageFile;
+      storedImage.value = imageFile;
     }
   }
 
@@ -227,6 +230,9 @@ class RegisterController extends AuthController {
       if (!(formKey.currentState?.validate() ?? false)) {
         return;
       }
+      !isEduContInitial
+          ? Get.put(RegisterEduController(), permanent: true)
+          : null;
       isFirstRegisterStep.value = false;
     }
   }

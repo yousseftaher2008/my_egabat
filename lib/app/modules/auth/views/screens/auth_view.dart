@@ -4,7 +4,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:my_egabat/app/shared/loading/lottie_loading.dart';
 import '../../../../shared/styles/colors.dart';
 
-import '../../controllers/auth_controller.dart';
+import '../../controllers/state_management/auth_controller.dart';
 import '../widgets/student/student_auth.dart';
 import '../widgets/teacher/teacher_auth.dart';
 
