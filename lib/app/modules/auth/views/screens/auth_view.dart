@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:my_egabat/app/shared/loading/lottie_loading.dart';
+import 'package:my_egabat/app/shared/styles/button_styles.dart';
 import '../../../../shared/styles/colors.dart';
 
 import '../../controllers/state_management/auth_controller.dart';
@@ -71,9 +72,11 @@ class AuthView extends GetView<AuthController> {
                       () => controller.registerController.isRegister.value
                           ? Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: IconButton(
+                              child: ElevatedButton.icon(
                                 onPressed: controller
                                     .registerController.backFromRegister,
+                                style: primaryButtonStyle,
+                                label: const Text("الرجوع"),
                                 icon: const Icon(
                                   Icons.arrow_back,
                                   color: Colors.white,

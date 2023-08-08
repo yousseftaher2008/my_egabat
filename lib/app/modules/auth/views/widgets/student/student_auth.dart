@@ -11,21 +11,19 @@ class StudentAuth extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final double pageHeight =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return SizedBox(
-      height: pageHeight * 0.5,
+      height: controller.pageHeight * 0.5,
       child: SingleChildScrollView(
         child: Obx(
           () => Container(
-            constraints: BoxConstraints(minHeight: pageHeight * 0.5),
+            constraints: BoxConstraints(minHeight: controller.pageHeight * 0.5),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 controller.registerController.isRegister.value
                     ? controller.registerController.isFirstRegisterStep.value
-                        ? const RegisterPersonalInformation()
+                        ? const RegisterPersonalInfo()
                         : const RegisterEducationalInfo()
                     : PhoneCountryInput(onSaved: controller.studentLogin),
                 SizedBox(

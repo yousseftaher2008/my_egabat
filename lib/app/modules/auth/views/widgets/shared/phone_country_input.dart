@@ -15,7 +15,7 @@ class PhoneCountryInput extends GetView<AuthController> {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextFormField(
               key: controller.phoneKey,
               textAlign: TextAlign.left,
@@ -31,11 +31,12 @@ class PhoneCountryInput extends GetView<AuthController> {
               keyboardType: TextInputType.phone,
               decoration: authInputDecoration(labelText: "رقم الهاتف").copyWith(
                   suffixIcon: const SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: ChooseCountry(),
-                ),
-              )),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: ChooseCountry(),
+                    ),
+                  ),
+                  prefixIcon: const Icon(Icons.phone_enabled)),
               validator: (_) => controller.errorText,
             ),
           ),

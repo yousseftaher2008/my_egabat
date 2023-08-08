@@ -28,14 +28,12 @@ class AuthController extends MainController {
   late final RegisterController registerController;
   //country properties
   List<Country> countries = [];
-  Country? _selectedCountry;
+  Country? selectedCountry;
   final RxString selectedCountryCode = "اختر دولتك".obs;
   //boolean values
   final RxBool isGettingCountries = false.obs;
   final RxBool isTeacher = false.obs;
   final RxBool isInit = true.obs;
-
-  Country? get selectedCountry => _selectedCountry;
 
   @override
   onReady() async {
@@ -150,7 +148,7 @@ class AuthController extends MainController {
   }
 
   Future<bool> isValidPhone() async {
-    if (_selectedCountry == null) {
+    if (selectedCountry == null) {
       errorText = "اختر دولتك اولا";
       return false;
     }
@@ -159,7 +157,7 @@ class AuthController extends MainController {
       return false;
     }
     final String? phone = await PhoneNumberUtil.normalizePhoneNumber(
-        phoneNumber: phoneController.text, isoCode: _selectedCountry!.isoCode);
+        phoneNumber: phoneController.text, isoCode: selectedCountry!.isoCode);
     if (phone == null) {
       errorText = "أدخل رقما صحيحا";
 
@@ -167,7 +165,7 @@ class AuthController extends MainController {
     }
 
     final bool? isValid = await PhoneNumberUtil.isValidPhoneNumber(
-        phoneNumber: phone, isoCode: _selectedCountry!.isoCode);
+        phoneNumber: phone, isoCode: selectedCountry!.isoCode);
     if (!(isValid ?? false)) {
       errorText = "أدخل رقما صحيحا";
       return false;
@@ -183,7 +181,7 @@ class AuthController extends MainController {
       if (countries[i].code != value || selectedCountryCode.value == value) {
         continue;
       }
-      _selectedCountry = countries[i];
+      selectedCountry = countries[i];
       selectedCountryCode.value = value;
     }
   }
@@ -194,7 +192,7 @@ class AuthController extends MainController {
     isTeacher.value = !isTeacher.value;
     registerController.clearFirstPageInputs();
     registerController.clearSecondPageInputs();
-    _selectedCountry = null;
+    selectedCountry = null;
     selectedCountryCode.value = "اختر دولتك";
     phoneController.clear();
   }

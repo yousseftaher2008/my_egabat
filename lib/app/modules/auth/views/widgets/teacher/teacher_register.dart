@@ -14,35 +14,41 @@ class TeacherRegister extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Obx(
-            () => controller.isFirstRegisterStep.value
-                ? const PhoneCountryInput()
-                : const RegisterEducationalInfo(isTeacher: true),
-          ),
-          Obx(
-            () => (controller.isFirstRegisterStep.value)
-                ? const RegisterPersonalInformation(
-                    isTeacher: true,
-                  )
-                : const SizedBox(),
-          ),
-          Obx(
-            () => ElevatedButton(
-              onPressed: controller.isFirstRegisterStep.value
-                  ? controller.nextRegisterStep
-                  : controller.teacherRegister,
-              style: primaryButtonStyle,
-              child: Text(
-                controller.isFirstRegisterStep.value
-                    ? "التالي"
-                    : "انشاء حساب جديد",
+      child: SizedBox(
+        height: controller.pageHeight * 0.5,
+        child: SingleChildScrollView(
+          child: Obx(
+            () => Container(
+              constraints:
+                  BoxConstraints(minHeight: controller.pageHeight * 0.5),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  controller.isFirstRegisterStep.value
+                      ? const PhoneCountryInput()
+                      : const RegisterEducationalInfo(isTeacher: true),
+                  (controller.isFirstRegisterStep.value)
+                      ? const RegisterPersonalInfo(
+                          isTeacher: true,
+                        )
+                      : const SizedBox(),
+                  ElevatedButton(
+                    onPressed: controller.isFirstRegisterStep.value
+                        ? controller.nextRegisterStep
+                        : controller.teacherRegister,
+                    style: primaryButtonStyle,
+                    child: Text(
+                      controller.isFirstRegisterStep.value
+                          ? "التالي"
+                          : "انشاء حساب جديد",
+                    ),
+                  ),
+                ],
               ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

@@ -7,10 +7,11 @@ import '../../models/register_model.dart';
 import '../../models/subject_model.dart';
 import '../state_management/register_controller.dart';
 
-class RegisterEduController extends RegisterController {
+class RegisterEduController extends GetxController {
+  final RegisterController _registerController = Get.find<RegisterController>();
   bool _isSnackBarOpen = false;
-  Widget selectTypeWidget(List registerList, RxBool isLoading, String title,
-      BuildContext context, void Function(Register newValue) onSelectedFun,
+  Widget selectTypeWidget(List registerList, String title, BuildContext context,
+      RxBool isLoading, void Function(Register newValue) onSelectedFun,
       [bool isSubjects = false]) {
     return IconButton(
       onPressed: () => showRegisterListBottomSheet(
@@ -20,16 +21,12 @@ class RegisterEduController extends RegisterController {
         context,
         isSubjects: isSubjects,
       ),
-      icon: SizedBox(
-        width: pageWidth - 20,
-        height: 100,
-        child: Obx(
-          () => Icon(
-            Icons.arrow_drop_down_sharp,
-            color: isLoading.value || registerList.isEmpty
-                ? Colors.grey
-                : primaryColor,
-          ),
+      icon: Obx(
+        () => Icon(
+          Icons.arrow_drop_down_sharp,
+          color: isLoading.value || registerList.isEmpty
+              ? Colors.grey
+              : primaryColor,
         ),
       ),
     );
@@ -81,17 +78,20 @@ class RegisterEduController extends RegisterController {
       shape: const RoundedRectangleBorder(borderRadius: borderRadiusShape),
       backgroundColor: primaryButtonColor,
       builder: (_) {
-        ListView listView(List items) => ListView.builder(
+        ListView listView(int length) => ListView.builder(
               shrinkWrap: true,
-              itemCount: items.length,
+              itemCount: length,
               itemBuilder: (context, index) {
-                final item = items[index];
+                final Register item = isShowSubjects
+                    ? _registerController.selectedSubjects.values
+                        .elementAt(index)
+                    : itemsList[index];
                 Widget itemWidget = SizedBox(
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      item.name,
+                      isShowSubjects ? (item as Subject).fullName : item.name,
                       style: welcomeTitleTextStyle.copyWith(
                         fontSize: 20,
                       ),
@@ -144,6 +144,7 @@ class RegisterEduController extends RegisterController {
                 );
               },
             );
+
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -161,18 +162,65 @@ class RegisterEduController extends RegisterController {
               ),
             ),
             Container(
-              constraints: BoxConstraints(maxHeight: pageHeight / 2 - 100),
+              constraints: BoxConstraints(
+                  maxHeight: _registerController.pageHeight / 2 - 100),
               child: isShowSubjects
                   ? Obx(
-                      () => listView(
-                        selectedSubjects.values.toList(),
-                      ),
+                      () {
+                        if (_registerController.selectedSubjectsLength.value ==
+                            0) {
+                          Get.back();
+                        }
+                        return listView(
+                            _registerController.selectedSubjectsLength.value);
+                      },
                     )
-                  : listView(itemsList),
-            ),
+                  : listView(itemsList.length),
+            )
           ],
         );
       },
     );
+  }
+
+  void Function(Register item) selectSection(bool isTeacher) =>
+      (Register newSection) async {
+        bool isSame = newSection.id == _registerController.sectionId;
+        _registerController.sectionId = newSection.id;
+        _registerController.sectionController.text = newSection.name;
+        if (_registerController.isTeacher.value && isSame) {
+          _registerController.getSubjects();
+        }
+      };
+
+  void selectStage(Register newStage) async {
+    bool isSame = _registerController.stageId == newStage.id;
+    _registerController.stageId = newStage.id;
+    _registerController.stageController.text = newStage.name;
+    if (!isSame) {
+      _registerController.gradeId = "";
+      _registerController.gradeController.text = "";
+      await _registerController.getGrades();
+    }
+  }
+
+  void Function(Register item) selectGrade(bool isTeacher) {
+    return (Register newGrade) async {
+      bool isSame = _registerController.gradeId == newGrade.id;
+      _registerController.gradeId = newGrade.id;
+      _registerController.gradeController.text = newGrade.name;
+      if (isTeacher && !isSame) {
+        await _registerController.getSubjects();
+      }
+    };
+  }
+
+  void selectSubject(Register newSubject) {
+    (newSubject as Subject).isChosen.value = !newSubject.isChosen.value;
+    newSubject.isChosen.value
+        ? _registerController.selectedSubjects
+            .putIfAbsent(newSubject.id, () => newSubject)
+        : _registerController.selectedSubjects.remove(newSubject.id);
+    _registerController.updateSelectedSubjectsLength();
   }
 }
