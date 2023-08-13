@@ -34,9 +34,11 @@ class TeacherRegister extends GetView<RegisterController> {
                         )
                       : const SizedBox(),
                   ElevatedButton(
-                    onPressed: controller.isFirstRegisterStep.value
-                        ? controller.nextRegisterStep
-                        : controller.teacherRegister,
+                    onPressed: controller.isSnackBarOpen.value
+                        ? null
+                        : controller.isFirstRegisterStep.value
+                            ? controller.nextRegisterStep
+                            : controller.teacherRegister,
                     style: primaryButtonStyle,
                     child: Text(
                       controller.isFirstRegisterStep.value

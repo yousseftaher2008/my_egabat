@@ -5,19 +5,6 @@ class Country {
   late String flag;
   late String isoCode;
 
-  Country({
-    required this.id,
-    required this.name,
-    required this.code,
-    required this.flag,
-  }) {
-    if (code == "+2") {
-      isoCode = "EG";
-    } else if (code == "+965") {
-      isoCode = "KW";
-    }
-  }
-
   Country.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
     name = json['name'] ?? "";
@@ -27,6 +14,8 @@ class Country {
       isoCode = "EG";
     } else if (code == "+965") {
       isoCode = "KW";
+    } else {
+      isoCode = "";
     }
   }
 

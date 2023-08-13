@@ -125,8 +125,9 @@ class AuthController extends MainController {
         body: json.encode(body),
         headers: head,
       );
-      final Map<String, dynamic> responseData = json.decode(response.body);
+
       if ((response.statusCode) < 400) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
         final String? token = responseData["token"];
         final String? teacherName = responseData["teacherName"];
         SharedPreferences pref = await SharedPreferences.getInstance();

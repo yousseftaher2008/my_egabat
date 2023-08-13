@@ -90,25 +90,43 @@ class RegisterEduController extends GetxController {
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      isShowSubjects ? (item as Subject).fullName : item.name,
-                      style: welcomeTitleTextStyle.copyWith(
-                        fontSize: 20,
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Text(
+                            isShowSubjects
+                                ? (item as Subject).fullName
+                                : item.name,
+                            style: welcomeTitleTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        if (isShowSubjects)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              onPressed: () => onSelectedFun(item),
+                              icon: const Icon(Icons.delete),
+                              color: Colors.red,
+                            ),
+                          )
+                      ],
                     ),
                   ),
                 );
 
                 return Column(
                   children: [
-                    const ColoredBox(
-                      color: primaryColor,
-                      child: SizedBox(
-                        height: 2,
-                        width: double.infinity,
+                    if (index != 0)
+                      const ColoredBox(
+                        color: primaryColor,
+                        child: SizedBox(
+                          height: 2,
+                          width: double.infinity,
+                        ),
                       ),
-                    ),
                     isSubjects
                         ? Obx(
                             () => TextButton(
@@ -148,22 +166,49 @@ class RegisterEduController extends GetxController {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClipRRect(
-              borderRadius: borderRadiusShape,
+            Container(
+              height: 100,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              decoration: const BoxDecoration(
+                borderRadius: borderRadiusShape,
+              ),
+              child: isShowSubjects
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            _registerController.selectedSubjects.clear();
+                            for (var subject in _registerController.subjects) {
+                              subject.isChosen.value = false;
+                            }
+                            Get.back();
+                          },
+                          child: const Text(
+                            "مسح الكل",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        Center(
+                          child: Text(title, style: welcomeTitleTextStyle),
+                        ),
+                      ],
+                    )
+                  : Center(
+                      child: Text(title, style: welcomeTitleTextStyle),
+                    ),
+            ),
+            const ColoredBox(
+              color: primaryColor,
               child: SizedBox(
-                height: 100,
+                height: 2,
                 width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(title, style: welcomeTitleTextStyle),
-                  ),
-                ),
               ),
             ),
             Container(
               constraints: BoxConstraints(
-                  maxHeight: _registerController.pageHeight / 2 - 100),
+                  maxHeight: _registerController.pageHeight / 2 - 150),
               child: isShowSubjects
                   ? Obx(
                       () {

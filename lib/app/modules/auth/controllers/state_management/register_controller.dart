@@ -7,6 +7,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
+import 'package:my_egabat/app/shared/styles/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_controller.dart';
@@ -53,6 +54,8 @@ class RegisterController extends AuthController {
   String? stageId;
   String? gradeId;
 
+  RxBool isSnackBarOpen = false.obs;
+
   Future<void> getSections() async {
     if (sections.isNotEmpty) {
       return;
@@ -87,6 +90,10 @@ class RegisterController extends AuthController {
     isLoadingGrade.value = true;
     grades.clear();
     subjects.clear();
+    //? to reload the subject ui
+    isLoadingSubject.value = true;
+    isLoadingSubject.value = false;
+
     final url = ('${baseUrl}Grade/GetGradesByStageId/$stageId');
     Map<String, String> headers = {
       "Authorization": "Bearer ${authController.authData.token}",
@@ -121,13 +128,7 @@ class RegisterController extends AuthController {
       final List registerList = [];
       for (final registerItem in response.data) {
         final Register newItem = isSubject
-            ? Subject(
-                name: registerItem["${registerType}Name"],
-                id: registerItem["${registerType}Id"],
-                gradeName: registerItem["gradeName"],
-                stageName: registerItem["stageName"],
-                jsonSubject: registerItem,
-              )
+            ? Subject.fromJson(registerItem)
             : Register(
                 name: registerItem["${registerType}Name"],
                 id: registerItem["${registerType}Id"],
@@ -140,11 +141,6 @@ class RegisterController extends AuthController {
       }
       return registerList;
     } catch (e) {
-      print(url);
-      print(headers);
-      print(registerType);
-      print(e);
-
       Get.offAll(() => const ErrorScreen());
     }
     return [];
@@ -187,10 +183,10 @@ class RegisterController extends AuthController {
     }
   }
 
-  // TODO: complete register method
   Future<void> teacherRegister() async {
     try {
-      if (!(formKey.currentState?.validate() ?? false)) {
+      if (!(formKey.currentState?.validate() ?? false) ||
+          isSnackBarOpen.value) {
         return;
       }
       Map<String, String> headers = {
@@ -200,6 +196,7 @@ class RegisterController extends AuthController {
       selectedSubjects.forEach((key, value) {
         selectedSubjectsJson.add(value.id);
       });
+      print(selectedSubjectsJson);
       String body = json.encode({
         'name': nameController.text,
         'mobile': authController.phoneNumber,
@@ -207,13 +204,36 @@ class RegisterController extends AuthController {
         'password': passwordController.text,
         'subjects': selectedSubjectsJson,
       });
-      print(selectedSubjectsJson[0]);
       const String url = '${baseUrl}Teacher/RegisterVisitingTeacher';
       final response = await post(Uri.parse(url), body: body, headers: headers);
-      print(response.body);
+      final Map<String, dynamic> data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          "تم انشاء الحساب بنجاح",
+          "يرجى التسجيل الان",
+          duration: const Duration(seconds: 2),
+          backgroundColor: primaryButtonColor,
+          colorText: Colors.white,
+        );
+        isRegister.value = false;
+        clearFirstPageInputs();
+        clearSecondPageInputs();
+      } else {
+        isSnackBarOpen.value = true;
+        Get.snackbar(
+          "حدث خطأ",
+          "${data["errors"]["Message"]}",
+          duration: const Duration(seconds: 2),
+          backgroundColor: primaryButtonColor,
+          colorText: Colors.white,
+        );
+        Future.delayed(const Duration(seconds: 2), () {
+          isSnackBarOpen.value = false;
+        });
+      }
     } catch (e) {
       print(e);
-      // Get.offAll(() => const ErrorScreen());
+      Get.offAll(() => const ErrorScreen());
     }
   }
 
@@ -276,6 +296,7 @@ class RegisterController extends AuthController {
     nameController.clear();
     nickNameController.clear();
     emailController.clear();
+    passwordController.clear();
     authController.phoneController.clear();
     authController.selectedCountry = null;
     authController.selectedCountryCode.value = "اختر دولتك";

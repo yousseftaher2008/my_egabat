@@ -1,4 +1,3 @@
-// TODO: add password
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/state_management/register_controller.dart';
