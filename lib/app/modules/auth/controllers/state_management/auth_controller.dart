@@ -6,8 +6,8 @@ import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
+import "../../../../routes/app_pages.dart";
 import 'register_controller.dart';
-import '../../../../routes/app_pages.dart';
 import '../../../../shared/errors/error_screen.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -33,6 +33,7 @@ class AuthController extends MainController {
   //boolean values
   final RxBool isGettingCountries = false.obs;
   final RxBool isTeacher = false.obs;
+  final RxBool isLogging = false.obs;
   final RxBool isInit = true.obs;
 
   @override
@@ -57,16 +58,17 @@ class AuthController extends MainController {
         }
       }
     } catch (e) {
-      print(e);
       Get.offAll(() => const ErrorScreen());
     }
     isGettingCountries.value = false;
   }
 
   Future<void> studentLogin() async {
+    isLogging.value = true;
     final isValidPhon = await isValidPhone();
     if (!isValidPhon) {
       phoneKey.currentState!.validate();
+      isLogging.value = false;
       return;
     }
     phoneKey.currentState!.save();
@@ -83,32 +85,43 @@ class AuthController extends MainController {
       final response =
           await http.post(Uri.parse(url), body: body, headers: head);
       if ((response.statusCode) >= 400) {
-        print(response.body);
+        isLogging.value = false;
         Get.offAll(() => const ErrorScreen());
-      }
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      if ((responseData["isActive"] ?? false) == false) {
-        Get.offAll(const ErrorScreen());
+
         return;
-      }
-      final SharedPreferences pref = await SharedPreferences.getInstance();
-      await pref.setString("userId", responseData["studentId"] ?? "");
-      await pref.setString("token", responseData["token"] ?? "");
-      await pref.setBool("isLogin", responseData["isExist"] ?? false);
-      await getAuthData();
-      if ((responseData["isExist"] ?? false) == true) {
-        Get.offAllNamed(Routes.HOME);
       } else {
-        registerController.nextRegisterStep();
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if ((responseData["isActive"] ?? false) == false) {
+          isLogging.value = false;
+          Get.offAll(const ErrorScreen());
+          return;
+        }
+        final SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString("userId", responseData["studentId"] ?? "");
+        await pref.setString("token", responseData["token"] ?? "");
+        await pref.setBool("isLogin", responseData["isExist"] ?? false);
+        await getAuthData();
+        if ((responseData["isExist"] ?? false)) {
+          print(responseData);
+          isLogging.value = false;
+          Get.offAllNamed(Routes.STUDENT_HOME);
+          return;
+        } else {
+          isLogging.value = false;
+          registerController.nextRegisterStep();
+        }
       }
     } catch (e) {
-      print(e);
+      isLogging.value = false;
       Get.offAll(const ErrorScreen());
     }
   }
 
   Future<void> teacherLogin() async {
+    isLogging.value = true;
     if (!(teacherFromKey.currentState?.validate() ?? false)) {
+      print("get here 3");
+      isLogging.value = false;
       return;
     }
     try {
@@ -120,32 +133,40 @@ class AuthController extends MainController {
 
       final Uri url = Uri.parse("${baseUrl}Teacher/Login");
       Map<String, String> head = {"Content-Type": "application/json"};
+      print("get here 4");
       final response = await http.post(
         url,
         body: json.encode(body),
         headers: head,
       );
-
       if ((response.statusCode) < 400) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        final String? token = responseData["token"];
-        final String? teacherName = responseData["teacherName"];
         SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setString('token', token!);
-        pref.setBool('isFreeTrial', responseData['isFreeTrial']);
-        pref.setBool('isVisitingTeacher', responseData['isVisitingTeacher']);
-        pref.setString('TeacherName', teacherName!);
+        await pref.setBool("isLogin", true);
+        await pref.setString('token', responseData["token"]);
+        await pref.setBool('isFreeTrial', responseData['isFreeTrial']);
+        await pref.setBool(
+            'isVisitingTeacher', responseData['isVisitingTeacher']);
+        await pref.setString('teacherName', responseData["teacherName"]!);
 
-        // (extractedData["isVisitingTeacher"] == true)
-        //     ? Get.to(const VisitorTeacherHome(),
-        //         arguments: [token], duration: const Duration(seconds: 1))
-        //     : Get.to(const HomeTeacher(),
-        //         arguments: [token], duration: const Duration(seconds: 1));
+        print("get here 2");
+        isLogging.value = false;
+        (responseData["isVisitingTeacher"] == true)
+            ? Get.offAllNamed(Routes.VISITOR_HOME)
+            : Get.offAllNamed(Routes.TEACHER_HOME);
+      } else if (response.statusCode == 401) {
+        // TODO: reset password
+        isLogging.value = false;
+      } else {
+        isLogging.value = false;
+        Get.offAll(() => const ErrorScreen());
       }
     } catch (e) {
-      print(e);
+      print("get here 1");
+      isLogging.value = false;
       Get.offAll(() => const ErrorScreen());
     }
+    isLogging.value = false;
   }
 
   Future<bool> isValidPhone() async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/shared/loading/loading.dart';
 import '../../../../../shared/styles/button_styles.dart';
 import '../../../controllers/state_management/auth_controller.dart';
 import '../shared/phone_country_input.dart';
@@ -26,24 +27,30 @@ class StudentAuth extends GetView<AuthController> {
                         ? const RegisterPersonalInfo()
                         : const RegisterEducationalInfo()
                     : PhoneCountryInput(onSaved: controller.studentLogin),
-                SizedBox(
-                  child: ElevatedButton(
-                    style: primaryButtonStyle,
-                    onPressed: controller.registerController.isRegister.value
-                        ? controller
-                                .registerController.isFirstRegisterStep.value
-                            ? controller.registerController.nextRegisterStep
-                            : controller.registerController.studentRegister
-                        : controller.studentLogin,
-                    child: Text(
-                      controller.registerController.isRegister.value
-                          ? controller
-                                  .registerController.isFirstRegisterStep.value
-                              ? "التالي"
-                              : "تسجيل حساب جديد"
-                          : "تسجيل الدخول",
-                    ),
-                  ),
+                Obx(
+                  () => controller.isLogging.value ||
+                          controller.registerController.isRegistering.value
+                      ? Loading()
+                      : ElevatedButton(
+                          style: primaryButtonStyle,
+                          onPressed:
+                              controller.registerController.isRegister.value
+                                  ? controller.registerController
+                                          .isFirstRegisterStep.value
+                                      ? controller
+                                          .registerController.nextRegisterStep
+                                      : controller
+                                          .registerController.studentRegister
+                                  : controller.studentLogin,
+                          child: Text(
+                            controller.registerController.isRegister.value
+                                ? controller.registerController
+                                        .isFirstRegisterStep.value
+                                    ? "التالي"
+                                    : "تسجيل حساب جديد"
+                                : "تسجيل الدخول",
+                          ),
+                        ),
                 ),
               ],
             ),

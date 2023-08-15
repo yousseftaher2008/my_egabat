@@ -5,16 +5,20 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
   static const AUTH = _Paths.AUTH;
   static const MAIN = _Paths.MAIN;
   static const WELCOME = _Paths.WELCOME;
+  static const TEACHER_HOME = _Paths.TEACHER_HOME;
+  static const VISITOR_HOME = _Paths.VISITOR_HOME;
+  static const STUDENT_HOME = _Paths.STUDENT_HOME;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
   static const AUTH = '/auth';
   static const MAIN = '/main';
   static const WELCOME = '/welcome';
+  static const TEACHER_HOME = '/teacher-home';
+  static const VISITOR_HOME = '/visitor-home';
+  static const STUDENT_HOME = '/student-home';
 }

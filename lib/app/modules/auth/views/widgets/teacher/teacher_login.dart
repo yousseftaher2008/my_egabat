@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
 
+import '../../../../../shared/loading/loading.dart';
 import '../../../../../shared/styles/button_styles.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 
@@ -68,12 +69,14 @@ class TeacherLogin extends GetView<RegisterController> {
         ),
         Column(
           children: [
-            SizedBox(
-              child: ElevatedButton(
-                style: primaryButtonStyle,
-                onPressed: controller.teacherLogin,
-                child: const Text("تسجيل الدخول"),
-              ),
+            Obx(
+              () => controller.isLogging.value
+                  ? Loading()
+                  : ElevatedButton(
+                      style: primaryButtonStyle,
+                      onPressed: controller.teacherLogin,
+                      child: const Text("تسجيل الدخول"),
+                    ),
             ),
             TextButton(
               onPressed: controller.nextRegisterStep,

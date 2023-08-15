@@ -5,6 +5,7 @@ import 'package:my_egabat/app/modules/auth/views/widgets/shared/phone_country_in
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/register_educational_information.dart';
 import 'package:my_egabat/app/shared/styles/button_styles.dart';
 
+import '../../../../../shared/loading/loading.dart';
 import '../shared/register_personal_information.dart';
 
 class TeacherRegister extends GetView<RegisterController> {
@@ -33,18 +34,22 @@ class TeacherRegister extends GetView<RegisterController> {
                           isTeacher: true,
                         )
                       : const SizedBox(),
-                  ElevatedButton(
-                    onPressed: controller.isSnackBarOpen.value
-                        ? null
-                        : controller.isFirstRegisterStep.value
-                            ? controller.nextRegisterStep
-                            : controller.teacherRegister,
-                    style: primaryButtonStyle,
-                    child: Text(
-                      controller.isFirstRegisterStep.value
-                          ? "التالي"
-                          : "انشاء حساب جديد",
-                    ),
+                  Obx(
+                    () => controller.registerController.isRegistering.value
+                        ? Loading()
+                        : ElevatedButton(
+                            onPressed: controller.isSnackBarOpen.value
+                                ? null
+                                : controller.isFirstRegisterStep.value
+                                    ? controller.nextRegisterStep
+                                    : controller.teacherRegister,
+                            style: primaryButtonStyle,
+                            child: Text(
+                              controller.isFirstRegisterStep.value
+                                  ? "التالي"
+                                  : "انشاء حساب جديد",
+                            ),
+                          ),
                   ),
                 ],
               ),

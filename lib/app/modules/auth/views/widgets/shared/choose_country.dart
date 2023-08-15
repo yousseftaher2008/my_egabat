@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
 import 'package:my_egabat/app/shared/base_url.dart';
+import 'package:my_egabat/app/shared/loading/loading.dart';
 import 'package:my_egabat/app/shared/styles/text_styles.dart';
 import '../../../models/country_model.dart';
 
@@ -20,11 +21,9 @@ class ChooseCountry extends GetView<AuthController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           controller.isGettingCountries.value
-              ? const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    color: primaryColorTransparent,
-                  ),
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Loading(),
                 )
               : TextButton(
                   child: Padding(

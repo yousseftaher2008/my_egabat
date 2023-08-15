@@ -42,6 +42,7 @@ class RegisterController extends AuthController {
   final RxBool isLoadingSubject = false.obs;
   //ui transitions data
   final RxBool isRegister = false.obs;
+  final RxBool isRegistering = false.obs;
   final RxBool isFirstRegisterStep = false.obs;
   //data
   final List sections = [];
@@ -147,12 +148,14 @@ class RegisterController extends AuthController {
   }
 
   Future<void> studentRegister() async {
+    isRegistering.value = true;
     try {
       if (!(formKey.currentState?.validate() ?? false)) {
+        isRegistering.value = false;
         return;
       }
       Map<String, String> headers = {
-        "Authorization": "Bearer ${authController.authData.token}",
+        "Authorization": "Bearer ${super.authData.token}",
         "Content-Type": "multipart/form-data",
       };
       dio.MultipartFile? image = storedImage.value != null
@@ -175,18 +178,22 @@ class RegisterController extends AuthController {
       if (response.statusCode == 200) {
         final pref = await SharedPreferences.getInstance();
         pref.setBool("isLogin", true);
-        Get.offAllNamed(Routes.HOME);
+        isRegistering.value = false;
+        Get.offAllNamed(Routes.STUDENT_HOME);
       }
     } catch (e) {
       print(e);
+      isRegistering.value = false;
       Get.offAll(() => const ErrorScreen());
     }
   }
 
   Future<void> teacherRegister() async {
+    isRegistering.value = true;
     try {
       if (!(formKey.currentState?.validate() ?? false) ||
           isSnackBarOpen.value) {
+        isRegistering.value = false;
         return;
       }
       Map<String, String> headers = {
@@ -215,11 +222,13 @@ class RegisterController extends AuthController {
           backgroundColor: primaryButtonColor,
           colorText: Colors.white,
         );
+        isRegistering.value = false;
         isRegister.value = false;
         clearFirstPageInputs();
         clearSecondPageInputs();
       } else {
         isSnackBarOpen.value = true;
+        isRegistering.value = false;
         Get.snackbar(
           "حدث خطأ",
           "${data["errors"]["Message"]}",
@@ -233,6 +242,7 @@ class RegisterController extends AuthController {
       }
     } catch (e) {
       print(e);
+      isRegistering.value = false;
       Get.offAll(() => const ErrorScreen());
     }
   }
@@ -257,6 +267,7 @@ class RegisterController extends AuthController {
       selectedSubjectsLength.value = selectedSubjects.length;
 
   Future<void> nextRegisterStep() async {
+    print("get here");
     if (!isRegister.value) {
       isFirstRegisterStep.value = true;
       isRegister.value = true;
