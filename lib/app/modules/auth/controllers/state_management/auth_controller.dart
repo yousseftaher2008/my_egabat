@@ -64,6 +64,7 @@ class AuthController extends MainController {
   }
 
   Future<void> studentLogin() async {
+    print("why is get func");
     isLogging.value = true;
     final isValidPhon = await isValidPhone();
     if (!isValidPhon) {
@@ -85,6 +86,7 @@ class AuthController extends MainController {
       final response =
           await http.post(Uri.parse(url), body: body, headers: head);
       if ((response.statusCode) >= 400) {
+        print("get here");
         isLogging.value = false;
         Get.offAll(() => const ErrorScreen());
 
@@ -108,6 +110,7 @@ class AuthController extends MainController {
           return;
         } else {
           isLogging.value = false;
+          print("why is get here");
           registerController.nextRegisterStep();
         }
       }
@@ -154,6 +157,7 @@ class AuthController extends MainController {
         (responseData["isVisitingTeacher"] == true)
             ? Get.offAllNamed(Routes.VISITOR_HOME)
             : Get.offAllNamed(Routes.TEACHER_HOME);
+        clearControllers();
       } else if (response.statusCode == 401) {
         // TODO: reset password
         isLogging.value = false;
@@ -214,8 +218,15 @@ class AuthController extends MainController {
     isTeacher.value = !isTeacher.value;
     registerController.clearFirstPageInputs();
     registerController.clearSecondPageInputs();
+    teacherEmailController.clear();
+    teacherPassController.clear();
+    phoneController.clear();
     selectedCountry = null;
     selectedCountryCode.value = "اختر دولتك";
-    phoneController.clear();
+  }
+
+  void clearControllers() {
+    Get.delete<AuthController>(force: true);
+    Get.delete<RegisterController>(force: true);
   }
 }

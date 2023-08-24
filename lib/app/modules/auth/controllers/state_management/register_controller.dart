@@ -179,6 +179,7 @@ class RegisterController extends AuthController {
         final pref = await SharedPreferences.getInstance();
         pref.setBool("isLogin", true);
         isRegistering.value = false;
+        clearControllers();
         Get.offAllNamed(Routes.STUDENT_HOME);
       }
     } catch (e) {
