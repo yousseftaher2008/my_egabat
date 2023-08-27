@@ -24,6 +24,13 @@ class AuthController extends MainController {
   final TextEditingController teacherEmailController = TextEditingController();
   final TextEditingController teacherPassController = TextEditingController();
   final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
+  // reset properties
+  final GlobalKey<FormState> teacherResetPassFromKey = GlobalKey<FormState>();
+  final TextEditingController resetCodeController = TextEditingController();
+  final TextEditingController teacherResetPassController =
+      TextEditingController();
+  final TextEditingController teacherResetPassController2 =
+      TextEditingController();
   //controllers
   late final RegisterController registerController;
   //country properties
