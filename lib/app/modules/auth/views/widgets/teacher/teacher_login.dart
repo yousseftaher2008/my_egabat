@@ -57,8 +57,8 @@ class TeacherLogin extends GetView<AuthController> {
                     ),
                     validator: (value) => value?.isEmpty ?? true
                         ? "ادخل رمز المرور من فضلك"
-                        : value!.length < 8
-                            ? "يجب ان يكون رمز المرور 8 حروف على الاقل"
+                        : value!.length < 5
+                            ? "يجب ان يكون رمز المرور 5 حروف على الاقل"
                             : null,
                     onFieldSubmitted: (_) => controller.teacherLogin(),
                   ),

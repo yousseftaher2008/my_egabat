@@ -69,10 +69,10 @@ class AuthView extends GetView<AuthController> {
                     ),
                     Obx(
                       () => controller.registerController.isRegister.value
-                          ? const Padding(
-                              padding: EdgeInsets.all(16.0),
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
                               child: DecoratedBox(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
                                       blurRadius: 30,
@@ -81,10 +81,14 @@ class AuthView extends GetView<AuthController> {
                                     ),
                                   ],
                                 ),
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
-                                  size: 35,
+                                child: IconButton(
+                                  onPressed: controller
+                                      .registerController.backFromRegister,
+                                  icon: const Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                    size: 35,
+                                  ),
                                 ),
                               ),
                             )

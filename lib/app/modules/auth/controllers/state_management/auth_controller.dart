@@ -64,113 +64,118 @@ class AuthController extends MainController {
   }
 
   Future<void> studentLogin() async {
-    print("why is get func");
-    isLogging.value = true;
-    final isValidPhon = await isValidPhone();
-    if (!isValidPhon) {
-      phoneKey.currentState!.validate();
-      isLogging.value = false;
-      return;
-    }
-    phoneKey.currentState!.save();
-    try {
-      const url = ('${baseUrl}Student/Login');
-      final body = json.encode({
-        "mobile": phoneNumber,
-        "deviceToken": deviceToken,
-      });
-      Map<String, String> head = {
-        "Content-Type": "application/json",
-        "accept": "*/*",
-      };
-      final response =
-          await http.post(Uri.parse(url), body: body, headers: head);
-      if ((response.statusCode) >= 400) {
-        print("get here");
+    if (!isLogging.value) {
+      print("why is get func");
+      isLogging.value = true;
+      final isValidPhon = await isValidPhone();
+      if (!isValidPhon) {
+        phoneKey.currentState!.validate();
         isLogging.value = false;
-        Get.offAll(() => const ErrorScreen());
-
         return;
-      } else {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if ((responseData["isActive"] ?? false) == false) {
+      }
+      phoneKey.currentState!.save();
+      try {
+        const url = ('${baseUrl}Student/Login');
+        final body = json.encode({
+          "mobile": phoneNumber,
+          "deviceToken": deviceToken,
+        });
+        Map<String, String> head = {
+          "Content-Type": "application/json",
+          "accept": "*/*",
+        };
+        final response =
+            await http.post(Uri.parse(url), body: body, headers: head);
+        if ((response.statusCode) >= 400) {
+          print("get here");
           isLogging.value = false;
-          Get.offAll(const ErrorScreen());
-          return;
-        }
-        final SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setString("userId", responseData["studentId"] ?? "");
-        await pref.setString("token", responseData["token"] ?? "");
-        await pref.setBool("isLogin", responseData["isExist"] ?? false);
-        await getAuthData();
-        if ((responseData["isExist"] ?? false)) {
-          print(responseData);
-          isLogging.value = false;
-          Get.offAllNamed(Routes.STUDENT_HOME);
+          Get.offAll(() => const ErrorScreen());
+
           return;
         } else {
-          isLogging.value = false;
-          print("why is get here");
-          registerController.nextRegisterStep();
+          final Map<String, dynamic> responseData = json.decode(response.body);
+          if ((responseData["isActive"] ?? false) == false) {
+            isLogging.value = false;
+            Get.offAll(const ErrorScreen());
+            return;
+          }
+          final SharedPreferences pref = await SharedPreferences.getInstance();
+          await pref.setString("userId", responseData["studentId"] ?? "");
+          await pref.setString("token", responseData["token"] ?? "");
+          await pref.setBool("isLogin", responseData["isExist"] ?? false);
+          await getAuthData();
+          if ((responseData["isExist"] ?? false)) {
+            print(responseData);
+            isLogging.value = false;
+            Get.offAllNamed(Routes.STUDENT_HOME);
+            return;
+          } else {
+            isLogging.value = false;
+            print("why is get here");
+            registerController.nextRegisterStep();
+          }
         }
+      } catch (e) {
+        isLogging.value = false;
+        Get.offAll(const ErrorScreen());
       }
-    } catch (e) {
-      isLogging.value = false;
-      Get.offAll(const ErrorScreen());
     }
   }
 
   Future<void> teacherLogin() async {
-    isLogging.value = true;
-    if (!(teacherFromKey.currentState?.validate() ?? false)) {
-      print("get here 3");
-      isLogging.value = false;
-      return;
-    }
-    try {
-      final body = {
-        "username": teacherEmailController.text.trim(),
-        "password": teacherPassController.text.trim(),
-        "deviceToken": deviceToken,
-      };
-
-      final Uri url = Uri.parse("${baseUrl}Teacher/Login");
-      Map<String, String> head = {"Content-Type": "application/json"};
-      print("get here 4");
-      final response = await http.post(
-        url,
-        body: json.encode(body),
-        headers: head,
-      );
-      if ((response.statusCode) < 400) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setBool("isLogin", true);
-        await pref.setString('token', responseData["token"]);
-        await pref.setBool('isFreeTrial', responseData['isFreeTrial']);
-        await pref.setBool(
-            'isVisitingTeacher', responseData['isVisitingTeacher']);
-        await pref.setString('teacherName', responseData["teacherName"]!);
-
-        print("get here 2");
+    if (!isLogging.value) {
+      isLogging.value = true;
+      if (!(teacherFromKey.currentState?.validate() ?? false)) {
+        print("get here 3");
         isLogging.value = false;
-        (responseData["isVisitingTeacher"] == true)
-            ? Get.offAllNamed(Routes.VISITOR_HOME)
-            : Get.offAllNamed(Routes.TEACHER_HOME);
-        clearControllers();
-      } else if (response.statusCode == 401) {
-        // TODO: reset password
-        isLogging.value = false;
-      } else {
+        return;
+      }
+      try {
+        final body = {
+          "username": teacherEmailController.text.trim(),
+          "password": teacherPassController.text.trim(),
+          "deviceToken": deviceToken,
+        };
+
+        final Uri url = Uri.parse("${baseUrl}Teacher/Login");
+        Map<String, String> head = {"Content-Type": "application/json"};
+        print("get here 4");
+        final response = await http.post(
+          url,
+          body: json.encode(body),
+          headers: head,
+        );
+        print("go and come");
+        if ((response.statusCode) < 400) {
+          final Map<String, dynamic> responseData = json.decode(response.body);
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          await pref.setBool("isLogin", true);
+          await pref.setString('token', responseData["token"]);
+          await pref.setBool('isFreeTrial', responseData['isFreeTrial']);
+          await pref.setBool(
+              'isVisitingTeacher', responseData['isVisitingTeacher']);
+          await pref.setString('teacherName', responseData["teacherName"]!);
+
+          print("get here 2");
+          isLogging.value = false;
+          (responseData["isVisitingTeacher"] == true)
+              ? Get.offAllNamed(Routes.VISITOR_HOME)
+              : Get.offAllNamed(Routes.TEACHER_HOME);
+        } else if (response.statusCode == 401) {
+          // TODO: reset password
+          print("get 401");
+          isLogging.value = false;
+        } else {
+          isLogging.value = false;
+          Get.offAll(() => const ErrorScreen());
+        }
+      } catch (e) {
+        print("get here 1");
         isLogging.value = false;
         Get.offAll(() => const ErrorScreen());
       }
-    } catch (e) {
-      print("get here 1");
       isLogging.value = false;
-      Get.offAll(() => const ErrorScreen());
     }
-    isLogging.value = false;
   }
 
   Future<bool> isValidPhone() async {

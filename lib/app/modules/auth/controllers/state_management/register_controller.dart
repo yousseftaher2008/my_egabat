@@ -268,7 +268,6 @@ class RegisterController extends AuthController {
       selectedSubjectsLength.value = selectedSubjects.length;
 
   Future<void> nextRegisterStep() async {
-    print("get here");
     if (!isRegister.value) {
       isFirstRegisterStep.value = true;
       isRegister.value = true;
