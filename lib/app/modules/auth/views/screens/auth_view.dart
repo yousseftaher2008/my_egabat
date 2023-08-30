@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:my_egabat/app/modules/auth/views/widgets/teacher/reset_password.dart';
 import 'package:my_egabat/app/shared/loading/lottie_loading.dart';
 import '../../../../shared/styles/colors.dart';
 
@@ -13,7 +14,7 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     final double pageHeight =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+        controller.pageHeight - MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
         body: Obx(
@@ -39,7 +40,9 @@ class AuthView extends GetView<AuthController> {
                                   child: Obx(
                                     () => Image.asset(
                                       controller.isTeacher.value
-                                          ? "assets/teacher_image.png"
+                                          ? controller.isChangingPass.value
+                                              ? "assets/change_pass.png"
+                                              : "assets/teacher_image.png"
                                           : "assets/student_image.png",
                                     ),
                                   ),
@@ -48,7 +51,9 @@ class AuthView extends GetView<AuthController> {
                             ),
                             Obx(
                               () => controller.isTeacher.value
-                                  ? const TeacherAuth()
+                                  ? controller.isChangingPass.value
+                                      ? const ResetPassword()
+                                      : const TeacherAuth()
                                   : const StudentAuth(),
                             ),
                             Obx(
@@ -68,7 +73,8 @@ class AuthView extends GetView<AuthController> {
                       ),
                     ),
                     Obx(
-                      () => controller.registerController.isRegister.value
+                      () => controller.registerController.isRegister.value ||
+                              controller.isChangingPass.value
                           ? Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: DecoratedBox(
@@ -82,8 +88,11 @@ class AuthView extends GetView<AuthController> {
                                   ],
                                 ),
                                 child: IconButton(
-                                  onPressed: controller
-                                      .registerController.backFromRegister,
+                                  onPressed: () {
+                                    controller.isChangingPass.value = false;
+                                    controller.registerController
+                                        .backFromRegister();
+                                  },
                                   icon: const Icon(
                                     Icons.arrow_back,
                                     color: Colors.white,

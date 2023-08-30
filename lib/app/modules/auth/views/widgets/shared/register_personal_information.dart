@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/shared/widgets/password_field.dart';
 import '../../../controllers/state_management/register_controller.dart';
 import '../student/image_input.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
@@ -9,8 +10,6 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
   final bool isTeacher;
   @override
   Widget build(BuildContext context) {
-    final RxBool isVisible = false.obs;
-    void changeVisibility() => isVisible.value = !isVisible.value;
     return Center(
       child: Form(
         key: controller.formKey,
@@ -69,33 +68,10 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
               ),
             ),
             if (isTeacher)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Obx(
-                  () => TextFormField(
-                    textInputAction: TextInputAction.done,
-                    controller: controller.passwordController,
-                    obscureText: !isVisible.value,
-                    decoration:
-                        authInputDecoration(hintText: "رمز المرور").copyWith(
-                      prefixIcon: IconButton(
-                        onPressed: changeVisibility,
-                        icon: Icon(
-                          isVisible.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                      ),
-                    ),
-                    validator: (value) => value?.isEmpty ?? true
-                        ? "ادخل رمز المرور من فضلك"
-                        : value!.length < 5
-                            ? "يجب ان يكون رمز المرور 5 حروف على الاقل"
-                            : null,
-                    onFieldSubmitted: (_) => controller.nextRegisterStep(),
-                  ),
-                ),
-              ),
+              AppPasswordField(
+                controller.passwordController,
+                onFieldSubmitted: (_) => controller.nextRegisterStep(),
+              )
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
+import 'package:my_egabat/app/shared/widgets/password_field.dart';
 
 import '../../../../../shared/loading/loading.dart';
 import '../../../../../shared/styles/button_styles.dart';
@@ -11,8 +12,6 @@ class TeacherLogin extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final RxBool isVisible = false.obs;
-    void changeVisibility() => isVisible.value = !isVisible.value;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
@@ -38,32 +37,10 @@ class TeacherLogin extends GetView<AuthController> {
                           : null,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Obx(
-                  () => TextFormField(
-                    controller: controller.teacherPassController,
-                    obscureText: !isVisible.value,
-                    decoration:
-                        authInputDecoration(hintText: "رمز المرور").copyWith(
-                      prefixIcon: IconButton(
-                        onPressed: changeVisibility,
-                        icon: Icon(
-                          isVisible.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                      ),
-                    ),
-                    validator: (value) => value?.isEmpty ?? true
-                        ? "ادخل رمز المرور من فضلك"
-                        : value!.length < 5
-                            ? "يجب ان يكون رمز المرور 5 حروف على الاقل"
-                            : null,
-                    onFieldSubmitted: (_) => controller.teacherLogin(),
-                  ),
-                ),
-              ),
+              AppPasswordField(
+                controller.teacherPassController,
+                onFieldSubmitted: (_) => controller.teacherLogin(),
+              )
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
 import "../../../../routes/app_pages.dart";
+import "../../../../shared/styles/colors.dart";
 import 'register_controller.dart';
 import '../../../../shared/errors/error_screen.dart';
 import "package:shared_preferences/shared_preferences.dart";
@@ -40,6 +41,7 @@ class AuthController extends MainController {
   //boolean values
   final RxBool isGettingCountries = false.obs;
   final RxBool isTeacher = false.obs;
+  final RxBool isChangingPass = true.obs;
   final RxBool isLogging = false.obs;
   final RxBool isInit = true.obs;
 
@@ -170,7 +172,31 @@ class AuthController extends MainController {
               : Get.offAllNamed(Routes.TEACHER_HOME);
         } else if (response.statusCode == 401) {
           // TODO: reset password
-          print("get 401");
+          Get.defaultDialog(
+            title: "الشفره خاطئه",
+            middleText: "هل تريد تغير الشفرة؟",
+            cancel: ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                side: const BorderSide(
+                  color: primaryColor,
+                  width: 2,
+                ),
+                foregroundColor: primaryColor,
+              ),
+              child: const Text("العودة"),
+            ),
+            confirm: ElevatedButton(
+              onPressed: () {
+                Get.back();
+                isChangingPass.value = true;
+              },
+              child: const Text("تغير الشفرة"),
+            ),
+          );
           isLogging.value = false;
         } else {
           isLogging.value = false;
@@ -226,6 +252,7 @@ class AuthController extends MainController {
 
   void changeUserType() {
     registerController.isRegister.value = false;
+    isChangingPass.value = false;
     registerController.isFirstRegisterStep.value = false;
     isTeacher.value = !isTeacher.value;
     registerController.clearFirstPageInputs();
