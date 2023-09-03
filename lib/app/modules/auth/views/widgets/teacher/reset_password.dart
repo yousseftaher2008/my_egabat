@@ -1,12 +1,12 @@
-// TODO: add password fields and add a default password field
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
-import 'package:my_egabat/app/shared/widgets/password_field.dart';
+import 'package:my_egabat/app/shared/styles/button_styles.dart';
 
+import '../../../controllers/state_management/reset_password_controller.dart';
+import '../../../../../shared/widgets/password_field.dart';
 import '../../../../../shared/styles/text_field_styles.dart';
 
-class ResetPassword extends GetView<AuthController> {
+class ResetPassword extends GetView<ResetPasswordController> {
   const ResetPassword({super.key});
 
   @override
@@ -27,6 +27,13 @@ class ResetPassword extends GetView<AuthController> {
                         .copyWith(
                   prefixIcon: const Icon(Icons.code),
                 ),
+                validator: (value) {
+                  return (value?.isEmpty) ?? true
+                      ? "ادخل الكود من فضلك"
+                      : value != controller.expectedCode
+                          ? "يرجى ادخال كود صحيح"
+                          : null;
+                },
               ),
             ),
             AppPasswordField(
@@ -35,8 +42,9 @@ class ResetPassword extends GetView<AuthController> {
             ),
             AppPasswordField(
               controller.teacherResetPassController2,
-              onFieldSubmitted: (_) =>
-                  controller.teacherResetPassFromKey.currentState!.validate(),
+              onFieldSubmitted: (_) {
+                controller.resetPassword();
+              },
               hintText: "رمز المرور مرة اخرى",
               moreValidating: () {
                 return controller.teacherResetPassController.text !=
@@ -44,6 +52,13 @@ class ResetPassword extends GetView<AuthController> {
                     ? "الرمزان غير متطابقان"
                     : null;
               },
+            ),
+            ElevatedButton(
+              style: primaryButtonStyle,
+              onPressed: () {
+                controller.resetPassword();
+              },
+              child: const Text("تغير الشفرة"),
             )
           ],
         ),

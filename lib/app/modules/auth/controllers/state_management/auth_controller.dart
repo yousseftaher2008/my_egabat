@@ -5,6 +5,8 @@ import "package:get/get.dart";
 import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
+import "package:my_egabat/app/modules/auth/bindings/reset_password_binding.dart";
+import "package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
 import "../../../../routes/app_pages.dart";
 import "../../../../shared/styles/colors.dart";
@@ -25,13 +27,6 @@ class AuthController extends MainController {
   final TextEditingController teacherEmailController = TextEditingController();
   final TextEditingController teacherPassController = TextEditingController();
   final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
-  // reset properties
-  final GlobalKey<FormState> teacherResetPassFromKey = GlobalKey<FormState>();
-  final TextEditingController resetCodeController = TextEditingController();
-  final TextEditingController teacherResetPassController =
-      TextEditingController();
-  final TextEditingController teacherResetPassController2 =
-      TextEditingController();
   //controllers
   late final RegisterController registerController;
   //country properties
@@ -74,7 +69,6 @@ class AuthController extends MainController {
 
   Future<void> studentLogin() async {
     if (!isLogging.value) {
-      print("why is get func");
       isLogging.value = true;
       final isValidPhon = await isValidPhone();
       if (!isValidPhon) {
@@ -96,7 +90,6 @@ class AuthController extends MainController {
         final response =
             await http.post(Uri.parse(url), body: body, headers: head);
         if ((response.statusCode) >= 400) {
-          print("get here");
           isLogging.value = false;
           Get.offAll(() => const ErrorScreen());
 
@@ -114,13 +107,12 @@ class AuthController extends MainController {
           await pref.setBool("isLogin", responseData["isExist"] ?? false);
           await getAuthData();
           if ((responseData["isExist"] ?? false)) {
-            print(responseData);
             isLogging.value = false;
             Get.offAllNamed(Routes.STUDENT_HOME);
+            await clearControllers();
             return;
           } else {
             isLogging.value = false;
-            print("why is get here");
             registerController.nextRegisterStep();
           }
         }
@@ -135,7 +127,6 @@ class AuthController extends MainController {
     if (!isLogging.value) {
       isLogging.value = true;
       if (!(teacherFromKey.currentState?.validate() ?? false)) {
-        print("get here 3");
         isLogging.value = false;
         return;
       }
@@ -148,28 +139,28 @@ class AuthController extends MainController {
 
         final Uri url = Uri.parse("${baseUrl}Teacher/Login");
         Map<String, String> head = {"Content-Type": "application/json"};
-        print("get here 4");
         final response = await http.post(
           url,
           body: json.encode(body),
           headers: head,
         );
-        print("go and come");
         if ((response.statusCode) < 400) {
           final Map<String, dynamic> responseData = json.decode(response.body);
           SharedPreferences pref = await SharedPreferences.getInstance();
           await pref.setBool("isLogin", true);
-          await pref.setString('token', responseData["token"]);
-          await pref.setBool('isFreeTrial', responseData['isFreeTrial']);
+          await pref.setString('token', responseData["token"] ?? "");
           await pref.setBool(
-              'isVisitingTeacher', responseData['isVisitingTeacher']);
-          await pref.setString('teacherName', responseData["teacherName"]!);
+              'isFreeTrial', responseData['isFreeTrial'] ?? false);
+          await pref.setBool(
+              'isVisitingTeacher', responseData['isVisitingTeacher'] ?? false);
+          await pref.setString(
+              'teacherName', responseData["teacherName"] ?? "");
 
-          print("get here 2");
           isLogging.value = false;
           (responseData["isVisitingTeacher"] == true)
               ? Get.offAllNamed(Routes.VISITOR_HOME)
               : Get.offAllNamed(Routes.TEACHER_HOME);
+          await clearControllers();
         } else if (response.statusCode == 401) {
           // TODO: reset password
           Get.defaultDialog(
@@ -190,9 +181,13 @@ class AuthController extends MainController {
               child: const Text("العودة"),
             ),
             confirm: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Get.back();
-                isChangingPass.value = true;
+                ResetPasswordBinding().dependencies();
+                if ((await Get.find<ResetPasswordController>()
+                    .requestCode(teacherEmailController.text))) {
+                  isChangingPass.value = true;
+                }
               },
               child: const Text("تغير الشفرة"),
             ),
@@ -203,7 +198,6 @@ class AuthController extends MainController {
           Get.offAll(() => const ErrorScreen());
         }
       } catch (e) {
-        print("get here 1");
         isLogging.value = false;
         Get.offAll(() => const ErrorScreen());
       }
@@ -264,7 +258,8 @@ class AuthController extends MainController {
     selectedCountryCode.value = "اختر دولتك";
   }
 
-  void clearControllers() {
+  Future<void> clearControllers() async {
+    await Future.delayed(const Duration(milliseconds: 1));
     Get.delete<AuthController>(force: true);
     Get.delete<RegisterController>(force: true);
   }

@@ -183,7 +183,6 @@ class RegisterController extends AuthController {
         Get.offAllNamed(Routes.STUDENT_HOME);
       }
     } catch (e) {
-      print(e);
       isRegistering.value = false;
       Get.offAll(() => const ErrorScreen());
     }
@@ -204,7 +203,6 @@ class RegisterController extends AuthController {
       selectedSubjects.forEach((key, value) {
         selectedSubjectsJson.add(value.id);
       });
-      print(selectedSubjectsJson);
       String body = json.encode({
         'name': nameController.text,
         'mobile': authController.phoneNumber,
@@ -242,7 +240,6 @@ class RegisterController extends AuthController {
         });
       }
     } catch (e) {
-      print(e);
       isRegistering.value = false;
       Get.offAll(() => const ErrorScreen());
     }

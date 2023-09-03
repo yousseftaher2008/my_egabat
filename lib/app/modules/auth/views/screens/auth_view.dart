@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/teacher/reset_password.dart';
 import 'package:my_egabat/app/shared/loading/lottie_loading.dart';
 import '../../../../shared/styles/colors.dart';
@@ -89,7 +90,11 @@ class AuthView extends GetView<AuthController> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {
-                                    controller.isChangingPass.value = false;
+                                    if (controller.isChangingPass.value) {
+                                      controller.isChangingPass.value = false;
+                                      Get.delete<ResetPasswordController>();
+                                    }
+
                                     controller.registerController
                                         .backFromRegister();
                                   },
