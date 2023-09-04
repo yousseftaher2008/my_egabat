@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/shared/widgets/email_field.dart';
 import 'package:my_egabat/app/shared/widgets/password_field.dart';
 import '../../../controllers/state_management/register_controller.dart';
 import '../student/image_input.dart';
@@ -20,14 +21,15 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: controller.nameController,
-                decoration: authInputDecoration(labelText: "الاسم").copyWith(
+                decoration:
+                    authInputDecoration(labelText: "ادخل اسمك".tr).copyWith(
                   prefixIcon: const Icon(Icons.person),
                 ),
                 textInputAction: TextInputAction.next,
                 validator: (value) => value?.isEmpty ?? true
-                    ? "ادخل اسمك من فضلك"
+                    ? "ادخل اسمك".tr
                     : value!.length < 3
-                        ? "يجب ان يكون اسمك من 3 حروف على الاقل"
+                        ? "يجب ان يكون اسمك من 3 حروف على الاقل".tr
                         : null,
               ),
             ),
@@ -36,36 +38,23 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   controller: controller.nickNameController,
-                  decoration: authInputDecoration(labelText: "الاسم المستعار")
+                  decoration: authInputDecoration(
+                          labelText: "ادخل اسمك المستعار".tr)
                       .copyWith(prefixIcon: const Icon(Icons.person_outlined)),
                   textInputAction: TextInputAction.next,
                   validator: (value) => value?.isEmpty ?? true
-                      ? "ادخل اسمك المستعار من فضلك"
+                      ? "ادخل اسمك المستعار".tr
                       : value!.length < 3
-                          ? "يجب ان يكون الاسم المستعار من 3 حروف على الاقل"
+                          ? "يجب ان يكون الاسم المستعار من 3 حروف على الاقل".tr
                           : null,
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                textInputAction:
-                    isTeacher ? TextInputAction.next : TextInputAction.done,
-                controller: controller.emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: authInputDecoration(labelText: "البريد الالكتروني")
-                    .copyWith(
-                  prefixIcon: const Icon(Icons.email_outlined),
-                ),
-                onFieldSubmitted: !isTeacher
-                    ? (value) => controller.nextRegisterStep()
-                    : null,
-                validator: (value) => value?.isEmpty ?? true
-                    ? "ادخل برديك الالكتروني"
-                    : !value!.isEmail
-                        ? "ادخل بريد الالكتروني صحيح"
-                        : null,
-              ),
+            AppEmailField(
+              controller.emailController,
+              textInputAction:
+                  isTeacher ? TextInputAction.next : TextInputAction.done,
+              onFieldSubmitted:
+                  !isTeacher ? (value) => controller.nextRegisterStep() : null,
             ),
             if (isTeacher)
               AppPasswordField(

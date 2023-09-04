@@ -22,16 +22,16 @@ class ResetPassword extends GetView<ResetPasswordController> {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 controller: controller.resetCodeController,
-                decoration:
-                    authInputDecoration(labelText: "الكود الذي ارسل اليك")
-                        .copyWith(
+                decoration: authInputDecoration(
+                        labelText: "ادخل الكود الذي ارسل اليك".tr)
+                    .copyWith(
                   prefixIcon: const Icon(Icons.code),
                 ),
                 validator: (value) {
                   return (value?.isEmpty) ?? true
-                      ? "ادخل الكود من فضلك"
+                      ? "ادخل الكود الذي ارسل اليك".tr
                       : value != controller.expectedCode
-                          ? "يرجى ادخال كود صحيح"
+                          ? "يرجى ادخال كود صحيح".tr
                           : null;
                 },
               ),
@@ -45,7 +45,7 @@ class ResetPassword extends GetView<ResetPasswordController> {
               onFieldSubmitted: (_) {
                 controller.resetPassword();
               },
-              hintText: "رمز المرور مرة اخرى",
+              hintText: "رمز المرور مرة اخرى".tr,
               moreValidating: () {
                 return controller.teacherResetPassController.text !=
                         controller.teacherResetPassController2.text
@@ -58,7 +58,7 @@ class ResetPassword extends GetView<ResetPasswordController> {
               onPressed: () {
                 controller.resetPassword();
               },
-              child: const Text("تغير الشفرة"),
+              child: Text("تغير الشفرة".tr),
             )
           ],
         ),

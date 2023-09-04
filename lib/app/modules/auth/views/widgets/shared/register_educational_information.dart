@@ -44,12 +44,12 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                         subject.isChosen.value = false;
                         controller.updateSelectedSubjectsLength();
                       },
-                      "رؤية المواد المختارة",
+                      "رؤية المواد المختارة".tr,
                       context,
                       isShowSubjects: true,
                     );
                   },
-                  child: const Text("رؤية المواد المختارة"),
+                  child: Text("رؤية المواد المختارة".tr),
                 ),
               ),
             // get section
@@ -60,18 +60,18 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                 onTap: () => eduController.showRegisterListBottomSheet(
                   controller.sections,
                   eduController.selectSection(isTeacher),
-                  "اختر نوع مدرستك",
+                  "اختر نوع مدرستك".tr,
                   context,
                 ),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? "اختر نوع مدرستك من فضلك" : null,
+                    value?.isEmpty ?? true ? "اختر نوع مدرستك".tr : null,
                 controller: controller.sectionController,
-                decoration:
-                    authInputDecoration(labelText: "اختر نوع المدرسة").copyWith(
+                decoration: authInputDecoration(labelText: "اختر نوع مدرستك".tr)
+                    .copyWith(
                   suffixIcon: SizedBox(
                     child: eduController.selectTypeWidget(
                       controller.sections,
-                      "اختر نوع مدرستك",
+                      "اختر نوع مدرستك".tr,
                       context,
                       controller.isLoadingSection,
                       eduController.selectSection(isTeacher),
@@ -89,20 +89,19 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                 onTap: () => eduController.showRegisterListBottomSheet(
                   controller.stages,
                   eduController.selectStage,
-                  "اختر مرحلتك الدراسية",
+                  "اختر مرحلتك الدراسية".tr,
                   context,
                 ),
                 readOnly: true,
-                validator: (value) => value?.isEmpty ?? true
-                    ? "اختر مرحلتك الدراسيه من فضلك"
-                    : null,
+                validator: (value) =>
+                    value?.isEmpty ?? true ? "اختر مرحلتك الدراسية".tr : null,
                 decoration:
-                    authInputDecoration(labelText: "اختر المرحلة الدراسية")
+                    authInputDecoration(labelText: "اختر مرحلتك الدراسية".tr)
                         .copyWith(
                   prefixIcon: const Icon(FontAwesome.address_book),
                   suffixIcon: eduController.selectTypeWidget(
                     controller.stages,
-                    "اختر مرحلتك الدراسية",
+                    "اختر مرحلتك الدراسية".tr,
                     context,
                     controller.isLoadingStage,
                     eduController.selectStage,
@@ -118,18 +117,19 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                 onTap: () => eduController.showRegisterListBottomSheet(
                   controller.grades,
                   eduController.selectGrade(isTeacher),
-                  "اختر صفك الدراسي",
+                  "اختر صفك الدراسي".tr,
                   context,
                 ),
                 readOnly: true,
                 validator: (value) =>
-                    value?.isEmpty ?? true ? "اختر صفك الدراسي من فضلك" : null,
-                decoration: authInputDecoration(labelText: "اختر الصف الدراسي")
-                    .copyWith(
+                    value?.isEmpty ?? true ? "اختر صفك الدراسي".tr : null,
+                decoration:
+                    authInputDecoration(labelText: "اختر صفك الدراسي".tr)
+                        .copyWith(
                   prefixIcon: const Icon(Icons.book),
                   suffixIcon: eduController.selectTypeWidget(
                     controller.grades,
-                    "اختر صفك الدراسي",
+                    "اختر صفك الدراسي".tr,
                     context,
                     controller.isLoadingGrade,
                     eduController.selectGrade(isTeacher),
@@ -146,20 +146,20 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                   onTap: () => eduController.showRegisterListBottomSheet(
                     controller.subjects,
                     eduController.selectSubject,
-                    "اختر المادة",
+                    "اختر المواد التي تدرسها".tr,
                     context,
                     isSubjects: true,
                   ),
                   validator: (value) => controller.selectedSubjects.isEmpty
-                      ? "اختر المواد من فضلك"
+                      ? "اختر المواد التي تدرسها".tr
                       : null,
-                  decoration:
-                      authInputDecoration(labelText: "اختر المواد التي تدرسها")
-                          .copyWith(
+                  decoration: authInputDecoration(
+                          labelText: "اختر المواد التي تدرسها".tr)
+                      .copyWith(
                     prefixIcon: const Icon(FontAwesome.book),
                     suffixIcon: eduController.selectTypeWidget(
                       controller.subjects,
-                      "اختر المواد",
+                      "اختر المواد التي تدرسها".tr,
                       context,
                       controller.isLoadingSubject,
                       eduController.selectSubject,

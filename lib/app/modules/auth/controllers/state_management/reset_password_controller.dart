@@ -1,9 +1,10 @@
+//TODO: edit the toast
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_egabat/app/shared/styles/colors.dart';
 
 import 'auth_controller.dart';
@@ -37,7 +38,7 @@ class ResetPasswordController extends GetxController {
       final String? errMessage = extractedData["errors"]["Message"];
 
       Get.snackbar(
-        "حدث خطأ ${errMessage != null ? 'غير معروف' : ''}",
+        "${"حدث خطأ".tr} ${errMessage != null ? 'غير معروف'.tr : ''}",
         errMessage ?? '',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: primaryColorTransparent,
@@ -49,9 +50,7 @@ class ResetPasswordController extends GetxController {
   }
 
   Future<void> resetPassword() async {
-    print("get here");
     if (!(teacherResetPassFromKey.currentState?.validate() ?? false)) {
-      print("get here");
       return;
     }
     const String url = '${baseUrl}Teacher/ResetUserPassword';
@@ -65,9 +64,9 @@ class ResetPasswordController extends GetxController {
         await http.post(Uri.parse(url), body: json.encode(body), headers: head);
     if (response.statusCode == 200) {
       Get.find<AuthController>().isChangingPass.value = false;
-      Fluttertoast.showToast(msg: '!تم تغيير كلمة المرور بنجاح');
+      // Fluttertoast.showToast(msg: '!تم تغيير كلمة المرور بنجاح');
     } else {
-      Fluttertoast.showToast(msg: 'يرجى المحاولة لاحقا');
+      // Fluttertoast.showToast(msg: 'يرجى المحاولة لاحقا');
     }
   }
 }

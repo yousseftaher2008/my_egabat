@@ -33,16 +33,16 @@ class MainController extends GetxController {
       }
       isLoading.value = false;
     });
-    getAuthData().then((AuthData _authData) => authData = _authData);
+    getAuthData();
     super.onReady();
   }
 
   Future<bool> isAuth() async {
-    authData = await getAuthData();
+    await getAuthData();
     return authData.isLogin && authData.token.isNotEmpty;
   }
 
-  Future<AuthData> getAuthData() async {
+  Future<void> getAuthData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final String token = pref.getString('token') ?? "";
     final String teacherName = pref.getString('TeacherName') ?? "";
@@ -50,14 +50,13 @@ class MainController extends GetxController {
     final bool isLogin = pref.getBool('isLogin') ?? false;
     final bool isVisitor = pref.getBool('isVisitingTeacher') ?? false;
 
-    AuthData _authData = AuthData(
+    authData = AuthData(
       token: token,
       teacherName: teacherName,
       id: userId,
       isLogin: isLogin,
       isVisitor: isVisitor,
     );
-    return _authData;
   }
 
   Future<bool> isConnected() async {

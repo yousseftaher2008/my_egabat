@@ -45,14 +45,15 @@ class RegisterEduController extends GetxController {
         "",
         "",
         titleText: Text(
-          isShowSubjects ? "لا يوجد مواد" : "لا يوجد اختيارات ",
+          isShowSubjects ? "لا يوجد مواد".tr : "لا يوجد اختيارات".tr,
           style: welcomeTitleTextStyle.copyWith(fontSize: 25),
           textAlign: TextAlign.center,
         ),
         messageText: Text(
           isShowSubjects
-              ? "انت لم تختر المواد التي تدرسها, يرجى اختيار المواد اولا"
-              : "الخانه الدراسيه السابقه لهذه الخانه فارغه او انك لم تختر شئ من الخانه السابقة",
+              ? "انت لم تختر المواد التي تدرسها, يرجى اختيار المواد اولا".tr
+              : "الخانه الدراسيه السابقه لهذه الخانه فارغه او انك لم تختر شئ من الخانه السابقة"
+                  .tr,
           style: welcomeBodyTextStyle,
           textAlign: TextAlign.center,
         ),
@@ -185,9 +186,9 @@ class RegisterEduController extends GetxController {
                             }
                             Get.back();
                           },
-                          child: const Text(
-                            "مسح الكل",
-                            style: TextStyle(color: Colors.red),
+                          child: Text(
+                            "مسح الكل".tr,
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
                         Center(

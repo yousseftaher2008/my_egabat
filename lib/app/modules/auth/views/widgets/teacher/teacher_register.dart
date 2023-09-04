@@ -46,8 +46,8 @@ class TeacherRegister extends GetView<RegisterController> {
                             style: primaryButtonStyle,
                             child: Text(
                               controller.isFirstRegisterStep.value
-                                  ? "التالي"
-                                  : "انشاء حساب جديد",
+                                  ? "التالي".tr
+                                  : "تسجيل حساب جديد".tr,
                             ),
                           ),
                   ),

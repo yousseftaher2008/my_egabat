@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
+import 'package:my_egabat/app/modules/auth/models/app_local.dart';
 
 import '../../../../../shared/styles/text_field_styles.dart';
 import 'choose_country.dart';
@@ -29,14 +31,18 @@ class PhoneCountryInput extends GetView<AuthController> {
               },
               controller: controller.phoneController,
               keyboardType: TextInputType.phone,
-              decoration: authInputDecoration(labelText: "رقم الهاتف").copyWith(
-                  suffixIcon: const SizedBox(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: ChooseCountry(),
-                    ),
+              decoration:
+                  authInputDecoration(labelText: "رقم الهاتف".tr).copyWith(
+                suffixIcon: const SizedBox(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: ChooseCountry(),
                   ),
-                  prefixIcon: const Icon(Icons.phone_enabled)),
+                ),
+                prefixIcon: Icon(
+                  appLocal == AppLocal.ar ? Icons.phone_enabled : Icons.phone,
+                ),
+              ),
               validator: (_) => controller.errorText,
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart' as launch;
 import '../styles/colors.dart';
 import 'errors_messages.dart';
@@ -36,9 +37,9 @@ class HelpButton extends StatelessWidget {
           whatsappLauncherError();
         }
       },
-      label: const Text(
-        "المساعدة",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      label: Text(
+        "المساعدة".tr,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

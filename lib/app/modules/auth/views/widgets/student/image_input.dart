@@ -36,14 +36,14 @@ class ImageInput extends GetView<RegisterController> {
                   onPressed: () {
                     controller.takePicture(ImageSource.camera);
                   },
-                  label: const Text("الكاميرا"),
+                  label: Text("الكاميرا".tr),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.image),
                   onPressed: () {
                     controller.takePicture(ImageSource.gallery);
                   },
-                  label: const Text("معرض الصور"),
+                  label: Text("معرض الصور".tr),
                 ),
               ],
             ),

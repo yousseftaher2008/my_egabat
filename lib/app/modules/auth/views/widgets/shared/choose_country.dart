@@ -56,8 +56,8 @@ class ChooseCountry extends GetView<AuthController> {
                               ),
                               color: primaryColor,
                             ),
-                            child: const Text(
-                              "اختر دولتك",
+                            child: Text(
+                              "اختر دولتك".tr,
                               textAlign: TextAlign.center,
                               style: welcomeTitleTextStyle,
                             ),

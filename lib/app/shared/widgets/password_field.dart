@@ -5,15 +5,17 @@ import '../styles/text_field_styles.dart';
 
 class AppPasswordField extends StatelessWidget {
   const AppPasswordField(
-    this._textEditingController, {
+    this.textEditingController, {
     this.onFieldSubmitted,
-    this.hintText = "رمز المرور",
+    this.hintText,
     this.moreValidating,
+    this.textInputAction,
     super.key,
   });
-  final TextEditingController _textEditingController;
+  final TextEditingController textEditingController;
+  final TextInputAction? textInputAction;
   final Function(String value)? onFieldSubmitted;
-  final String hintText;
+  final String? hintText;
   final String? Function()? moreValidating;
   @override
   @override
@@ -24,9 +26,12 @@ class AppPasswordField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Obx(
         () => TextFormField(
-          controller: _textEditingController,
+          controller: textEditingController,
+          textInputAction: textInputAction,
           obscureText: !isVisible.value,
-          decoration: authInputDecoration(hintText: hintText).copyWith(
+          decoration:
+              authInputDecoration(hintText: hintText ?? "ادخل رمز المرور".tr)
+                  .copyWith(
             prefixIcon: IconButton(
               onPressed: changeVisibility,
               icon: Icon(
@@ -35,9 +40,9 @@ class AppPasswordField extends StatelessWidget {
             ),
           ),
           validator: (value) => value?.isEmpty ?? true
-              ? "ادخل رمز المرور من فضلك"
+              ? "ادخل رمز المرور".tr
               : value!.length < 5
-                  ? "يجب ان يكون رمز المرور 5 حروف على الاقل"
+                  ? "يجب ان يكون رمز المرور 5 حروف على الاقل".tr
                   : moreValidating != null
                       ? moreValidating!()
                       : null,

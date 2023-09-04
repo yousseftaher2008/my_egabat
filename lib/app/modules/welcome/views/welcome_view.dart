@@ -19,12 +19,12 @@ class WelcomeView extends GetView<WelcomeController> {
         globalBackgroundColor: primaryColor,
         pages: [
           PageViewModel(
-            titleWidget: const Text(
-              "تعلم من افضل المدرسين",
+            titleWidget: Text(
+              "تعلم من افضل المدرسين".tr,
               style: welcomeTitleTextStyle,
             ),
-            bodyWidget: const Text(
-              "استمع لافضل المدرسين في كل المواد وانت في بيتك",
+            bodyWidget: Text(
+              "استمع لافضل المدرسين في كل المواد وانت في بيتك".tr,
               style: welcomeBodyTextStyle,
             ),
             image: Container(
@@ -40,12 +40,12 @@ class WelcomeView extends GetView<WelcomeController> {
           ),
           PageViewModel(
             decoration: const PageDecoration(),
-            titleWidget: const Text(
-              "اسال زملائك و مدرسينك",
+            titleWidget: Text(
+              "اسال زملائك و مدرسينك".tr,
               style: welcomeTitleTextStyle,
             ),
-            bodyWidget: const Text(
-              "تواصل مع زملائك و مدرسينك واسالهم عن كل ما يعارضك في طريقك",
+            bodyWidget: Text(
+              "تواصل مع زملائك و مدرسينك واسالهم عن كل ما يعارضك في طريقك".tr,
               style: welcomeBodyTextStyle,
             ),
             image: Container(
@@ -60,9 +60,9 @@ class WelcomeView extends GetView<WelcomeController> {
         ],
         showBackButton: true,
         showNextButton: true,
-        back: welcomeButton("السابق"),
-        next: welcomeButton("التالي"),
-        done: welcomeButton("تم"),
+        back: welcomeButton("السابق".tr),
+        next: welcomeButton("التالي".tr),
+        done: welcomeButton("تم".tr),
         onDone: controller.done,
         dotsDecorator: DotsDecorator(
           color: Colors.white,

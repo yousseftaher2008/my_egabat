@@ -32,11 +32,11 @@ class AuthController extends MainController {
   //country properties
   List<Country> countries = [];
   Country? selectedCountry;
-  final RxString selectedCountryCode = "اختر دولتك".obs;
+  final RxString selectedCountryCode = "اختر دولتك".tr.obs;
   //boolean values
   final RxBool isGettingCountries = false.obs;
   final RxBool isTeacher = false.obs;
-  final RxBool isChangingPass = true.obs;
+  final RxBool isChangingPass = false.obs;
   final RxBool isLogging = false.obs;
   final RxBool isInit = true.obs;
 
@@ -162,7 +162,6 @@ class AuthController extends MainController {
               : Get.offAllNamed(Routes.TEACHER_HOME);
           await clearControllers();
         } else if (response.statusCode == 401) {
-          // TODO: reset password
           Get.defaultDialog(
             title: "الشفره خاطئه",
             middleText: "هل تريد تغير الشفرة؟",
@@ -207,17 +206,17 @@ class AuthController extends MainController {
 
   Future<bool> isValidPhone() async {
     if (selectedCountry == null) {
-      errorText = "اختر دولتك اولا";
+      errorText = "اختر دولتك اولا".tr;
       return false;
     }
     if (phoneController.value.text == "") {
-      errorText = "أدخل رقما ";
+      errorText = "أدخل رقما".tr;
       return false;
     }
     final String? phone = await PhoneNumberUtil.normalizePhoneNumber(
         phoneNumber: phoneController.text, isoCode: selectedCountry!.isoCode);
     if (phone == null) {
-      errorText = "أدخل رقما صحيحا";
+      errorText = "أدخل رقما صحيحا".tr;
 
       return false;
     }
@@ -225,7 +224,7 @@ class AuthController extends MainController {
     final bool? isValid = await PhoneNumberUtil.isValidPhoneNumber(
         phoneNumber: phone, isoCode: selectedCountry!.isoCode);
     if (!(isValid ?? false)) {
-      errorText = "أدخل رقما صحيحا";
+      errorText = "أدخل رقما صحيحا".tr;
       return false;
     }
 
@@ -255,7 +254,7 @@ class AuthController extends MainController {
     teacherPassController.clear();
     phoneController.clear();
     selectedCountry = null;
-    selectedCountryCode.value = "اختر دولتك";
+    selectedCountryCode.value = "اختر دولتك".tr;
   }
 
   Future<void> clearControllers() async {

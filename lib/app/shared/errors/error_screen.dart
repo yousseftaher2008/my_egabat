@@ -26,11 +26,11 @@ class ErrorScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
             child: Text(
-              "خطأ غير معروف!",
-              style: TextStyle(
+              "خطأ غير معروف!".tr,
+              style: const TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -48,15 +48,14 @@ class ErrorScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 side: const BorderSide(color: Colors.white38, width: 2)),
-            child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text("الرجوع للشاشة الرئيسية",
+            child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text("الرجوع للشاشة الرئيسية".tr,
                     style: welcomeTitleTextStyle)),
           ),
           const SizedBox(height: 100),
           const HelpButton(
             phoneNumber: "+96599811025",
-            startMessage: "",
           ),
         ],
       ),

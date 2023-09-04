@@ -7,6 +7,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
+import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
 import 'package:my_egabat/app/shared/styles/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +24,7 @@ class RegisterController extends AuthController {
   Rx<File?> storedImage = Rxn<File?>();
   //controllers
   final AuthController authController = Get.find<AuthController>();
+  final MainController mainController = Get.find<MainController>();
   //form key
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   //Student TextEditingControllers
@@ -155,7 +157,7 @@ class RegisterController extends AuthController {
         return;
       }
       Map<String, String> headers = {
-        "Authorization": "Bearer ${super.authData.token}",
+        "Authorization": "Bearer ${mainController.authData.token}",
         "Content-Type": "multipart/form-data",
       };
       dio.MultipartFile? image = storedImage.value != null
@@ -215,8 +217,8 @@ class RegisterController extends AuthController {
       final Map<String, dynamic> data = json.decode(response.body);
       if (response.statusCode == 200) {
         Get.snackbar(
-          "تم انشاء الحساب بنجاح",
-          "يرجى التسجيل الان",
+          "تم انشاء الحساب بنجاح".tr,
+          "يرجى التسجيل الان".tr,
           duration: const Duration(seconds: 2),
           backgroundColor: primaryButtonColor,
           colorText: Colors.white,
@@ -229,7 +231,7 @@ class RegisterController extends AuthController {
         isSnackBarOpen.value = true;
         isRegistering.value = false;
         Get.snackbar(
-          "حدث خطأ",
+          "حدث خطأ".tr,
           "${data["errors"]["Message"]}",
           duration: const Duration(seconds: 2),
           backgroundColor: primaryButtonColor,
@@ -307,7 +309,7 @@ class RegisterController extends AuthController {
     passwordController.clear();
     authController.phoneController.clear();
     authController.selectedCountry = null;
-    authController.selectedCountryCode.value = "اختر دولتك";
+    authController.selectedCountryCode.value = "اختر دولتك".tr;
   }
 
   void clearSecondPageInputs() {

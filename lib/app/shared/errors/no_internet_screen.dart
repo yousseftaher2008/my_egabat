@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});
@@ -32,13 +33,7 @@ class NoInternetScreen extends StatelessWidget {
         );
     return SafeArea(
       child: Scaffold(
-        body:
-            // RefreshIndicator(
-            // onRefresh: () async {
-            //   await Get.offAllNamed(Routes.MAIN);
-            // },
-            // child:
-            Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -50,7 +45,7 @@ class NoInternetScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                "لايوجد اتصال بالانترنت",
+                "لا يوجد اتصال بالانترنت".tr,
                 style: TextStyle(
                   color: Color.fromARGB(255, 107, 105, 105),
                   fontSize: 20,
@@ -58,9 +53,9 @@ class NoInternetScreen extends StatelessWidget {
                 ),
               ),
             ),
-            stepWidget("(router or modem) تحقق من جهاز"),
+            stepWidget("(router or modem) تحقق من جهاز".tr),
             SizedBox(height: 15),
-            stepWidget(' او أعد الاتصال بشبكة Wifi او بيانات الهاتف او'),
+            stepWidget("او أعد الاتصال بشبكة Wifi او بيانات الهاتف او".tr),
           ],
         ),
         // ),

@@ -64,8 +64,8 @@ class AuthView extends GetView<AuthController> {
                                 },
                                 child: Text(
                                   controller.isTeacher.value
-                                      ? "انا طالب ولست مدرس؟"
-                                      : "انا مدرس ولست طالبا؟",
+                                      ? "انا طالب ولست مدرس؟".tr
+                                      : "انا مدرس ولست طالبا؟".tr,
                                 ),
                               ),
                             ),
