@@ -10,6 +10,6 @@ Widget _LottieLoading(double width, double height) => Center(
       child: SizedBox(
         height: height,
         width: width,
-        child: Lottie.asset('assets/loading.json'),
+        child: Lottie.asset('assets/default_lottie_loading.json'),
       ),
     );

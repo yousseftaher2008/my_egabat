@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/shared/styles/button_styles.dart';
+import 'package:my_egabat/app/core/constants/styles/button_styles.dart';
 
 import '../../../controllers/state_management/reset_password_controller.dart';
-import '../../../../../shared/widgets/password_field.dart';
-import '../../../../../shared/styles/text_field_styles.dart';
+import '../../../../../core/shared/widgets/password_field.dart';
+import '../../../../../core/constants/styles/text_field_styles.dart';
 
 class ResetPassword extends GetView<ResetPasswordController> {
   const ResetPassword({super.key});

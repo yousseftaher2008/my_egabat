@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'help_button.dart';
-import '../styles/colors.dart';
-import '../styles/text_styles.dart';
-import '../../routes/app_pages.dart';
+import '../../constants/styles/colors.dart';
+import '../../constants/styles/text_styles.dart';
+import '../../../routes/app_pages.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});

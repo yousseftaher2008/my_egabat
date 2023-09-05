@@ -8,15 +8,14 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
 import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
-import 'package:my_egabat/app/shared/styles/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_egabat/app/core/constants/styles/colors.dart';
 
 import 'auth_controller.dart';
 import '../../models/subject_model.dart';
 import '../../../../routes/app_pages.dart';
-import '../../../../shared/errors/error_screen.dart';
+import '../../../../core/shared/errors/error_screen.dart';
 
-import '../../../../shared/base_url.dart';
+import '../../../../core/constants/base_url.dart';
 import '../../models/register_model.dart';
 
 class RegisterController extends AuthController {
@@ -178,8 +177,7 @@ class RegisterController extends AuthController {
           .post(url, data: formData, options: dio.Options(headers: headers));
 
       if (response.statusCode == 200) {
-        final pref = await SharedPreferences.getInstance();
-        pref.setBool("isLogin", true);
+        appServices.pref.setBool("isLogin", true);
         isRegistering.value = false;
         clearControllers();
         Get.offAllNamed(Routes.STUDENT_HOME);

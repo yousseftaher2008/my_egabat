@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 // import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_egabat/app/shared/styles/colors.dart';
+import 'package:my_egabat/app/core/constants/styles/colors.dart';
 
 import 'auth_controller.dart';
-import '../../../../shared/base_url.dart';
+import '../../../../core/constants/base_url.dart';
 
 class ResetPasswordController extends GetxController {
   final GlobalKey<FormState> teacherResetPassFromKey = GlobalKey<FormState>();

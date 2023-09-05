@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/phone_country_input.dart';
 import 'package:my_egabat/app/modules/auth/views/widgets/shared/register_educational_information.dart';
-import 'package:my_egabat/app/shared/styles/button_styles.dart';
+import 'package:my_egabat/app/core/constants/styles/button_styles.dart';
 
-import '../../../../../shared/loading/loading.dart';
 import '../shared/register_personal_information.dart';
 
 class TeacherRegister extends GetView<RegisterController> {
@@ -36,7 +36,7 @@ class TeacherRegister extends GetView<RegisterController> {
                       : const SizedBox(),
                   Obx(
                     () => controller.registerController.isRegistering.value
-                        ? Loading()
+                        ? SmallLottieLoading()
                         : ElevatedButton(
                             onPressed: controller.isSnackBarOpen.value
                                 ? null

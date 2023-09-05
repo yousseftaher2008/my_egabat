@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
-import 'package:my_egabat/app/shared/widgets/email_field.dart';
-import 'package:my_egabat/app/shared/widgets/password_field.dart';
+import 'package:my_egabat/app/core/shared/widgets/email_field.dart';
+import 'package:my_egabat/app/core/shared/widgets/password_field.dart';
 
-import '../../../../../shared/loading/loading.dart';
-import '../../../../../shared/styles/button_styles.dart';
+import '../../../../../core/constants/styles/button_styles.dart';
 
 class TeacherLogin extends GetView<AuthController> {
   const TeacherLogin({super.key});
@@ -37,7 +37,7 @@ class TeacherLogin extends GetView<AuthController> {
           children: [
             Obx(
               () => controller.isLogging.value
-                  ? Loading()
+                  ? SmallLottieLoading()
                   : ElevatedButton(
                       style: primaryButtonStyle,
                       onPressed: controller.teacherLogin,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/shared/widgets/email_field.dart';
-import 'package:my_egabat/app/shared/widgets/password_field.dart';
+import 'package:my_egabat/app/core/shared/widgets/email_field.dart';
+import 'package:my_egabat/app/core/shared/widgets/password_field.dart';
 import '../../../controllers/state_management/register_controller.dart';
 import '../student/image_input.dart';
-import '../../../../../shared/styles/text_field_styles.dart';
+import '../../../../../core/constants/styles/text_field_styles.dart';
 
 class RegisterPersonalInfo extends GetView<RegisterController> {
   const RegisterPersonalInfo({this.isTeacher = false, super.key});

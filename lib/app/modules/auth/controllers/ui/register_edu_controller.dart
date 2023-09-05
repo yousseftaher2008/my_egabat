@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../shared/styles/colors.dart';
-import '../../../../shared/styles/text_styles.dart';
+import '../../../../core/constants/styles/colors.dart';
+import '../../../../core/constants/styles/text_styles.dart';
 import '../../models/register_model.dart';
 import '../../models/subject_model.dart';
 import '../state_management/register_controller.dart';

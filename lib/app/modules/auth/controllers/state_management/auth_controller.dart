@@ -5,17 +5,17 @@ import "package:get/get.dart";
 import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
+import "package:my_egabat/app/core/services/services.dart";
 import "package:my_egabat/app/modules/auth/bindings/reset_password_binding.dart";
 import "package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
 import "../../../../routes/app_pages.dart";
-import "../../../../shared/styles/colors.dart";
+import '../../../../core/constants/styles/colors.dart';
 import 'register_controller.dart';
-import '../../../../shared/errors/error_screen.dart';
-import "package:shared_preferences/shared_preferences.dart";
+import '../../../../core/shared/errors/error_screen.dart';
 
-import '../../../../shared/base_url.dart';
-import '../../models/country_model.dart';
+import '../../../../core/constants/base_url.dart';
+import '../../../../core/data/models/country_model.dart';
 
 class AuthController extends MainController {
   //phone properties
@@ -29,6 +29,8 @@ class AuthController extends MainController {
   final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
   //controllers
   late final RegisterController registerController;
+  @override
+  final AppServices appServices = Get.find<AppServices>();
   //country properties
   List<Country> countries = [];
   Country? selectedCountry;
@@ -101,10 +103,12 @@ class AuthController extends MainController {
             Get.offAll(const ErrorScreen());
             return;
           }
-          final SharedPreferences pref = await SharedPreferences.getInstance();
-          await pref.setString("userId", responseData["studentId"] ?? "");
-          await pref.setString("token", responseData["token"] ?? "");
-          await pref.setBool("isLogin", responseData["isExist"] ?? false);
+          await appServices.pref
+              .setString("userId", responseData["studentId"] ?? "");
+          await appServices.pref
+              .setString("token", responseData["token"] ?? "");
+          await appServices.pref
+              .setBool("isLogin", responseData["isExist"] ?? false);
           await getAuthData();
           if ((responseData["isExist"] ?? false)) {
             isLogging.value = false;
@@ -146,15 +150,15 @@ class AuthController extends MainController {
         );
         if ((response.statusCode) < 400) {
           final Map<String, dynamic> responseData = json.decode(response.body);
-          SharedPreferences pref = await SharedPreferences.getInstance();
-          await pref.setBool("isLogin", true);
-          await pref.setString('token', responseData["token"] ?? "");
-          await pref.setBool(
-              'isFreeTrial', responseData['isFreeTrial'] ?? false);
-          await pref.setBool(
+          await appServices.pref.setBool("isLogin", true);
+          await appServices.pref
+              .setString('token', responseData["token"] ?? "");
+          await appServices.pref
+              .setBool('isFreeTrial', responseData['isFreeTrial'] ?? false);
+          await appServices.pref.setBool(
               'isVisitingTeacher', responseData['isVisitingTeacher'] ?? false);
-          await pref.setString(
-              'teacherName', responseData["teacherName"] ?? "");
+          await appServices.pref
+              .setString('teacherName', responseData["teacherName"] ?? "");
 
           isLogging.value = false;
           (responseData["isVisitingTeacher"] == true)

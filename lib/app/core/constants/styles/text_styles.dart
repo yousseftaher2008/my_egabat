@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/localization/local.dart';
-import '../../modules/auth/models/app_local.dart';
+import '../../localization/local.dart';
+import '../../data/models/app_local.dart';
 import 'colors.dart';
 
 TextStyle welcomeTitleTextStyle = TextStyle(

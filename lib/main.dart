@@ -5,7 +5,7 @@ import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/core/localization/translation.dart';
 
 import 'app/core/services/services.dart';
-import 'app/shared/styles/colors.dart';
+import 'app/core/constants/styles/colors.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {

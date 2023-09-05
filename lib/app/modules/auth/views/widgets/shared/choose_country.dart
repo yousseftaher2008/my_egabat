@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_egabat/app/core/constants/loading/loading.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
-import 'package:my_egabat/app/shared/base_url.dart';
-import 'package:my_egabat/app/shared/loading/loading.dart';
-import 'package:my_egabat/app/shared/styles/text_styles.dart';
-import '../../../models/country_model.dart';
+import 'package:my_egabat/app/core/constants/base_url.dart';
+import 'package:my_egabat/app/core/constants/styles/text_styles.dart';
+import '../../../../../core/data/models/country_model.dart';
 
-import '../../../../../shared/styles/colors.dart';
+import '../../../../../core/constants/styles/colors.dart';
 
 class ChooseCountry extends GetView<AuthController> {
   const ChooseCountry({super.key});

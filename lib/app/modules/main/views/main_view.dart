@@ -11,9 +11,9 @@ import '../../home/teacher/visitor_home/bindings/visitor_home_binding.dart';
 import '../../home/teacher/visitor_home/views/visitor_home_view.dart';
 import '../../welcome/bindings/welcome_binding.dart';
 import '../../welcome/views/welcome_view.dart';
-import '../../../shared/errors/error_screen.dart';
-import '../../../shared/errors/no_internet_screen.dart';
-import '../../../shared/loading/lottie_loading.dart';
+import '../../../core/shared/errors/error_screen.dart';
+import '../../../core/shared/errors/no_internet_screen.dart';
+import '../../../core/constants/loading/lottie_loading.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {

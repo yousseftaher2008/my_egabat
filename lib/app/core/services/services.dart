@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppServices extends GetxService {
-  late SharedPreferences sharedPreferences;
+  late SharedPreferences pref;
 
   Future<AppServices> init() async {
     await Firebase.initializeApp();
-    sharedPreferences = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
     return this;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/shared/loading/loading.dart';
-import '../../../../../shared/styles/button_styles.dart';
+import '../../../../../core/constants/loading/lottie_loading.dart';
+import '../../../../../core/constants/styles/button_styles.dart';
 import '../../../controllers/state_management/auth_controller.dart';
 import '../shared/phone_country_input.dart';
 import '../shared/register_educational_information.dart';
@@ -29,7 +29,7 @@ class StudentAuth extends GetView<AuthController> {
                     : PhoneCountryInput(onSaved: controller.studentLogin),
                 controller.isLogging.value ||
                         controller.registerController.isRegistering.value
-                    ? Loading()
+                    ? SmallLottieLoading()
                     : ElevatedButton(
                         style: primaryButtonStyle,
                         onPressed: controller

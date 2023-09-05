@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../styles/text_field_styles.dart';
+import '../../constants/styles/text_field_styles.dart';
 
 class AppEmailField extends StatelessWidget {
   const AppEmailField(
