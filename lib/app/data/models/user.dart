@@ -1,10 +1,13 @@
+import 'package:get/get.dart';
+import 'package:my_egabat/app/core/services/services.dart';
+
 class User {
-  final String id, token, userName, userEmail, userImage;
+  late String? userId, token, userName, userEmail, userImage;
+  late bool? isLogin, isVisitor, isTeacher;
 
-  final bool isLogin, isVisitor, isTeacher;
-
+  final AppServices _appServices = Get.find<AppServices>();
   User({
-    required this.id,
+    required this.userId,
     required this.token,
     required this.userName,
     required this.userEmail,
@@ -13,4 +16,26 @@ class User {
     required this.isTeacher,
     required this.isVisitor,
   });
+
+  Future<void> setData() async {
+    await _appServices.pref.setString("token", token ?? "");
+    await _appServices.pref.setString("userId", userId ?? "");
+    await _appServices.pref.setString("userName", userName ?? "");
+    await _appServices.pref.setString("userEmail", userEmail ?? "");
+    await _appServices.pref.setString("userImage", userImage ?? "");
+    await _appServices.pref.setBool("isTeacher", isTeacher ?? false);
+    await _appServices.pref.setBool("isVisitingTeacher", isVisitor ?? false);
+    await _appServices.pref.setBool("isLogin", isLogin ?? false);
+  }
+
+  User.fromPref() {
+    token = _appServices.pref.getString('token');
+    userName = _appServices.pref.getString('userName');
+    userEmail = _appServices.pref.getString('userEmail');
+    userImage = _appServices.pref.getString('userImage');
+    userId = _appServices.pref.getString('userId');
+    isLogin = _appServices.pref.getBool('isLogin');
+    isTeacher = _appServices.pref.getBool('isTeacher');
+    isVisitor = _appServices.pref.getBool('isVisitingTeacher');
+  }
 }

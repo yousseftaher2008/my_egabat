@@ -6,12 +6,12 @@ import '../../../routes/app_pages.dart';
 class WelcomeController extends GetxController {
   AppServices appServices = Get.find<AppServices>();
   Future<void> done() async {
-    await setIsViewed();
+    await setIsWelcomeViewed();
     Get.offAllNamed(Routes.AUTH);
   }
 
-  Future<void> setIsViewed() async {
+  Future<void> setIsWelcomeViewed() async {
     Get.find<MainController>().isWelcomeViewed = true;
-    await appServices.pref.setBool("isViewed", true);
+    await appServices.pref.setBool("isWelcomeViewed", true);
   }
 }

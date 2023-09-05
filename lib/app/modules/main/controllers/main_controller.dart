@@ -23,6 +23,7 @@ class MainController extends GetxController {
   @override
   Future<void> onReady() async {
     final fbm = FirebaseMessaging.instance;
+    user = User.fromPref();
     deviceToken = await fbm.getToken();
     await getIsWelcomeViewed();
     connectionStream =
@@ -34,36 +35,11 @@ class MainController extends GetxController {
       }
       isLoading.value = false;
     });
-    getAuthData();
     super.onReady();
   }
 
   Future<bool> isAuth() async {
-    await getAuthData();
-    return user.isLogin && user.token.isNotEmpty;
-  }
-
-  Future<void> getAuthData() async {
-    final String token = appServices.pref.getString('token') ?? "";
-    final String userName = appServices.pref.getString('userName') ?? "";
-    final String userEmail = appServices.pref.getString('userEmail') ?? "";
-    final String userImage = appServices.pref.getString('userImage') ?? "";
-    final String userId = appServices.pref.getString('userId') ?? "";
-    final bool isLogin = appServices.pref.getBool('isLogin') ?? false;
-    final bool isTeacher = appServices.pref.getBool('isTeacher') ?? false;
-    final bool isVisitor =
-        appServices.pref.getBool('isVisitingTeacher') ?? false;
-
-    user = User(
-      id: userId,
-      token: token,
-      userName: userName,
-      userEmail: userEmail,
-      userImage: userImage,
-      isLogin: isLogin,
-      isTeacher: isTeacher,
-      isVisitor: isVisitor,
-    );
+    return (user.isLogin ?? false) && (user.token?.isNotEmpty ?? false);
   }
 
   Future<bool> isConnected() async {
@@ -72,7 +48,6 @@ class MainController extends GetxController {
   }
 
   Future<void> getIsWelcomeViewed() async {
-    isWelcomeViewed = appServices.pref.getBool("isViewed") ?? false;
-    // isWelcomeViewed = false;
+    isWelcomeViewed = appServices.pref.getBool("isWelcomeViewed") ?? false;
   }
 }

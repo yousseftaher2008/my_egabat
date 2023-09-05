@@ -6,8 +6,9 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_egabat/app/data/models/student.dart';
+import 'package:my_egabat/app/data/models/user.dart';
 import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
-import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
 import 'package:my_egabat/app/core/constants/styles/colors.dart';
 
 import 'auth_controller.dart';
@@ -23,7 +24,6 @@ class RegisterController extends AuthController {
   Rx<File?> storedImage = Rxn<File?>();
   //controllers
   final AuthController authController = Get.find<AuthController>();
-  final MainController mainController = Get.find<MainController>();
   //form key
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   //Student TextEditingControllers
@@ -155,6 +155,8 @@ class RegisterController extends AuthController {
         isRegistering.value = false;
         return;
       }
+      print(",${mainController.user.token},");
+
       Map<String, String> headers = {
         "Authorization": "Bearer ${mainController.user.token}",
         "Content-Type": "multipart/form-data",
@@ -162,7 +164,7 @@ class RegisterController extends AuthController {
       dio.MultipartFile? image = storedImage.value != null
           ? await dio.MultipartFile.fromFile(storedImage.value!.path.toString())
           : null;
-      String body = json.encode({
+      dio.FormData formData = dio.FormData.fromMap({
         "ProfileImage": image != null ? [image] : null,
         'Name': nameController.text,
         'NickName': nickNameController.text,
@@ -171,17 +173,32 @@ class RegisterController extends AuthController {
         'StageId': stageId ?? "",
         'GradeId': gradeId,
       });
-      final url = Uri.parse('${baseUrl}Student/StudentRegistration');
-      final response = await post(url, body: body, headers: headers);
+      const url = ('${baseUrl}Student/StudentRegistration');
+      late final dio.Response response;
+      response = await dio.Dio()
+          .post(url, data: formData, options: dio.Options(headers: headers));
 
       if (response.statusCode == 200) {
-        appServices.pref.setBool("isLogin", true);
-        isRegistering.value = false;
-        clearControllers();
-        Get.offAllNamed(Routes.STUDENT_HOME);
+        final Student student = Student.fromRegisterJson(response.data);
+        mainController.user = User(
+          userId: response.data["studentId"],
+          token: response.data["token"],
+          userName: student.name,
+          userEmail: student.email,
+          userImage: student.profileImage,
+          isLogin: true,
+          isTeacher: false,
+          isVisitor: false,
+        )..setData();
+
+        Get.offAllNamed(Routes.STUDENT_HOME, arguments: {
+          "student": student,
+        });
+        return;
       }
     } catch (e) {
       isRegistering.value = false;
+      print(e);
       Get.offAll(() => const ErrorScreen());
     }
   }
@@ -278,9 +295,7 @@ class RegisterController extends AuthController {
         return;
       }
 
-      !isEduContInitial
-          ? Get.put(RegisterEduController(), permanent: true)
-          : null;
+      Get.lazyPut(() => RegisterEduController(), fenix: true);
       isFirstRegisterStep.value = false;
     }
   }
@@ -319,29 +334,3 @@ class RegisterController extends AuthController {
     gradeId = null;
   }
 }
-
-/*
-  {
-    studentId: 528f232d-3193-410f-828e-08dbad4f3561,
-    countryId: 00000000-0000-0000-0000-000000000000,
-    freeTrialDate: 2023-09-08T00:12:16.2921398-07:00,
-    isFreeTrial: true,
-    isSubscriped: false,
-    name: youssef taher,
-    nickName: yhamrosh,
-    mobile: +96599887766,
-    email: yhamrosh@gmail.com,
-    isActive: true,
-    premiumSubscription: false,
-    sectionId: b1829161-0f1b-414f-a913-707aaeb7bd89,
-    stageId: 00000000-0000-0000-0000-000000000000,
-    gradeId: d75b27f1-b172-45a0-9fdf-0582cbb7e47f,
-    profileImage: Files/Students\ProfileImage/7aec3e0e-f2ab-44f8-a02e-ca45659aeda1.jpg
-  }
-  deviceToken: null,
-  studentImage: null,
-  sectionName: null,
-  stageName: null,
-  gradeName: null,
-  identityId: null,
-*/

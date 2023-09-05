@@ -8,6 +8,7 @@ import "package:libphonenumber/libphonenumber.dart";
 import "package:my_egabat/app/modules/auth/bindings/reset_password_binding.dart";
 import "package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
+import "../../../../data/models/user.dart";
 import "../../../../routes/app_pages.dart";
 import '../../../../core/constants/styles/colors.dart';
 import 'register_controller.dart';
@@ -28,6 +29,7 @@ class AuthController extends MainController {
   final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
   //controllers
   late final RegisterController registerController;
+  final MainController mainController = Get.find<MainController>();
   //country properties
   List<Country> countries = [];
   Country? selectedCountry;
@@ -42,7 +44,7 @@ class AuthController extends MainController {
   @override
   onReady() async {
     super.onReady();
-    Get.put(RegisterController(), permanent: true);
+    Get.lazyPut<RegisterController>(() => RegisterController(), fenix: true);
     registerController = Get.find<RegisterController>();
     isInit.value = false;
   }
@@ -100,17 +102,14 @@ class AuthController extends MainController {
             Get.offAll(const ErrorScreen());
             return;
           }
-          await appServices.pref
-              .setString("userId", responseData["studentId"] ?? "");
-          await appServices.pref
-              .setString("token", responseData["token"] ?? "");
-          await appServices.pref
-              .setBool("isLogin", responseData["isExist"] ?? false);
-          await getAuthData();
+          mainController.user.token = responseData["token"];
           if ((responseData["isExist"] ?? false)) {
+            mainController.user.isLogin = true;
+            mainController.user.setData();
             isLogging.value = false;
-            Get.offAllNamed(Routes.STUDENT_HOME);
-            await clearControllers();
+            Get.offAllNamed(Routes.STUDENT_HOME, arguments: {
+              "token": responseData["token"],
+            });
             return;
           } else {
             isLogging.value = false;
@@ -147,19 +146,20 @@ class AuthController extends MainController {
         );
         if ((response.statusCode) < 400) {
           final Map<String, dynamic> responseData = json.decode(response.body);
-          await appServices.pref.setBool("isLogin", true);
-          await appServices.pref
-              .setString('token', responseData["token"] ?? "");
-          await appServices.pref
-              .setBool('isFreeTrial', responseData['isFreeTrial'] ?? false);
-          await appServices.pref.setBool(
-              'isVisitingTeacher', responseData['isVisitingTeacher'] ?? false);
-
+          mainController.user = User(
+            token: responseData["token"],
+            userId: null,
+            userName: responseData["teacherName"],
+            userEmail: null,
+            userImage: null,
+            isLogin: true,
+            isTeacher: !responseData["isVisitingTeacher"],
+            isVisitor: responseData['isVisitingTeacher'],
+          )..setData();
           isLogging.value = false;
           (responseData["isVisitingTeacher"] == true)
               ? Get.offAllNamed(Routes.VISITOR_HOME)
               : Get.offAllNamed(Routes.TEACHER_HOME);
-          await clearControllers();
         } else if (response.statusCode == 401) {
           Get.defaultDialog(
             title: "الشفره خاطئه",
@@ -255,22 +255,4 @@ class AuthController extends MainController {
     selectedCountry = null;
     selectedCountryCode.value = "اختر دولتك".tr;
   }
-
-  Future<void> clearControllers() async {
-    await Future.delayed(const Duration(milliseconds: 1));
-    Get.delete<AuthController>(force: true);
-    Get.delete<RegisterController>(force: true);
-  }
 }
-
-
-/*
-  {
-    studentId: ee0c4eb1-473f-4a62-bb60-08dbaddb70be,
-    token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiKzk2NTk5OTk5OTk5IiwiZW1haWwiOiIrOTY1OTk5OTk5OTkiLCJuYW1laWQiOiJlZTBjNGViMS00NzNmLTRhNjItYmI2MC0wOGRiYWRkYjcwYmUiLCJyb2xlIjoiU3R1ZGVudCIsIm5iZiI6MTY5Mzg5NzY2MiwiZXhwIjoxNjk1MTA3MjYyLCJpYXQiOjE2OTM4OTc2NjJ9.SXLqNBjorebQl52QrIEgEhBq_7Cw92CiKuyFgkdzU2KWo8iLAoSva6jLTOJP70Ix1GsA8r69CRcmPZvgcqKpIg,
-    isFreeTrial: true,
-    freeTrialDate: 2023-09-08T00:06:14.8164996,
-    isExist: true,
-    isActive: true
-  }
-*/
