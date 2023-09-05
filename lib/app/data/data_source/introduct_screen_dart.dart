@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/data/models/introduction_page.dart';
+import 'package:my_egabat/app/data/models/introduction_page.dart';
 
 List<IntroductionPage> introductionScreenData = [
   IntroductionPage(

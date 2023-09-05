@@ -63,15 +63,15 @@ class MainView extends GetView<MainController> {
                   }
 
                   if (isAuth.data ?? false) {
-                    if (controller.authData.teacherName.isEmpty) {
-                      StudentHomeBinding().dependencies();
-                      return const StudentHomeView();
-                    } else if (controller.authData.isVisitor) {
+                    if (controller.user.isTeacher) {
+                      TeacherHomeBinding().dependencies();
+                      return const TeacherHomeView();
+                    } else if (controller.user.isVisitor) {
                       VisitorHomeBinding().dependencies();
                       return const VisitorHomeView();
                     } else {
-                      TeacherHomeBinding().dependencies();
-                      return const TeacherHomeView();
+                      StudentHomeBinding().dependencies();
+                      return const StudentHomeView();
                     }
                   } else {
                     AuthBinding().dependencies();

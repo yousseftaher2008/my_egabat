@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/data/models/app_local.dart';
+import 'package:my_egabat/app/data/models/app_local.dart';
 
 import '../services/services.dart';
 

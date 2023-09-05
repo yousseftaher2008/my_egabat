@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
-import 'package:my_egabat/app/core/data/models/app_local.dart';
+import 'package:my_egabat/app/data/models/app_local.dart';
 
 import '../../../../../core/constants/styles/text_field_styles.dart';
 import 'choose_country.dart';

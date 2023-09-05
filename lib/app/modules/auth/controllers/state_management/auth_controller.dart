@@ -5,7 +5,6 @@ import "package:get/get.dart";
 import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
-import "package:my_egabat/app/core/services/services.dart";
 import "package:my_egabat/app/modules/auth/bindings/reset_password_binding.dart";
 import "package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart";
 import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
@@ -15,7 +14,7 @@ import 'register_controller.dart';
 import '../../../../core/shared/errors/error_screen.dart';
 
 import '../../../../core/constants/base_url.dart';
-import '../../../../core/data/models/country_model.dart';
+import '../../../../data/models/country_model.dart';
 
 class AuthController extends MainController {
   //phone properties
@@ -29,8 +28,6 @@ class AuthController extends MainController {
   final GlobalKey<FormState> teacherFromKey = GlobalKey<FormState>();
   //controllers
   late final RegisterController registerController;
-  @override
-  final AppServices appServices = Get.find<AppServices>();
   //country properties
   List<Country> countries = [];
   Country? selectedCountry;
@@ -157,8 +154,6 @@ class AuthController extends MainController {
               .setBool('isFreeTrial', responseData['isFreeTrial'] ?? false);
           await appServices.pref.setBool(
               'isVisitingTeacher', responseData['isVisitingTeacher'] ?? false);
-          await appServices.pref
-              .setString('teacherName', responseData["teacherName"] ?? "");
 
           isLogging.value = false;
           (responseData["isVisitingTeacher"] == true)
@@ -267,3 +262,15 @@ class AuthController extends MainController {
     Get.delete<RegisterController>(force: true);
   }
 }
+
+
+/*
+  {
+    studentId: ee0c4eb1-473f-4a62-bb60-08dbaddb70be,
+    token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiKzk2NTk5OTk5OTk5IiwiZW1haWwiOiIrOTY1OTk5OTk5OTkiLCJuYW1laWQiOiJlZTBjNGViMS00NzNmLTRhNjItYmI2MC0wOGRiYWRkYjcwYmUiLCJyb2xlIjoiU3R1ZGVudCIsIm5iZiI6MTY5Mzg5NzY2MiwiZXhwIjoxNjk1MTA3MjYyLCJpYXQiOjE2OTM4OTc2NjJ9.SXLqNBjorebQl52QrIEgEhBq_7Cw92CiKuyFgkdzU2KWo8iLAoSva6jLTOJP70Ix1GsA8r69CRcmPZvgcqKpIg,
+    isFreeTrial: true,
+    freeTrialDate: 2023-09-08T00:06:14.8164996,
+    isExist: true,
+    isActive: true
+  }
+*/

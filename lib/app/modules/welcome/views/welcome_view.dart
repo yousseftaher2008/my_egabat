@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:introduction_screen/introduction_screen.dart";
-import "package:my_egabat/app/core/data/models/introduction_page.dart";
-import "../../../core/data/data_source/introduct_screen_dart.dart";
+import 'package:my_egabat/app/data/models/introduction_page.dart';
+import '../../../data/data_source/introduct_screen_dart.dart';
 import "../../../core/shared/widgets/welcome_button.dart";
 import "../../welcome/controllers/welcome_controller.dart";
 import '../../../core/constants/styles/colors.dart';
