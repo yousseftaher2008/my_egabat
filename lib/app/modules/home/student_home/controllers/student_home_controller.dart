@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:my_egabat/app/data/models/student.dart';
 import 'package:my_egabat/app/data/models/user.dart';
 import 'package:my_egabat/app/modules/main/controllers/main_controller.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../../../core/functions/get_student_profile.dart';
 
@@ -27,5 +28,13 @@ class StudentHomeController extends MainController {
       )..setData();
     }
     currentUser = mainController.user;
+  }
+
+  void checkQrCode(QRViewController qrController) {
+    qrController.scannedDataStream.listen((Barcode event) {
+      if (event.code != null) {
+        Get.back();
+      }
+    });
   }
 }

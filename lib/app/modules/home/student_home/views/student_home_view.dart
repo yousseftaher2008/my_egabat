@@ -35,7 +35,7 @@ class StudentHomeView extends GetView<StudentHomeController> {
               ),
             ],
           ),
-          // bottomSheet: const AppBottomSheet(),
+          bottomSheet: const AppBottomSheet(),
         );
       },
     );

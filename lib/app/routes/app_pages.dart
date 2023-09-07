@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../data/models/app_pages_enum.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
 import '../modules/main/bindings/main_binding.dart';
@@ -20,6 +21,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
+  static Rx<AppPagesEnum> currentPage = AppPagesEnum.home.obs;
   static const INITIAL = Routes.MAIN;
 
   static final routes = [

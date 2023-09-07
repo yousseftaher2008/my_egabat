@@ -1,6 +1,7 @@
 //TODO: default snackBars styles
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/core/localization/translation.dart';
@@ -12,12 +13,17 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
-  LocaleController controller = Get.put<LocaleController>(LocaleController());
+  await ScreenUtil.ensureScreenSize();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
+  LocaleController controller = Get.put<LocaleController>(LocaleController());
   runApp(
     GetMaterialApp(
       // textDirection: TextDirection.rtl,

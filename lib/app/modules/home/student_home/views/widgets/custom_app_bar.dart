@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/constants/base_url.dart';
+import 'package:my_egabat/app/core/constants/styles/colors.dart';
 import 'package:my_egabat/app/core/shared/widgets/app_bars.dart';
 import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
+import 'package:my_egabat/app/modules/home/student_home/views/screens/qr_code_screen.dart';
 
 import '../../../../../core/shared/widgets/default_user_image.dart';
 
@@ -22,38 +24,24 @@ class CustomAppBar extends GetView<StudentHomeController> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${"اهلا".tr} ${controller.currentUser.userName!}",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
-                  ),
-                  height: 50,
-                  width: 50,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(26),
-                    child: FadeInImage(
-                      fit: BoxFit.cover,
-                      placeholder: defaultUserImage,
-                      image: (controller.currentUser.userImage?.isNotEmpty ??
-                              false)
-                          ? NetworkImage(
-                              "$imageUrl${controller.currentUser.userImage}")
-                          : defaultUserImage as ImageProvider,
-                    ),
-                  ),
-                ),
-              ],
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: secondaryColor,
+              ),
+              height: 50,
+              width: 50,
+              child: (controller.currentUser.userImage?.isNotEmpty ?? false)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: FadeInImage(
+                        fit: BoxFit.cover,
+                        placeholder: defaultUserImage,
+                        image: NetworkImage(
+                            "$imageUrl${controller.currentUser.userImage}"),
+                      ),
+                    )
+                  : userImageByName(controller.currentUser.userName!),
             ),
             const Spacer(),
             IconButton(
@@ -64,7 +52,9 @@ class CustomAppBar extends GetView<StudentHomeController> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const QrCodeScreen());
+              },
               icon: const Icon(
                 Icons.qr_code_2,
                 color: Colors.white,
