@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:my_egabat/app/core/services/services.dart';
 
 class User {
-  late String? userId, token, userName, userEmail, userImage;
-  late bool? isLogin, isVisitor, isTeacher;
+  String? userId, token, userName, userEmail, userImage;
+  bool? isLogin, isVisitor, isTeacher;
 
   final AppServices _appServices = Get.find<AppServices>();
   User({
     required this.userId,
-    required this.token,
+    this.token,
     required this.userName,
     required this.userEmail,
     required this.userImage,

@@ -1,5 +1,6 @@
 //TODO: default snackBars styles
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/core/localization/translation.dart';
@@ -12,6 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
   LocaleController controller = Get.put<LocaleController>(LocaleController());
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
+  );
   runApp(
     GetMaterialApp(
       // textDirection: TextDirection.rtl,
@@ -21,8 +27,7 @@ void main() async {
       translations: MyTranslation(),
       theme: ThemeData(
         primaryColor: primaryColor,
-        colorScheme:
-            const ColorScheme.light(secondary: primaryColorTransparent),
+        colorScheme: const ColorScheme.light(secondary: primaryColorLight),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,

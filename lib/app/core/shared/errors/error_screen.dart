@@ -43,7 +43,7 @@ class ErrorScreen extends StatelessWidget {
               Get.offAllNamed(Routes.MAIN);
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: primaryColorTransparent,
+                backgroundColor: primaryColorLight,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

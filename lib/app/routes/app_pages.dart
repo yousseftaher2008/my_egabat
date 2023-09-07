@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
-import '../modules/auth/views/screens/auth_view.dart';
+import '../modules/auth/views/auth_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/home/student_home/bindings/student_home_binding.dart';

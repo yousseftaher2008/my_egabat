@@ -67,6 +67,7 @@ class MyTranslation extends Translations {
           'غير معروف': 'غير معروف',
           "تسجيل كمعلم زائر": "تسجيل كمعلم زائر",
           "مسح الكل": "مسح الكل",
+          "اهلا": "اهلا",
         },
         "en": {
           "اختر دولتك": "Choose your country",
@@ -133,6 +134,7 @@ class MyTranslation extends Translations {
           'غير معروف': 'Unknown',
           "تسجيل كمعلم زائر": "Login as a visitor teacher",
           "مسح الكل": "Delete all",
+          "اهلا": "hello",
         }
       };
 }

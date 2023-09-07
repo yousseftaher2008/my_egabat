@@ -16,7 +16,7 @@ class HelpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColorTransparent,
+          backgroundColor: primaryColorLight,
           // backgroundColor: Colors.transparent,
           side: const BorderSide(
             color: Colors.white,

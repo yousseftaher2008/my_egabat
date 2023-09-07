@@ -41,7 +41,7 @@ class ResetPasswordController extends GetxController {
         "${"حدث خطأ".tr} ${errMessage != null ? 'غير معروف'.tr : ''}",
         errMessage ?? '',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColorTransparent,
+        backgroundColor: primaryColorLight,
         colorText: Colors.white,
       );
 

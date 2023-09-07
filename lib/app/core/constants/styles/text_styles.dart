@@ -11,11 +11,11 @@ TextStyle welcomeTitleTextStyle = TextStyle(
 );
 
 TextStyle welcomeBodyTextStyle = TextStyle(
-  color: welcomeBodyTextColor,
+  color: secondaryColorLight,
   fontSize: appLocal == AppLocal.ar ? 20 : 17,
   fontWeight: FontWeight.w400,
 );
 const TextStyle textFormFieldStyle = TextStyle(
-  color: primaryColorTransparent,
+  color: primaryColorLight,
   fontWeight: FontWeight.bold,
 );

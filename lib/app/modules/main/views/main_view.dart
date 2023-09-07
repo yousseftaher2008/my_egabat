@@ -6,7 +6,7 @@ import 'package:my_egabat/app/modules/home/teacher/teacher_home/bindings/teacher
 import 'package:my_egabat/app/modules/home/teacher/teacher_home/views/teacher_home_view.dart';
 
 import '../../auth/bindings/auth_binding.dart';
-import '../../auth/views/screens/auth_view.dart';
+import '../../auth/views/auth_view.dart';
 import '../../home/teacher/visitor_home/bindings/visitor_home_binding.dart';
 import '../../home/teacher/visitor_home/views/visitor_home_view.dart';
 import '../../welcome/bindings/welcome_binding.dart';
@@ -74,6 +74,7 @@ class MainView extends GetView<MainController> {
                       return const StudentHomeView();
                     }
                   } else {
+                    print(isAuth.data);
                     AuthBinding().dependencies();
                     return const AuthView();
                   }

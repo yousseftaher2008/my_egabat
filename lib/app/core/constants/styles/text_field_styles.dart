@@ -10,7 +10,7 @@ InputDecoration authInputDecoration({String? labelText, String? hintText}) =>
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
           width: 1.5,
-          color: primaryColorTransparent,
+          color: primaryColorLight,
         ),
       ),
       enabledBorder: OutlineInputBorder(

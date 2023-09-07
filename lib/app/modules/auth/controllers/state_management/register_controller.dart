@@ -155,7 +155,6 @@ class RegisterController extends AuthController {
         isRegistering.value = false;
         return;
       }
-      print(",${mainController.user.token},");
 
       Map<String, String> headers = {
         "Authorization": "Bearer ${mainController.user.token}",
@@ -182,7 +181,7 @@ class RegisterController extends AuthController {
         final Student student = Student.fromRegisterJson(response.data);
         mainController.user = User(
           userId: response.data["studentId"],
-          token: response.data["token"],
+          token: mainController.user.token,
           userName: student.name,
           userEmail: student.email,
           userImage: student.profileImage,
@@ -198,7 +197,6 @@ class RegisterController extends AuthController {
       }
     } catch (e) {
       isRegistering.value = false;
-      print(e);
       Get.offAll(() => const ErrorScreen());
     }
   }
