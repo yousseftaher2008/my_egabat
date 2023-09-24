@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -19,7 +18,7 @@ class QrCodeScreen extends GetView<StudentHomeController> {
       backgroundColor: primaryColor,
       title: const Text("QR Code"),
     );
-    double qrCodeDimensions = min(pageHeight(), pageWidth() - 100.w);
+    double qrCodeDimensions = min(pageHeight(), pageWidth() - 100);
     double heightWithoutQrCode = ((pageHeight() -
                 MediaQuery.of(context).padding.top -
                 screenAppBar.preferredSize.height) -
@@ -51,7 +50,7 @@ class QrCodeScreen extends GetView<StudentHomeController> {
             alignment: Alignment.centerRight,
             child: Container(
               color: pageColor,
-              width: 50.w,
+              width: 50,
               height: qrCodeDimensions,
             ),
           ),
@@ -59,21 +58,21 @@ class QrCodeScreen extends GetView<StudentHomeController> {
             alignment: Alignment.centerLeft,
             child: Container(
               color: pageColor,
-              width: 50.w,
+              width: 50,
               height: qrCodeDimensions,
             ),
           ),
           Center(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: primaryColor,
                   width: 4,
                 ),
               ),
-              height: qrCodeDimensions + 10.r,
-              width: qrCodeDimensions + 10.r,
+              height: qrCodeDimensions + 10,
+              width: qrCodeDimensions + 10,
             ),
           ),
         ],

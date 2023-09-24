@@ -14,8 +14,8 @@ Widget firstAppBar({required Widget child}) => DecoratedBox(
               primaryColorLight,
             ],
             stops: [
-              0,
               0.5,
+              0.7,
               0.75,
               1
             ]),
