@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/constants/base_url.dart';
 import 'package:my_egabat/app/core/constants/styles/colors.dart';
 import 'package:my_egabat/app/core/shared/widgets/app_bars.dart';
 import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/screens/qr_code_screen.dart';
 
 import '../../../../../core/shared/widgets/default_user_image.dart';
 
@@ -45,7 +45,9 @@ class CustomAppBar extends GetView<StudentHomeController> {
             ),
             const Spacer(),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // Get.to(() => SearchScreen());
+              },
               icon: const Icon(
                 Icons.search,
                 color: Colors.white,
@@ -53,7 +55,9 @@ class CustomAppBar extends GetView<StudentHomeController> {
             ),
             IconButton(
               onPressed: () {
-                Get.to(() => const QrCodeScreen());
+                FlutterBarcodeScanner.scanBarcode(
+                        "$primaryColor", "الغاء".tr, true, ScanMode.QR)
+                    .then(controller.qrLogin);
               },
               icon: const Icon(
                 Icons.qr_code_2,
