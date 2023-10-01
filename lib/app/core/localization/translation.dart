@@ -68,6 +68,7 @@ class MyTranslation extends Translations {
           "تسجيل كمعلم زائر": "تسجيل كمعلم زائر",
           "مسح الكل": "مسح الكل",
           "اهلا": "اهلا",
+          "الغاء": "الغاء",
         },
         "en": {
           "اختر دولتك": "Choose your country",
@@ -135,6 +136,7 @@ class MyTranslation extends Translations {
           "تسجيل كمعلم زائر": "Login as a visitor teacher",
           "مسح الكل": "Delete all",
           "اهلا": "hello",
+          "الغاء": "Cancel",
         }
       };
 }
