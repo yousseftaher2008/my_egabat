@@ -96,7 +96,7 @@ class RegisterEduController extends GetxController {
                         Center(
                           child: Text(
                             isShowSubjects
-                                ? (item as Subject).fullName
+                                ? (item as AuthSubject).fullName
                                 : item.name,
                             style: welcomeTitleTextStyle.copyWith(
                               fontSize: 20,
@@ -135,7 +135,7 @@ class RegisterEduController extends GetxController {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white.withOpacity(0.3),
                                 backgroundColor:
-                                    (item as Subject).isChosen.value
+                                    (item as AuthSubject).isChosen.value
                                         ? Colors.white.withOpacity(0.3)
                                         : null,
                               ),
@@ -262,7 +262,7 @@ class RegisterEduController extends GetxController {
   }
 
   void selectSubject(Register newSubject) {
-    (newSubject as Subject).isChosen.value = !newSubject.isChosen.value;
+    (newSubject as AuthSubject).isChosen.value = !newSubject.isChosen.value;
     newSubject.isChosen.value
         ? _registerController.selectedSubjects
             .putIfAbsent(newSubject.id, () => newSubject)

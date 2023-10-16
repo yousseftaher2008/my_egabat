@@ -3,16 +3,22 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/constants/base_url.dart';
 import 'package:my_egabat/app/core/constants/styles/colors.dart';
+import 'package:my_egabat/app/core/localization/local.dart';
 import 'package:my_egabat/app/core/shared/widgets/app_bars.dart';
+import 'package:my_egabat/app/data/models/app_local.dart';
 import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
 
 import '../../../../../core/shared/widgets/default_user_image.dart';
+import '../../controllers/student_search_controller.dart';
+import 'anim_search_bar.dart';
 
 class CustomAppBar extends GetView<StudentHomeController> {
   const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final StudentSearchController studentSearchController =
+        Get.find<StudentSearchController>();
     return firstAppBar(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -22,12 +28,12 @@ class CustomAppBar extends GetView<StudentHomeController> {
           right: 8.0,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: secondaryColor,
+                color: secondaryColor.withOpacity(0.6),
               ),
               height: 50,
               width: 50,
@@ -43,14 +49,18 @@ class CustomAppBar extends GetView<StudentHomeController> {
                     )
                   : userImageByName(controller.currentUser.userName!),
             ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                // Get.to(() => SearchScreen());
-              },
-              icon: const Icon(
-                Icons.search,
-                color: Colors.white,
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: AnimSearchBar(
+                width: Get.size.width - 110,
+                rtl: appLocal == AppLocal.en,
+                searchIconColor: Colors.white,
+                color: Colors.transparent,
+                textController: studentSearchController.textEditingController,
+                onChanged: studentSearchController.onValueChanged,
+                onSubmitted: studentSearchController.onValueChanged,
               ),
             ),
             IconButton(

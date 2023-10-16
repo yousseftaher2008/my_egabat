@@ -36,7 +36,7 @@ class RegisterEducationalInfo extends GetView<RegisterController> {
                     eduController.showRegisterListBottomSheet(
                       controller.selectedSubjects.values.toList(),
                       (subject) {
-                        (subject as Subject).isChosen.value
+                        (subject as AuthSubject).isChosen.value
                             ? {
                                 controller.selectedSubjects.remove(subject.id),
                               }

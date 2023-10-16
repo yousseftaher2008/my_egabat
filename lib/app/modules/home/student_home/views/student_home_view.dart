@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
 import 'package:my_egabat/app/core/shared/errors/error_screen.dart';
+import 'package:my_egabat/app/modules/home/student_home/views/widgets/subject_grid.dart';
 
 import '../../../../core/shared/widgets/app_bottom_sheet.dart';
 import '../controllers/student_home_controller.dart';
@@ -23,19 +24,17 @@ class StudentHomeView extends GetView<StudentHomeController> {
         if (user.hasError) {
           return const ErrorScreen();
         }
-        return Scaffold(
+        return const Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Column(
             children: [
-              const CustomAppBar(),
-              Center(
-                child: Text(
-                  'hello ${controller.currentUser.userName}',
-                  style: const TextStyle(fontSize: 20),
-                ),
+              CustomAppBar(),
+              Expanded(
+                child: SearchedSubjectGrid(),
               ),
+              AppBottomSheet(),
             ],
           ),
-          bottomSheet: const AppBottomSheet(),
         );
       },
     );

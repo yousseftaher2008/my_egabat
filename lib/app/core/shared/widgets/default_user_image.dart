@@ -10,9 +10,10 @@ Widget userImageByName(String userName) {
   return Center(
     child: Text(
       nickName,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.w900,
         fontSize: 25,
+        color: Colors.white.withOpacity(0.9),
       ),
     ),
   );

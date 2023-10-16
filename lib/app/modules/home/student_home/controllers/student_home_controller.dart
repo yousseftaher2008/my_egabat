@@ -11,8 +11,10 @@ import '../../../../core/constants/base_url.dart';
 import '../../../../core/functions/get_student_profile.dart';
 
 class StudentHomeController extends MainController {
+  RxBool isSearching = false.obs;
   Student? currentStudent;
   final MainController mainController = Get.find<MainController>();
+
   late User currentUser;
 
   Future<void> getUser(studentOrToken) async {

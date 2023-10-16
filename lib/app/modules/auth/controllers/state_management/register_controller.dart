@@ -50,7 +50,7 @@ class RegisterController extends AuthController {
   final List stages = [];
   final List grades = [];
   final List subjects = [];
-  final Map<String, Subject> selectedSubjects = {};
+  final Map<String, AuthSubject> selectedSubjects = {};
   RxInt selectedSubjectsLength = 0.obs;
   String? sectionId;
   String? stageId;
@@ -130,14 +130,14 @@ class RegisterController extends AuthController {
       final List registerList = [];
       for (final registerItem in response.data) {
         final Register newItem = isSubject
-            ? Subject.fromJson(registerItem)
+            ? AuthSubject.fromJson(registerItem)
             : Register(
                 name: registerItem["${registerType}Name"],
                 id: registerItem["${registerType}Id"],
               );
         registerList.add(newItem);
         isSubject
-            ? (newItem as Subject).isChosen.value =
+            ? (newItem as AuthSubject).isChosen.value =
                 selectedSubjects.containsKey(newItem.id)
             : null;
       }

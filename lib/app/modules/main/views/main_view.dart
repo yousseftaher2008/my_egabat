@@ -74,7 +74,6 @@ class MainView extends GetView<MainController> {
                       return const StudentHomeView();
                     }
                   } else {
-                    print(isAuth.data);
                     AuthBinding().dependencies();
                     return const AuthView();
                   }

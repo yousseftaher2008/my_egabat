@@ -2,16 +2,16 @@ import 'package:get/get.dart';
 
 import 'register_model.dart';
 
-class Subject extends Register {
+class AuthSubject extends Register {
   final RxBool isChosen = false.obs;
   late final String fullName;
-  Subject({
+  AuthSubject({
     required super.id,
     required super.name,
     required this.fullName,
   });
-  factory Subject.fromJson(Map<String, dynamic> json) {
-    return Subject(
+  factory AuthSubject.fromJson(Map<String, dynamic> json) {
+    return AuthSubject(
       id: json["subjectId"],
       name: json["subjectName"],
       fullName:

@@ -4,7 +4,7 @@ import 'package:my_egabat/app/data/models/app_local.dart';
 
 import '../services/services.dart';
 
-AppLocal appLocal = AppLocal.ar;
+late AppLocal appLocal;
 
 class LocaleController extends GetxController {
   Locale? language;

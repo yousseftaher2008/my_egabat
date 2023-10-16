@@ -69,6 +69,8 @@ class MyTranslation extends Translations {
           "مسح الكل": "مسح الكل",
           "اهلا": "اهلا",
           "الغاء": "الغاء",
+          "...ابحث": "...ابحث",
+          "لا يوجد مادة تحتوي على": "لا يوجد مادة تحتوي على",
         },
         "en": {
           "اختر دولتك": "Choose your country",
@@ -137,6 +139,8 @@ class MyTranslation extends Translations {
           "مسح الكل": "Delete all",
           "اهلا": "hello",
           "الغاء": "Cancel",
+          "...ابحث": "Search...",
+          "لا يوجد مادة تحتوي على": "There is no subject contains",
         }
       };
 }
