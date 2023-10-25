@@ -59,17 +59,13 @@ class AppBottomSheet extends StatelessWidget {
                                   isInThisPage ? primaryColor : secondaryColor,
                             ),
                     ),
-                    const Expanded(
-                      child: FittedBox(
-                        child: Text(" "),
-                      ),
-                    ),
                     FittedBox(
                       child: Text(
                         pageName,
                         style: defaultStyle(pageEnumName),
                       ),
                     ),
+                    const SizedBox()
                   ],
                 ),
               ),
@@ -110,14 +106,14 @@ class AppBottomSheet extends StatelessWidget {
             pageIconOutline: Icons.person_outline_sharp,
           ),
           pageWidget(
-            "المكتبه".tr,
-            AppPagesEnum.library,
-            pageIcon: Icons.library_books,
-            pageIconOutline: Icons.library_books_outlined,
+            "الاختبارات".tr,
+            AppPagesEnum.quiz,
+            pageIcon: Icons.quiz,
+            pageIconOutline: Icons.quiz_outlined,
           ),
           pageWidget(
             "المسابقات".tr,
-            AppPagesEnum.compsAndQuiz,
+            AppPagesEnum.comps,
             iconImageAsset: "assets/competition.png",
             iconImageAssetOutline: "assets/competition_outline.png",
           ),

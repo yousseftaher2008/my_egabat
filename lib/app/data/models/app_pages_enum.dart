@@ -1,8 +1,1 @@
-enum AppPagesEnum {
-  home,
-  communicate,
-  library,
-  compsAndQuiz,
-  videos,
-  questions
-}
+enum AppPagesEnum { home, communicate, quiz, comps, videos, questions }

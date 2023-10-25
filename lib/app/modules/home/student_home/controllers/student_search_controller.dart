@@ -20,6 +20,7 @@ class StudentSearchController extends StudentHomeController {
     try {
       searchedSubjects.clear();
 
+      print(studentHomeController.currentUser.token);
       isGettingData.value = true;
       final response = await http.get(
         Uri.parse("${baseUrl}Subject/GetAllAttachments?&Text=$val"),

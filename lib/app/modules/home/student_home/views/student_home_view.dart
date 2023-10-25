@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
 import 'package:my_egabat/app/core/shared/errors/error_screen.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/widgets/subject_grid.dart';
+import 'package:my_egabat/app/modules/home/student_home/views/widgets/searched_subject_grid.dart';
 
+import '../../../../core/constants/styles/colors.dart';
 import '../../../../core/shared/widgets/app_bottom_sheet.dart';
+import '../../../../data/models/app_pages_enum.dart';
+import '../../../../routes/app_pages.dart';
 import '../controllers/student_home_controller.dart';
 import 'widgets/custom_app_bar.dart';
+import 'widgets/sub_lib/sub_lib.dart';
 
 class StudentHomeView extends GetView<StudentHomeController> {
   const StudentHomeView({Key? key}) : super(key: key);
@@ -24,15 +28,36 @@ class StudentHomeView extends GetView<StudentHomeController> {
         if (user.hasError) {
           return const ErrorScreen();
         }
-        return const Scaffold(
+
+        return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Column(
             children: [
-              CustomAppBar(),
+              const CustomAppBar(),
               Expanded(
-                child: SearchedSubjectGrid(),
+                child: Obx(
+                  () => AppPages.currentPage.value != AppPagesEnum.home
+                      ? const Center(
+                          child: Text(
+                            "Will Added Letter",
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        )
+                      : controller.isSearching.value
+                          ? const SearchedSubjectGrid()
+                          : ListView(
+                              children: const [
+                                SubLib(true),
+                                SubLib(false),
+                              ],
+                            ),
+                ),
               ),
-              AppBottomSheet(),
+              const AppBottomSheet(),
             ],
           ),
         );

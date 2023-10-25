@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 
 import '../../../../core/shared/errors/error_screen.dart';
+import '../../../../data/models/library.dart';
 import '../../../../data/models/student.dart';
+import '../../../../data/models/subject.dart';
 import '../../../../data/models/user.dart';
 import '../../../main/controllers/main_controller.dart';
 import '../../../../core/constants/base_url.dart';
@@ -16,6 +18,16 @@ class StudentHomeController extends MainController {
   final MainController mainController = Get.find<MainController>();
 
   late User currentUser;
+
+  List<Subject> subjects = [];
+  List<Library> libraries = [];
+
+  @override
+  onInit() {
+    super.onInit();
+    getSub();
+    getLib();
+  }
 
   Future<void> getUser(studentOrToken) async {
     if (studentOrToken is Student) {
@@ -47,6 +59,34 @@ class StudentHomeController extends MainController {
       Get.back();
     } catch (e) {
       Get.offAll(() => const ErrorScreen());
+    }
+  }
+
+  Future<void> getLib() async {
+    List<Map<String, dynamic>> libs = [
+      {"name": "مكتبة الرياضيات", "image": null},
+      {"name": "مكتبة الفيزياء", "image": null},
+      {"name": "مكتبة الكيمياء", "image": null},
+      {"name": "مكتبة العربية", "image": null},
+      {"name": "مكتبة الأحياء", "image": null},
+      {"name": "مكتبة الانجليزية", "image": null}
+    ];
+    for (final lib in libs) {
+      libraries.add(Library.fromJson(lib));
+    }
+  }
+
+  Future<void> getSub() async {
+    List<Map<String, dynamic>> subs = [
+      {"name": "رياضيات", "image": null},
+      {"name": "فيزياء", "image": null},
+      {"name": "كيمياء", "image": null},
+      {"name": "العربية", "image": null},
+      {"name": "أحياء", "image": null},
+      {"name": "الانجليزية", "image": null}
+    ];
+    for (final sub in subs) {
+      subjects.add(Subject.fromJson(sub));
     }
   }
 }

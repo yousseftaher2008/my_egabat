@@ -62,21 +62,20 @@ class MainView extends GetView<MainController> {
                     return const ErrorScreen();
                   }
 
-                  if (isAuth.data ?? false) {
-                    if (controller.user.isTeacher ?? false) {
-                      TeacherHomeBinding().dependencies();
-                      return const TeacherHomeView();
-                    } else if (controller.user.isVisitor ?? false) {
-                      VisitorHomeBinding().dependencies();
-                      return const VisitorHomeView();
-                    } else {
-                      StudentHomeBinding().dependencies();
-                      return const StudentHomeView();
-                    }
-                  } else {
+                  if (!(isAuth.data ?? false)) {
                     AuthBinding().dependencies();
                     return const AuthView();
                   }
+                  if (controller.user.isTeacher ?? false) {
+                    TeacherHomeBinding().dependencies();
+                    return const TeacherHomeView();
+                  }
+                  if (controller.user.isVisitor ?? false) {
+                    VisitorHomeBinding().dependencies();
+                    return const VisitorHomeView();
+                  }
+                  StudentHomeBinding().dependencies();
+                  return const StudentHomeView();
                 },
               );
             }),
