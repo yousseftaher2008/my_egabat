@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/screens/pdf_viewer_screen.dart';
 
-import '../../../../../data/models/searched_subjects.dart';
 import '../../../../../core/constants/styles/colors.dart';
+import '../../../../../data/models/searched_subjects.dart';
+import '../screens/pdf_viewer_screen.dart';
 
 class SearchedSubjectGridItem extends StatelessWidget {
   const SearchedSubjectGridItem(this.subject, {super.key});

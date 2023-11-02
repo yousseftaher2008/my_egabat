@@ -4,11 +4,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-// import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_egabat/app/core/constants/styles/colors.dart';
 
-import 'auth_controller.dart';
 import '../../../../core/constants/base_url.dart';
+import '../../../../core/constants/styles/colors.dart';
+import 'auth_controller.dart';
 
 class ResetPasswordController extends GetxController {
   final GlobalKey<FormState> teacherResetPassFromKey = GlobalKey<FormState>();
@@ -64,7 +63,6 @@ class ResetPasswordController extends GetxController {
         await http.post(Uri.parse(url), body: json.encode(body), headers: head);
     if (response.statusCode == 200) {
       Get.find<AuthController>().isChangingPass.value = false;
-      // Fluttertoast.showToast(msg: '!تم تغيير كلمة المرور بنجاح');
     } else {
       // Fluttertoast.showToast(msg: 'يرجى المحاولة لاحقا');
     }

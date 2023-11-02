@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/widgets/sub_lib/sub_lib_grid_item.dart';
+
 import '../../../controllers/student_home_controller.dart';
+import 'sub_lib_grid_item.dart';
 
 class SubLibGrid extends GetView<StudentHomeController> {
   const SubLibGrid(this.isSub, {super.key});

@@ -1,6 +1,6 @@
 import 'dart:convert' as convert;
 
-import 'package:my_egabat/app/core/constants/base_url.dart';
+import '../../core/constants/base_url.dart';
 
 class SearchedSubject {
   late final String name, filePath;

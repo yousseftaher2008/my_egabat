@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
-import 'package:my_egabat/app/core/shared/errors/error_screen.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/widgets/searched_subject_grid.dart';
 
+import '../../../../core/constants/loading/lottie_loading.dart';
 import '../../../../core/constants/styles/colors.dart';
+import '../../../../core/shared/errors/error_screen.dart';
 import '../../../../core/shared/widgets/app_bottom_sheet.dart';
 import '../../../../data/models/app_pages_enum.dart';
 import '../../../../routes/app_pages.dart';
 import '../controllers/student_home_controller.dart';
 import 'widgets/custom_app_bar.dart';
+import 'widgets/searched_subject_grid.dart';
 import 'widgets/sub_lib/sub_lib.dart';
 
 class StudentHomeView extends GetView<StudentHomeController> {

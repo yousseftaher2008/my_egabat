@@ -1,4 +1,7 @@
+// ignore_for_file: empty_catches
+
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -129,9 +132,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                               unfocusKeyboard();
                               toggle.value = 0;
                             }
-                          } catch (e) {
-                            print(e);
-                          }
+                          } catch (e) {}
                         },
                         child: Icon(
                           Icons.close,

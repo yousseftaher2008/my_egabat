@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/constants/base_url.dart';
-import 'package:my_egabat/app/core/constants/styles/colors.dart';
-import 'package:my_egabat/app/core/localization/local.dart';
-import 'package:my_egabat/app/core/shared/widgets/app_bars.dart';
-import 'package:my_egabat/app/data/models/app_local.dart';
-import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
 
+import '../../../../../core/constants/base_url.dart';
+import '../../../../../core/constants/styles/colors.dart';
+import '../../../../../core/localization/local.dart';
+import '../../../../../core/shared/widgets/app_bars.dart';
 import '../../../../../core/shared/widgets/default_user_image.dart';
+import '../../../../../data/models/app_local.dart';
+import '../../controllers/student_home_controller.dart';
 import '../../controllers/student_search_controller.dart';
 import 'anim_search_bar.dart';
 

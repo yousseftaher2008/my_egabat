@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
-import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
-import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
+
+import '../../../../../core/constants/loading/lottie_loading.dart';
 import '../../../../../core/constants/styles/text_field_styles.dart';
+import '../../../controllers/state_management/register_controller.dart';
+import '../../../controllers/ui/register_edu_controller.dart';
 import '../../../models/subject_model.dart';
 
 class RegisterEducationalInfo extends GetView<RegisterController> {

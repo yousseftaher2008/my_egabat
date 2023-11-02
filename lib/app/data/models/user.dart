@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/services/services.dart';
+
+import '../../core/services/services.dart';
 
 class User {
   String? userId, token, userName, userEmail, userImage;

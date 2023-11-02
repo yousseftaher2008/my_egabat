@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/constants/loading/loading.dart';
-import 'package:my_egabat/app/core/constants/styles/colors.dart';
-import 'package:my_egabat/app/modules/home/student_home/views/widgets/subject_grid_item.dart';
 
+import '../../../../../core/constants/loading/loading.dart';
+import '../../../../../core/constants/styles/colors.dart';
 import '../../controllers/student_search_controller.dart';
+import 'subject_grid_item.dart';
 
 class SearchedSubjectGrid extends GetView<StudentSearchController> {
   const SearchedSubjectGrid({super.key});

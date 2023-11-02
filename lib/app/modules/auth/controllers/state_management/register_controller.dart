@@ -1,23 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_egabat/app/data/models/student.dart';
-import 'package:my_egabat/app/data/models/user.dart';
-import 'package:my_egabat/app/modules/auth/controllers/ui/register_edu_controller.dart';
-import 'package:my_egabat/app/core/constants/styles/colors.dart';
-
-import 'auth_controller.dart';
-import '../../models/subject_model.dart';
-import '../../../../routes/app_pages.dart';
-import '../../../../core/shared/errors/error_screen.dart';
 
 import '../../../../core/constants/base_url.dart';
+import '../../../../core/constants/styles/colors.dart';
+import '../../../../core/shared/errors/error_screen.dart';
+import '../../../../data/models/student.dart';
+import '../../../../data/models/user.dart';
+import '../../../../routes/app_pages.dart';
 import '../../models/register_model.dart';
+import '../../models/subject_model.dart';
+import '../ui/register_edu_controller.dart';
+import 'auth_controller.dart';
 
 class RegisterController extends AuthController {
   //image

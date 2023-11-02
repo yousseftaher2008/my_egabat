@@ -5,11 +5,11 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/services/services.dart';
-import '../../../routes/app_pages.dart';
-import '../../../core/shared/errors/no_internet_screen.dart';
 
+import '../../../core/services/services.dart';
+import '../../../core/shared/errors/no_internet_screen.dart';
 import '../../../data/models/user.dart';
+import '../../../routes/app_pages.dart';
 
 class MainController extends GetxController {
   late User user;

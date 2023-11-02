@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/data/models/searched_subjects.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import '../../../../../data/models/searched_subjects.dart';
 
 class PdfViewerPage extends StatelessWidget {
   const PdfViewerPage(this.subject, {super.key});

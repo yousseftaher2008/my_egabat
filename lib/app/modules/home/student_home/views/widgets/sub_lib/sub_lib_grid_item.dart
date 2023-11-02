@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_egabat/app/core/constants/styles/colors.dart';
-import 'package:my_egabat/app/data/models/library.dart';
-import 'package:my_egabat/app/data/models/subject.dart';
+
+import '../../../../../../core/constants/styles/colors.dart';
+import '../../../../../../data/models/library.dart';
+import '../../../../../../data/models/subject.dart';
 
 class SubLibGridItem extends StatelessWidget {
   const SubLibGridItem({this.subject, this.library, super.key});

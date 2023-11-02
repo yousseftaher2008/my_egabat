@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
-import 'package:my_egabat/app/modules/auth/controllers/state_management/auth_controller.dart';
-import 'package:my_egabat/app/core/shared/widgets/email_field.dart';
-import 'package:my_egabat/app/core/shared/widgets/password_field.dart';
 
+import '../../../../../core/constants/loading/lottie_loading.dart';
 import '../../../../../core/constants/styles/button_styles.dart';
+import '../../../../../core/shared/widgets/email_field.dart';
+import '../../../../../core/shared/widgets/password_field.dart';
+import '../../../controllers/state_management/auth_controller.dart';
 
 class TeacherLogin extends GetView<AuthController> {
   const TeacherLogin({super.key});

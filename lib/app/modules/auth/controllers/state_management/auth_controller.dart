@@ -1,21 +1,21 @@
 import 'dart:convert';
 
+import "package:dio/dio.dart" as dio;
 import "package:flutter/material.dart";
 import "package:get/get.dart";
-import "package:dio/dio.dart" as dio;
 import "package:http/http.dart" as http;
 import "package:libphonenumber/libphonenumber.dart";
-import "package:my_egabat/app/modules/auth/bindings/reset_password_binding.dart";
-import "package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart";
-import "package:my_egabat/app/modules/main/controllers/main_controller.dart";
-import "../../../../data/models/user.dart";
-import "../../../../routes/app_pages.dart";
-import '../../../../core/constants/styles/colors.dart';
-import 'register_controller.dart';
-import '../../../../core/shared/errors/error_screen.dart';
 
 import '../../../../core/constants/base_url.dart';
+import '../../../../core/constants/styles/colors.dart';
+import '../../../../core/shared/errors/error_screen.dart';
 import '../../../../data/models/country_model.dart';
+import "../../../../data/models/user.dart";
+import "../../../../routes/app_pages.dart";
+import "../../../main/controllers/main_controller.dart";
+import "../../bindings/reset_password_binding.dart";
+import 'register_controller.dart';
+import "reset_password_controller.dart";
 
 class AuthController extends MainController {
   //phone properties

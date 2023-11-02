@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:my_egabat/app/modules/auth/controllers/state_management/reset_password_controller.dart';
-import 'package:my_egabat/app/modules/auth/views/widgets/teacher/reset_password.dart';
-import 'package:my_egabat/app/core/constants/loading/lottie_loading.dart';
-import '../../../core/constants/styles/colors.dart';
+import 'package:get/get.dart';
 
+import '../../../core/constants/loading/lottie_loading.dart';
+import '../../../core/constants/styles/colors.dart';
 import '../controllers/state_management/auth_controller.dart';
+import '../controllers/state_management/reset_password_controller.dart';
 import 'widgets/student/student_auth.dart';
+import 'widgets/teacher/reset_password.dart';
 import 'widgets/teacher/teacher_auth.dart';
 
 class AuthView extends GetView<AuthController> {

@@ -1,12 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/home/student_home/controllers/student_home_controller.dart';
-
-import '../../../../core/constants/base_url.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/base_url.dart';
 import '../../../../data/models/searched_subjects.dart';
+import 'student_home_controller.dart';
 
 class StudentSearchController extends StudentHomeController {
   StudentHomeController studentHomeController =

@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:introduction_screen/introduction_screen.dart";
-import 'package:my_egabat/app/data/models/introduction_page.dart';
-import '../../../data/data_source/introduct_screen_dart.dart';
-import "../../../core/shared/widgets/welcome_button.dart";
-import "../../welcome/controllers/welcome_controller.dart";
-import '../../../core/constants/styles/colors.dart';
 
+import '../../../core/constants/styles/colors.dart';
 import '../../../core/constants/styles/text_styles.dart';
+import "../../../core/shared/widgets/welcome_button.dart";
+import '../../../data/data_source/introduction_screen_dart.dart';
+import '../../../data/models/introduction_page.dart';
+import "../../welcome/controllers/welcome_controller.dart";
 
 class WelcomeView extends GetView<WelcomeController> {
   const WelcomeView({super.key});

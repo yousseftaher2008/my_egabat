@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_egabat/app/modules/auth/controllers/state_management/register_controller.dart';
-import 'package:my_egabat/app/modules/auth/views/widgets/teacher/teacher_login.dart';
-import 'package:my_egabat/app/modules/auth/views/widgets/teacher/teacher_register.dart';
+
+import '../../../controllers/state_management/register_controller.dart';
+import 'teacher_login.dart';
+import 'teacher_register.dart';
 
 class TeacherAuth extends GetView<RegisterController> {
   const TeacherAuth({super.key});
