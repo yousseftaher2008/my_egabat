@@ -25,10 +25,8 @@ void main() async {
   LocaleController controller = Get.put<LocaleController>(LocaleController());
   runApp(
     GetMaterialApp(
-      // textDirection: TextDirection.rtl,
       title: "Ai School",
       locale: controller.language,
-
       translations: MyTranslation(),
       theme: ThemeData(
         primaryColor: primaryColor,

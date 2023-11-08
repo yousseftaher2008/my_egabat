@@ -15,6 +15,7 @@ class StudentSearchController extends StudentHomeController {
   final List<SearchedSubject> searchedSubjects = [];
   final RxInt searchedSubjectsLength = 0.obs;
   final RxBool isGettingData = false.obs;
+  final RxBool isLastWasSubmit = false.obs;
   final RxString searchedValue = "".obs;
   Future<void> getFiles(val) async {
     try {
@@ -28,6 +29,7 @@ class StudentSearchController extends StudentHomeController {
           "Authorization": "Bearer ${studentHomeController.currentUser.token}",
         },
       );
+      print(response.statusCode);
       if (val != searchedValue.value) return;
       isGettingData.value = false;
       if (response.statusCode == 200) {
@@ -45,9 +47,10 @@ class StudentSearchController extends StudentHomeController {
     }
   }
 
-  void onValueChanged(String val) {
+  void onValueChanged(String val, {bool must = false}) {
     searchedValue.value = val.trim();
     studentHomeController.isSearching.value = searchedValue.value.isNotEmpty;
+    if (!must && val.length < 3) return;
     if (studentHomeController.isSearching.value) {
       getFiles(searchedValue.value);
     } else {

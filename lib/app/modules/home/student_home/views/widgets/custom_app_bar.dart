@@ -54,14 +54,19 @@ class CustomAppBar extends GetView<StudentHomeController> {
             ),
             Expanded(
               child: AnimSearchBar(
-                width: Get.size.width - 110,
-                rtl: appLocal == AppLocal.en,
-                searchIconColor: Colors.white,
-                color: Colors.transparent,
-                textController: studentSearchController.textEditingController,
-                onChanged: studentSearchController.onValueChanged,
-                onSubmitted: studentSearchController.onValueChanged,
-              ),
+                  width: Get.size.width - 110,
+                  rtl: appLocal == AppLocal.en,
+                  searchIconColor: Colors.white,
+                  color: Colors.transparent,
+                  textController: studentSearchController.textEditingController,
+                  onChanged: (val) {
+                    studentSearchController.isLastWasSubmit.value = false;
+                    studentSearchController.onValueChanged(val);
+                  },
+                  onSubmitted: (val) {
+                    studentSearchController.isLastWasSubmit.value = true;
+                    studentSearchController.onValueChanged(val, must: true);
+                  }),
             ),
             IconButton(
               onPressed: () {

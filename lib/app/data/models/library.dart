@@ -1,13 +1,17 @@
 import '../../core/constants/base_url.dart';
 
 class Library {
-  String? name, filePath;
-
-  Library(this.name, this.filePath);
+  late String id, name;
+  String? image;
+  bool? general, isActive;
+  Library(this.name, this.image);
 
   Library.fromJson(Map<String, dynamic> json) {
-    filePath =
-        (json["image"]?.isNotEmpty ?? false) ? imageUrl + json["image"]! : null;
-    name = json["name"];
+    id = json["mainCategory_Id"] ?? "";
+    name = json["mainCategory_Name"] ?? "";
+    image =
+        (json["mainCategory_Image"] != null) ? imageUrl + json["image"]! : null;
+    general = json["general"];
+    isActive = json["isActive"];
   }
 }

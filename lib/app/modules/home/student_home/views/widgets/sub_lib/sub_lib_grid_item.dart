@@ -34,17 +34,21 @@ class SubLibGridItem extends StatelessWidget {
             ),
             key: UniqueKey(),
             child: isSub
-                ? subject!.filePath == null
-                    ? Image.asset("assets/subject.png")
+                ? subject!.image == null
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset("assets/subject.png"),
+                      )
                     : FadeInImage(
                         placeholder: const AssetImage("assets/subject.png"),
-                        image: NetworkImage(subject!.filePath!),
+                        image: NetworkImage(subject!.image!),
+                        fit: BoxFit.fill,
                       )
-                : library!.filePath == null
+                : library!.image == null
                     ? Image.asset("assets/library.png")
                     : FadeInImage(
                         placeholder: const AssetImage("assets/library.png"),
-                        image: NetworkImage(library!.filePath!),
+                        image: NetworkImage(library!.image!),
                       ),
           ),
         ),
@@ -76,7 +80,7 @@ class SubLibGridItem extends StatelessWidget {
               softWrap: false,
               overflow: TextOverflow.fade,
               child: Text(
-                subject?.name ?? library!.name!,
+                subject?.name ?? library!.name,
               ),
             ),
           ),

@@ -155,7 +155,7 @@ class MyTranslation extends Translations {
           "الأسئلة": "Questions",
           "الاختبارات": "Quizzes",
           "المواد": "Subjects",
-          "رؤية المزيد": "See All",
+          "رؤية الكل": "See All",
           "المكتبات": "Libraries"
         }
       };

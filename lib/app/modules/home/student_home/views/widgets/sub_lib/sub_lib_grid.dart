@@ -13,13 +13,19 @@ class SubLibGrid extends GetView<StudentHomeController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.only(
+        bottom: isSub ? 30.0 : 0,
+        right: 4,
+        left: 4,
+      ),
       child: GridView.builder(
+        // scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: const EdgeInsets.all(4),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          childAspectRatio: 2.5 / 2,
+          childAspectRatio: .75,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),

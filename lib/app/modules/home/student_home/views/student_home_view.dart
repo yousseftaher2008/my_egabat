@@ -49,6 +49,7 @@ class StudentHomeView extends GetView<StudentHomeController> {
                       : controller.isSearching.value
                           ? const SearchedSubjectGrid()
                           : ListView(
+                              shrinkWrap: true,
                               children: const [
                                 SubLib(true),
                                 SubLib(false),

@@ -9,7 +9,11 @@ class SubLibHead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.only(
+        bottom: 10,
+        right: 20,
+        left: 20,
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,7 +29,7 @@ class SubLibHead extends StatelessWidget {
           TextButton(
             onPressed: () {},
             child: Text(
-              "رؤية المزيد".tr,
+              "رؤية الكل".tr,
               style: const TextStyle(
                 color: primaryColor,
                 fontWeight: FontWeight.bold,

@@ -12,54 +12,58 @@ class SearchedSubjectGrid extends GetView<StudentSearchController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isGettingData.value
-          ? Loading()
-          : controller.searchedSubjectsLength.value == 0 &&
-                  controller.searchedValue.value.isNotEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "لا يوجد مادة تحتوي على".tr,
-                          style: const TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+      () => controller.searchedValue.value.length < 3 &&
+              !controller.isLastWasSubmit.value
+          ? const Center()
+          : controller.isGettingData.value
+              ? Loading()
+              : controller.searchedSubjectsLength.value == 0 &&
+                      controller.searchedValue.value.isNotEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "لا يوجد مادة تحتوي على".tr,
+                              style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            DefaultTextStyle(
+                              style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              child: Text(
+                                "\n\"${controller.textEditingController.text}\"",
+                              ),
+                            ),
+                          ],
                         ),
-                        DefaultTextStyle(
-                          style: const TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          child: Text(
-                            "\n\"${controller.textEditingController.text}\"",
-                          ),
-                        ),
-                      ],
+                      ),
+                    )
+                  : GridView.builder(
+                      padding: const EdgeInsets.all(4),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 2.5 / 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: controller.searchedSubjectsLength.value,
+                      itemBuilder: (_, i) {
+                        return SearchedSubjectGridItem(
+                            controller.searchedSubjects[i]);
+                      },
                     ),
-                  ),
-                )
-              : GridView.builder(
-                  padding: const EdgeInsets.all(4),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 2.5 / 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: controller.searchedSubjectsLength.value,
-                  itemBuilder: (_, i) {
-                    return SearchedSubjectGridItem(
-                        controller.searchedSubjects[i]);
-                  },
-                ),
     );
   }
 }

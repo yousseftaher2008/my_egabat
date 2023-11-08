@@ -1,10 +1,20 @@
-class Subject {
-  String? name, filePath;
+import '../../core/constants/base_url.dart';
 
-  Subject(this.name, this.filePath);
+class Subject {
+  late String id, name;
+  late String? image;
+  late double price;
+  late bool isFree, isSubscribed;
+
+  Subject(this.name, this.image);
 
   Subject.fromJson(json) {
-    filePath = json["image"];
-    name = json["name"];
+    id = json["subjectId"] ?? "";
+    name = json["subjectName"] ?? "";
+    price = json["subjectPrice"];
+    image =
+        json["subjectImage"] == null ? null : imageUrl + json["subjectImage"];
+    isFree = json["isFree"] ?? false;
+    isSubscribed = json["isSubscriped"] ?? false;
   }
 }
