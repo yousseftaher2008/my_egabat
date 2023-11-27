@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/loading/lottie_loading.dart';
+import '../../../core/constants/screen_dimensions.dart' as size;
 import '../../../core/constants/styles/colors.dart';
 import '../controllers/state_management/auth_controller.dart';
 import '../controllers/state_management/reset_password_controller.dart';
@@ -15,7 +17,7 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     final double pageHeight =
-        controller.pageHeight - MediaQuery.of(context).padding.top;
+        size.pageHeight() - MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
         body: Obx(
@@ -37,7 +39,7 @@ class AuthView extends GetView<AuthController> {
                                 height: pageHeight / 3,
                                 width: double.infinity,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(8.sp),
                                   child: Obx(
                                     () => Image.asset(
                                       controller.isTeacher.value
@@ -77,7 +79,7 @@ class AuthView extends GetView<AuthController> {
                       () => controller.registerController.isRegister.value ||
                               controller.isChangingPass.value
                           ? Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: EdgeInsets.all(16.0.sp),
                               child: DecoratedBox(
                                 decoration: const BoxDecoration(
                                   boxShadow: [
@@ -98,10 +100,10 @@ class AuthView extends GetView<AuthController> {
                                     controller.registerController
                                         .backFromRegister();
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.arrow_back,
                                     color: Colors.white,
-                                    size: 35,
+                                    size: 35.sp,
                                   ),
                                 ),
                               ),

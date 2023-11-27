@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/styles/colors.dart';
@@ -22,11 +23,11 @@ class SearchedSubjectGridItem extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.maxFinite,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: infoColor,
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15.r),
+                  topLeft: Radius.circular(15.r),
                 ),
               ),
               key: UniqueKey(),
@@ -36,20 +37,20 @@ class SearchedSubjectGridItem extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.sp),
             decoration: BoxDecoration(
               color: Colors.white,
-              border: Border.all(width: 2, color: infoColor),
-              boxShadow: const [
+              border: Border.all(width: 2.w, color: infoColor),
+              boxShadow: [
                 BoxShadow(
-                  offset: Offset(10, 10),
-                  blurRadius: 20,
+                  offset: Offset(10.w, 10.h),
+                  blurRadius: 20.r,
                   color: Colors.black45,
                 ),
               ],
-              borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15.r),
+                bottomLeft: Radius.circular(15.r),
               ),
             ),
             width: double.infinity,
@@ -57,9 +58,9 @@ class SearchedSubjectGridItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DefaultTextStyle(
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: infoColor,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
                   softWrap: false,

@@ -68,7 +68,6 @@ class StudentHomeController extends MainController {
       };
 
       final response = await get(url, headers: head);
-      print(response.statusCode);
 
       List<dynamic> libs = json.decode(response.body);
 
@@ -90,7 +89,6 @@ class StudentHomeController extends MainController {
       };
 
       final response = await get(url, headers: head);
-      print(response.statusCode);
 
       List<dynamic> subs = json.decode(response.body);
       for (final sub in subs) {

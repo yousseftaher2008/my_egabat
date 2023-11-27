@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/base_url.dart';
+import '../../../../../core/constants/screen_dimensions.dart';
 import '../../../../../core/constants/styles/colors.dart';
 import '../../../../../core/localization/local.dart';
 import '../../../../../core/shared/widgets/app_bars.dart';
@@ -21,11 +23,11 @@ class CustomAppBar extends GetView<StudentHomeController> {
         Get.find<StudentSearchController>();
     return firstAppBar(
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 40.0,
-          bottom: 8.0,
-          left: 8.0,
-          right: 8.0,
+        padding: EdgeInsets.only(
+          top: 40.0.h,
+          bottom: 8.0.h,
+          left: 8.0.w,
+          right: 8.0.w,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,11 +37,11 @@ class CustomAppBar extends GetView<StudentHomeController> {
                 borderRadius: BorderRadius.circular(25),
                 color: secondaryColor.withOpacity(0.6),
               ),
-              height: 50,
-              width: 50,
+              height: 50.h,
+              width: 50.w,
               child: (controller.currentUser.userImage?.isNotEmpty ?? false)
                   ? ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(25.r),
                       child: FadeInImage(
                         fit: BoxFit.cover,
                         placeholder: defaultUserImage,
@@ -49,12 +51,12 @@ class CustomAppBar extends GetView<StudentHomeController> {
                     )
                   : userImageByName(controller.currentUser.userName!),
             ),
-            const SizedBox(
-              width: 10,
+            SizedBox(
+              width: 10.w,
             ),
             Expanded(
               child: AnimSearchBar(
-                  width: Get.size.width - 110,
+                  width: pageWidth() - 110.w,
                   rtl: appLocal == AppLocal.en,
                   searchIconColor: Colors.white,
                   color: Colors.transparent,

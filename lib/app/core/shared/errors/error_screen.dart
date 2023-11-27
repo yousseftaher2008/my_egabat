@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'help_button.dart';
+import '../../../routes/app_pages.dart';
 import '../../constants/styles/colors.dart';
 import '../../constants/styles/text_styles.dart';
-import '../../../routes/app_pages.dart';
+import 'help_button.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});
@@ -19,19 +20,19 @@ class ErrorScreen extends StatelessWidget {
         children: [
           Center(
             child: SizedBox(
-              height: 300,
-              width: 300,
+              height: 300.h,
+              width: 300.w,
               child: Image.asset(
                 "assets/error_image.png",
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 10.w),
             child: Text(
               "خطأ غير معروف!".tr,
-              style: const TextStyle(
-                fontSize: 50,
+              style: TextStyle(
+                fontSize: 50.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -45,15 +46,15 @@ class ErrorScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColorLight,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 side: const BorderSide(color: Colors.white38, width: 2)),
             child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10.r),
                 child: Text("الرجوع للشاشة الرئيسية".tr,
                     style: welcomeTitleTextStyle)),
           ),
-          const SizedBox(height: 100),
+          SizedBox(height: 100.h),
           const HelpButton(
             phoneNumber: "+96599811025",
           ),

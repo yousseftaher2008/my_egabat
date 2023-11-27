@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/loading/lottie_loading.dart';
+import '../../../../../core/constants/screen_dimensions.dart';
 import '../../../../../core/constants/styles/button_styles.dart';
 import '../../../controllers/state_management/register_controller.dart';
 import '../shared/phone_country_input.dart';
@@ -14,14 +16,13 @@ class TeacherRegister extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0.sp),
       child: SizedBox(
-        height: controller.pageHeight * 0.5,
+        height: (pageHeight() * 0.5).h,
         child: SingleChildScrollView(
           child: Obx(
             () => Container(
-              constraints:
-                  BoxConstraints(minHeight: controller.pageHeight * 0.5),
+              constraints: BoxConstraints(minHeight: (pageHeight() * 0.5).sp),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,

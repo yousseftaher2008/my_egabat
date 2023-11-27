@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget userImageByName(String userName) {
   String nickName = "";
@@ -12,7 +13,7 @@ Widget userImageByName(String userName) {
       nickName,
       style: TextStyle(
         fontWeight: FontWeight.w900,
-        fontSize: 25,
+        fontSize: 25.sp,
         color: Colors.white.withOpacity(0.9),
       ),
     ),

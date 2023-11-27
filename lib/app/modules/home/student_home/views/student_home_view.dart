@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/loading/lottie_loading.dart';
@@ -36,11 +37,11 @@ class StudentHomeView extends GetView<StudentHomeController> {
               Expanded(
                 child: Obx(
                   () => AppPages.currentPage.value != AppPagesEnum.home
-                      ? const Center(
+                      ? Center(
                           child: Text(
                             "Will Added Letter",
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               color: primaryColor,
                               fontWeight: FontWeight.w900,
                             ),

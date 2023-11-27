@@ -13,12 +13,10 @@ import '../../../routes/app_pages.dart';
 
 class MainController extends GetxController {
   late User user;
-  late StreamSubscription connectionStream;
-  final double pageWidth = Get.size.width;
-  final double pageHeight = Get.size.height;
   RxBool isLoading = true.obs;
-  String? deviceToken;
   bool isWelcomeViewed = false;
+  String? deviceToken;
+  late StreamSubscription connectionStream;
   final AppServices appServices = Get.find<AppServices>();
   @override
   Future<void> onReady() async {

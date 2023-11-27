@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../../../../core/constants/loading/lottie_loading.dart';
+import '../../../../../core/constants/screen_dimensions.dart';
 import '../../../../../core/constants/styles/button_styles.dart';
 import '../../../controllers/state_management/auth_controller.dart';
 import '../shared/phone_country_input.dart';
@@ -13,11 +16,11 @@ class StudentAuth extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: controller.pageHeight * 0.5,
+      height: (pageHeight() * 0.5).h,
       child: SingleChildScrollView(
         child: Obx(
           () => Container(
-            constraints: BoxConstraints(minHeight: controller.pageHeight * 0.5),
+            constraints: BoxConstraints(minHeight: (pageHeight() * 0.5).h),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

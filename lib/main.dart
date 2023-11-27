@@ -1,6 +1,7 @@
 //TODO: default snackBars styles
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/core/constants/styles/colors.dart';
@@ -24,17 +25,24 @@ void main() async {
   );
   LocaleController controller = Get.put<LocaleController>(LocaleController());
   runApp(
-    GetMaterialApp(
-      title: "Ai School",
-      locale: controller.language,
-      translations: MyTranslation(),
-      theme: ThemeData(
-        primaryColor: primaryColor,
-        colorScheme: const ColorScheme.light(secondary: primaryColorLight),
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-    ),
+    ScreenUtilInit(
+        designSize: const Size(411, 890),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return GetMaterialApp(
+            title: "Ai School",
+            locale: controller.language,
+            translations: MyTranslation(),
+            theme: ThemeData(
+              primaryColor: primaryColor,
+              colorScheme:
+                  const ColorScheme.light(secondary: primaryColorLight),
+            ),
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+          );
+        }),
   );
 }

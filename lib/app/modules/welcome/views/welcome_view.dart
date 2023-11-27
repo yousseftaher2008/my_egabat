@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:get/get.dart";
 import "package:introduction_screen/introduction_screen.dart";
 
@@ -26,10 +27,10 @@ class WelcomeView extends GetView<WelcomeController> {
             style: welcomeBodyTextStyle,
           ),
           image: Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
+            margin: EdgeInsets.all(10.sp),
+            padding: EdgeInsets.all(10.sp),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
             ),
             child: Image.asset(introductionPage.image),
           ),
@@ -51,10 +52,10 @@ class WelcomeView extends GetView<WelcomeController> {
         dotsDecorator: DotsDecorator(
           color: Colors.white,
           activeColor: Colors.white,
-          activeSize: const Size(30, 7),
+          activeSize: Size(30.w, 7.h),
           activeShape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          size: const Size.square(7),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+          size: Size.square(7.sp),
         ),
       ),
     );

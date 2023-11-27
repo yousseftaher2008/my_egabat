@@ -16,12 +16,12 @@ class StudentSearchController extends StudentHomeController {
   final RxInt searchedSubjectsLength = 0.obs;
   final RxBool isGettingData = false.obs;
   final RxBool isLastWasSubmit = false.obs;
+  final RxBool isSubSearching = false.obs;
   final RxString searchedValue = "".obs;
   Future<void> getFiles(val) async {
     try {
       searchedSubjects.clear();
 
-      print(studentHomeController.currentUser.token);
       isGettingData.value = true;
       final response = await http.get(
         Uri.parse("${baseUrl}Subject/GetAllAttachments?&Text=$val"),
@@ -29,7 +29,6 @@ class StudentSearchController extends StudentHomeController {
           "Authorization": "Bearer ${studentHomeController.currentUser.token}",
         },
       );
-      print(response.statusCode);
       if (val != searchedValue.value) return;
       isGettingData.value = false;
       if (response.statusCode == 200) {

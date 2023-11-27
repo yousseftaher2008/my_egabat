@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:get/get.dart";
 import "package:image_picker/image_picker.dart";
 
@@ -11,19 +12,19 @@ class ImageInput extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     RegisterController registerController = Get.find<RegisterController>();
     return SizedBox(
-      height: 150,
+      height: 150.h,
       child: Column(
         children: [
           Obx(
             () => registerController.storedImage.value != null
                 ? CircleAvatar(
-                    radius: 50,
+                    radius: 50.r,
                     backgroundImage:
                         FileImage(registerController.storedImage.value!),
                     backgroundColor: Colors.transparent,
                   )
                 : CircleAvatar(
-                    radius: 50,
+                    radius: 50.r,
                     backgroundColor: Colors.transparent,
                     child: Image.asset("assets/user.png"),
                   ),

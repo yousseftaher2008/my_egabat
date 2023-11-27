@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/styles/text_field_styles.dart';
@@ -17,7 +18,7 @@ class PhoneCountryInput extends GetView<AuthController> {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: TextFormField(
               key: controller.phoneKey,
               textAlign: TextAlign.left,
@@ -33,10 +34,10 @@ class PhoneCountryInput extends GetView<AuthController> {
               keyboardType: TextInputType.phone,
               decoration:
                   authInputDecoration(labelText: "رقم الهاتف".tr).copyWith(
-                suffixIcon: const SizedBox(
+                suffixIcon: SizedBox(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: ChooseCountry(),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: const ChooseCountry(),
                   ),
                 ),
                 prefixIcon: Icon(

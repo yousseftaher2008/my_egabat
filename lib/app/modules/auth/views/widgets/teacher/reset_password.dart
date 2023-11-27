@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/styles/button_styles.dart';
@@ -17,7 +18,7 @@ class ResetPassword extends GetView<ResetPasswordController> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0.sp),
               child: TextFormField(
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,

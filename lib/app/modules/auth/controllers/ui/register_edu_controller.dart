@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/constants/screen_dimensions.dart';
 import '../../../../core/constants/styles/colors.dart';
 import '../../../../core/constants/styles/text_styles.dart';
 import '../../models/register_model.dart';
@@ -46,7 +48,7 @@ class RegisterEduController extends GetxController {
         "",
         titleText: Text(
           isShowSubjects ? "لا يوجد مواد".tr : "لا يوجد اختيارات".tr,
-          style: welcomeTitleTextStyle.copyWith(fontSize: 25),
+          style: welcomeTitleTextStyle.copyWith(fontSize: 25.sp),
           textAlign: TextAlign.center,
         ),
         messageText: Text(
@@ -59,7 +61,7 @@ class RegisterEduController extends GetxController {
         ),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: primaryButtonColor,
-        margin: const EdgeInsets.all(10),
+        margin: EdgeInsets.all(10.sp),
       );
       Future.delayed(const Duration(seconds: 3), () {
         _isSnackBarOpen = false;
@@ -69,14 +71,14 @@ class RegisterEduController extends GetxController {
       return;
     }
     Get.closeCurrentSnackbar();
-    const BorderRadius borderRadiusShape = BorderRadius.only(
-      topRight: Radius.circular(30),
-      topLeft: Radius.circular(30),
+    BorderRadius borderRadiusShape = BorderRadius.only(
+      topRight: Radius.circular(30.r),
+      topLeft: Radius.circular(30.r),
     );
 
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: borderRadiusShape),
+      shape: RoundedRectangleBorder(borderRadius: borderRadiusShape),
       backgroundColor: primaryButtonColor,
       builder: (_) {
         ListView listView(int length) => ListView.builder(
@@ -90,7 +92,7 @@ class RegisterEduController extends GetxController {
                 Widget itemWidget = SizedBox(
                   width: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(15.0.sp),
                     child: Stack(
                       children: [
                         Center(
@@ -99,7 +101,7 @@ class RegisterEduController extends GetxController {
                                 ? (item as AuthSubject).fullName
                                 : item.name,
                             style: welcomeTitleTextStyle.copyWith(
-                              fontSize: 20,
+                              fontSize: 20.sp,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -121,10 +123,10 @@ class RegisterEduController extends GetxController {
                 return Column(
                   children: [
                     if (index != 0)
-                      const ColoredBox(
+                      ColoredBox(
                         color: primaryColor,
                         child: SizedBox(
-                          height: 2,
+                          height: 2.h,
                           width: double.infinity,
                         ),
                       ),
@@ -168,10 +170,10 @@ class RegisterEduController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 100,
+              height: 100.h,
               width: double.infinity,
-              padding: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(
+              padding: EdgeInsets.all(8.0.sp),
+              decoration: BoxDecoration(
                 borderRadius: borderRadiusShape,
               ),
               child: isShowSubjects
@@ -208,8 +210,8 @@ class RegisterEduController extends GetxController {
               ),
             ),
             Container(
-              constraints: BoxConstraints(
-                  maxHeight: _registerController.pageHeight / 2 - 150),
+              constraints:
+                  BoxConstraints(maxHeight: (pageWidth() / 2 - 150).sp),
               child: isShowSubjects
                   ? Obx(
                       () {

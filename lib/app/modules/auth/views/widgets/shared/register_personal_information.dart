@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/styles/text_field_styles.dart';
@@ -19,7 +20,7 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
           children: [
             if (!isTeacher) const ImageInput(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0.sp),
               child: TextFormField(
                 controller: controller.nameController,
                 decoration:
@@ -36,7 +37,7 @@ class RegisterPersonalInfo extends GetView<RegisterController> {
             ),
             if (!isTeacher)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.sp),
                 child: TextFormField(
                   controller: controller.nickNameController,
                   decoration: authInputDecoration(

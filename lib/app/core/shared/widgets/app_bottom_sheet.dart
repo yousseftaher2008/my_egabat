@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/app_pages_enum.dart';
@@ -41,15 +42,15 @@ class AppBottomSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: EdgeInsets.only(top: 8.0.h),
                       child: iconImageAsset != null &&
                               iconImageAssetOutline != null
                           ? Image.asset(
                               isInThisPage
                                   ? iconImageAsset
                                   : iconImageAssetOutline,
-                              width: 25,
-                              height: 25,
+                              width: 25.w,
+                              height: 25.h,
                             )
                           : Icon(
                               isInThisPage

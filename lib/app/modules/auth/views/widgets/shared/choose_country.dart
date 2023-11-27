@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/base_url.dart';
@@ -22,12 +23,12 @@ class ChooseCountry extends GetView<AuthController> {
         children: [
           controller.isGettingCountries.value
               ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.sp),
                   child: Loading(),
                 )
               : TextButton(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.sp),
                     child: Obx(
                       () => Text(
                         controller.selectedCountryCode.value,
@@ -38,21 +39,21 @@ class ChooseCountry extends GetView<AuthController> {
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
-                      shape: const RoundedRectangleBorder(
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30),
-                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30.r),
+                          topLeft: Radius.circular(30.r),
                         ),
                       ),
                       builder: (_) => Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(15),
+                            padding: EdgeInsets.all(15.sp),
                             width: double.infinity,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(30),
-                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30.r),
+                                topLeft: Radius.circular(30.r),
                               ),
                               color: primaryColor,
                             ),
@@ -70,8 +71,8 @@ class ChooseCountry extends GetView<AuthController> {
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           shadowColor: Colors.black,
-                                          side: const BorderSide(
-                                            width: 0.5,
+                                          side: BorderSide(
+                                            width: 0.5.w,
                                             color: Colors.grey,
                                           ),
                                           shape: const RoundedRectangleBorder(),
@@ -91,7 +92,7 @@ class ChooseCountry extends GetView<AuthController> {
                                           children: [
                                             const Spacer(),
                                             CircleAvatar(
-                                              radius: 50,
+                                              radius: 50.r,
                                               backgroundColor:
                                                   Colors.transparent,
                                               child: FadeInImage(
@@ -104,8 +105,8 @@ class ChooseCountry extends GetView<AuthController> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 20,
+                                            SizedBox(
+                                              height: 20.h,
                                             ),
                                             Text(
                                               country.name,
@@ -114,8 +115,8 @@ class ChooseCountry extends GetView<AuthController> {
                                                 color: primaryButtonColor,
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 15,
+                                            SizedBox(
+                                              height: 15.h,
                                             ),
                                             Text(
                                               country.code,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart' as launch;
+
 import '../../constants/styles/colors.dart';
 import '../../functions/errors_messages.dart';
 
@@ -18,11 +20,11 @@ class HelpButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           backgroundColor: primaryColorLight,
           // backgroundColor: Colors.transparent,
-          side: const BorderSide(
+          side: BorderSide(
             color: Colors.white,
-            width: 2,
+            width: 2.w,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
       icon: const Icon(FontAwesome.whatsapp),
@@ -39,7 +41,7 @@ class HelpButton extends StatelessWidget {
       },
       label: Text(
         "المساعدة".tr,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
       ),
     );
   }
