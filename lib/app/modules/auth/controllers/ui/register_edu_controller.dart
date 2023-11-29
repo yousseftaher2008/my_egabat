@@ -112,7 +112,7 @@ class RegisterEduController extends GetxController {
                             child: IconButton(
                               onPressed: () => onSelectedFun(item),
                               icon: const Icon(Icons.delete),
-                              color: Colors.red,
+                              color: dangerColor,
                             ),
                           )
                       ],
@@ -148,7 +148,7 @@ class RegisterEduController extends GetxController {
                             ? Dismissible(
                                 key: GlobalKey(),
                                 background: const ColoredBox(
-                                  color: Colors.red,
+                                  color: dangerColor,
                                   child: SizedBox(width: double.infinity),
                                 ),
                                 onDismissed: (_) => onSelectedFun(item),
@@ -190,7 +190,7 @@ class RegisterEduController extends GetxController {
                           },
                           child: Text(
                             "مسح الكل".tr,
-                            style: const TextStyle(color: Colors.red),
+                            style: dangerTextStyle,
                           ),
                         ),
                         Center(
@@ -202,16 +202,15 @@ class RegisterEduController extends GetxController {
                       child: Text(title, style: welcomeTitleTextStyle),
                     ),
             ),
-            const ColoredBox(
+            ColoredBox(
               color: primaryColor,
               child: SizedBox(
-                height: 2,
+                height: 2.h,
                 width: double.infinity,
               ),
             ),
             Container(
-              constraints:
-                  BoxConstraints(maxHeight: (pageWidth() / 2 - 150).sp),
+              constraints: BoxConstraints(maxHeight: pageHeight() / 2 - 150),
               child: isShowSubjects
                   ? Obx(
                       () {

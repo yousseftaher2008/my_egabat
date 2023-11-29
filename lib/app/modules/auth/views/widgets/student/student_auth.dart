@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/loading/lottie_loading.dart';
@@ -16,11 +15,11 @@ class StudentAuth extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: (pageHeight() * 0.5).h,
+      height: pageHeight() * 0.5,
       child: SingleChildScrollView(
         child: Obx(
           () => Container(
-            constraints: BoxConstraints(minHeight: (pageHeight() * 0.5).h),
+            constraints: BoxConstraints(minHeight: pageHeight() * 0.5),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

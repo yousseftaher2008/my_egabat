@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/visitor_home_controller.dart';
@@ -16,7 +15,6 @@ class VisitorHomeView extends GetView<VisitorHomeController> {
       body: const Center(
         child: Text(
           'VisitorHomeView is working',
-          style: TextStyle(fontSize: 20),
         ),
       ),
     );

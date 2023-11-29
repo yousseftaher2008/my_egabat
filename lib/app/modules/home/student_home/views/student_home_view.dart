@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/loading/lottie_loading.dart';
-import '../../../../core/constants/styles/colors.dart';
+import '../../../../core/constants/styles/text_styles.dart';
 import '../../../../core/shared/errors/error_screen.dart';
 import '../../../../core/shared/widgets/app_bottom_sheet.dart';
 import '../../../../data/models/app_pages_enum.dart';
@@ -40,11 +39,7 @@ class StudentHomeView extends GetView<StudentHomeController> {
                       ? Center(
                           child: Text(
                             "Will Added Letter",
-                            style: TextStyle(
-                              fontSize: 30.sp,
-                              color: primaryColor,
-                              fontWeight: FontWeight.w900,
-                            ),
+                            style: h1LargePrimary,
                           ),
                         )
                       : controller.isSearching.value

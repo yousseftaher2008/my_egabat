@@ -32,7 +32,7 @@ class ChooseCountry extends GetView<AuthController> {
                     child: Obx(
                       () => Text(
                         controller.selectedCountryCode.value,
-                        style: const TextStyle(color: Colors.black),
+                        style: blackTextStyle,
                       ),
                     ),
                   ),

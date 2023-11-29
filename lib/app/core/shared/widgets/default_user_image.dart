@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../constants/styles/text_styles.dart';
 
 Widget userImageByName(String userName) {
   String nickName = "";
@@ -11,11 +12,7 @@ Widget userImageByName(String userName) {
   return Center(
     child: Text(
       nickName,
-      style: TextStyle(
-        fontWeight: FontWeight.w900,
-        fontSize: 25.sp,
-        color: Colors.white.withOpacity(0.9),
-      ),
+      style: h3LargeTransparent,
     ),
   );
 }

@@ -155,6 +155,7 @@ class RegisterController extends AuthController {
         return;
       }
 
+      print(mainController.user.token);
       Map<String, String> headers = {
         "Authorization": "Bearer ${mainController.user.token}",
         "Content-Type": "multipart/form-data",
@@ -175,6 +176,8 @@ class RegisterController extends AuthController {
       late final dio.Response response;
       response = await dio.Dio()
           .post(url, data: formData, options: dio.Options(headers: headers));
+      print(response.statusCode);
+      print(response.data);
 
       if (response.statusCode == 200) {
         final Student student = Student.fromRegisterJson(response.data);
@@ -196,6 +199,7 @@ class RegisterController extends AuthController {
       }
     } catch (e) {
       isRegistering.value = false;
+      print(e);
       Get.offAll(() => const ErrorScreen());
     }
   }

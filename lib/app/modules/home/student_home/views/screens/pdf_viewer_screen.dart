@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../../../core/constants/styles/text_styles.dart';
 import '../../../../../data/models/searched_subjects.dart';
 
 class PdfViewerPage extends StatelessWidget {
@@ -15,7 +16,7 @@ class PdfViewerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: DefaultTextStyle(
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+          style: h3BoldBlack,
           softWrap: false,
           overflow: TextOverflow.ellipsis,
           child: Text(subject.name),
@@ -36,13 +37,7 @@ class PdfViewerPage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(bottom: 4.0.h),
               child: Obx(
-                () => Text(
-                  pageIndex.toString(),
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                () => Text(pageIndex.toString(), style: h3BoldBlack),
               ),
             ),
           ),

@@ -88,8 +88,11 @@ class AuthController extends MainController {
           "Content-Type": "application/json",
           "accept": "*/*",
         };
+        print(user.token);
         final response =
             await http.post(Uri.parse(url), body: body, headers: head);
+        print(response.statusCode);
+        print(response.body);
         if ((response.statusCode) >= 400) {
           isLogging.value = false;
           Get.offAll(() => const ErrorScreen());
@@ -118,6 +121,7 @@ class AuthController extends MainController {
         }
       } catch (e) {
         isLogging.value = false;
+        print(e);
         Get.offAll(const ErrorScreen());
       }
     }

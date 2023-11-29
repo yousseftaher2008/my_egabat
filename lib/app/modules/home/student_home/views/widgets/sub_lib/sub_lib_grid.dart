@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../../../core/constants/styles/text_styles.dart';
 import '../../../controllers/student_home_controller.dart';
 import 'sub_lib_grid_item.dart';
 
@@ -21,24 +22,31 @@ class SubLibGrid extends GetView<StudentHomeController> {
         right: 4.w,
         left: 4.w,
       ),
-      child: GridView.builder(
-        // scrollDirection: Axis.horizontal,
-        physics: isFull ? null : const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(4),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: isFull ? 2 : 3,
-          childAspectRatio: .75,
-          crossAxisSpacing: spacing.h,
-          mainAxisSpacing: spacing.w,
-        ),
-        itemCount: isFull || fullLength < 6 ? fullLength : 6,
-        itemBuilder: (_, i) {
-          return isSub
-              ? SubLibGridItem(subject: controller.subjects[i])
-              : SubLibGridItem(library: controller.libraries[i]);
-        },
-      ),
+      child: fullLength == 0
+          ? Center(
+              child: Text(
+                "${'لا يوجد'.tr} ${isSub ? 'مواد'.tr : 'مكتبات'.tr}",
+                style: h3BoldDanger,
+              ),
+            )
+          : GridView.builder(
+              // scrollDirection: Axis.horizontal,
+              physics: isFull ? null : const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(4),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isFull ? 2 : 3,
+                childAspectRatio: .75,
+                crossAxisSpacing: spacing.h,
+                mainAxisSpacing: spacing.w,
+              ),
+              itemCount: isFull || fullLength < 6 ? fullLength : 6,
+              itemBuilder: (_, i) {
+                return isSub
+                    ? SubLibGridItem(subject: controller.subjects[i])
+                    : SubLibGridItem(library: controller.libraries[i]);
+              },
+            ),
     );
   }
 }

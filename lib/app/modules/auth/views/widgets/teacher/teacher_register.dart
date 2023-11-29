@@ -18,11 +18,11 @@ class TeacherRegister extends GetView<RegisterController> {
     return Padding(
       padding: EdgeInsets.all(8.0.sp),
       child: SizedBox(
-        height: (pageHeight() * 0.5).h,
+        height: pageHeight() * 0.5,
         child: SingleChildScrollView(
           child: Obx(
             () => Container(
-              constraints: BoxConstraints(minHeight: (pageHeight() * 0.5).sp),
+              constraints: BoxConstraints(minHeight: pageHeight() * 0.5),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,

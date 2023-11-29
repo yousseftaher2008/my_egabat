@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../../../core/constants/styles/colors.dart';
+import '../../../../../../core/constants/styles/text_styles.dart';
 import '../../screens/sub_lib_screen.dart';
 
 class SubLibHead extends StatelessWidget {
@@ -22,11 +22,7 @@ class SubLibHead extends StatelessWidget {
         children: [
           Text(
             isSub ? "المواد".tr : "المكتبات".tr,
-            style: TextStyle(
-              fontSize: 25.sp,
-              color: infoColor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: h2Info,
           ),
           TextButton(
             onPressed: () {
@@ -34,10 +30,7 @@ class SubLibHead extends StatelessWidget {
             },
             child: Text(
               "رؤية الكل".tr,
-              style: const TextStyle(
-                color: primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: h5Bold,
             ),
           ),
         ],

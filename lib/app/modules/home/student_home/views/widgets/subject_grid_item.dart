@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/styles/colors.dart';
+import '../../../../../core/constants/styles/text_styles.dart';
 import '../../../../../data/models/searched_subjects.dart';
 import '../screens/pdf_viewer_screen.dart';
 
@@ -58,11 +59,7 @@ class SearchedSubjectGridItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DefaultTextStyle(
-                  style: TextStyle(
-                    color: infoColor,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: h4RegularInfo,
                   softWrap: false,
                   overflow: TextOverflow.fade,
                   child: Text(

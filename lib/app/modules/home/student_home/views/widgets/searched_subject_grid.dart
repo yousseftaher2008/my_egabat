@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/loading/loading.dart';
-import '../../../../../core/constants/styles/colors.dart';
+import '../../../../../core/constants/styles/text_styles.dart';
 import '../../controllers/student_search_controller.dart';
 import 'subject_grid_item.dart';
 
@@ -28,18 +28,10 @@ class SearchedSubjectGrid extends GetView<StudentSearchController> {
                           children: [
                             Text(
                               "لا يوجد مادة تحتوي على".tr,
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: h3BoldPrimary,
                             ),
                             DefaultTextStyle(
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: h3BoldPrimary,
                               softWrap: false,
                               overflow: TextOverflow.ellipsis,
                               child: Text(

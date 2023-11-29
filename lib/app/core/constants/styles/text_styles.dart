@@ -6,94 +6,106 @@ import '../../localization/local.dart';
 import 'colors.dart';
 
 //weights values
-const TextStyle _boldWeight = TextStyle(fontWeight: FontWeight.bold);
-const TextStyle _lightWeight = TextStyle(fontWeight: FontWeight.w300);
+const TextStyle largeWeight = TextStyle(fontWeight: FontWeight.w900);
+const TextStyle boldWeight = TextStyle(fontWeight: FontWeight.bold);
+const TextStyle lightWeight = TextStyle(fontWeight: FontWeight.w300);
 //sizes
-TextStyle _h1Size = TextStyle(fontSize: 28.sp);
-TextStyle _h2Size = TextStyle(fontSize: 24.sp);
-TextStyle _h3Size = TextStyle(fontSize: 18.sp);
-TextStyle _h4Size = TextStyle(fontSize: 16.sp);
-TextStyle _h6Size = TextStyle(fontSize: 12.sp);
+
+TextStyle xLargeSize = TextStyle(fontSize: 50.sp);
+TextStyle h1Size = TextStyle(fontSize: 30.sp);
+TextStyle h2Size = TextStyle(fontSize: 25.sp);
+TextStyle h3Size = TextStyle(fontSize: 18.sp);
+TextStyle h4Size = TextStyle(fontSize: 16.sp);
+TextStyle h6Size = TextStyle(fontSize: 12.sp);
 // default colors
-const TextStyle _primaryColor = TextStyle(color: primaryColor);
-const TextStyle _whiteColor = TextStyle(color: Colors.white);
-const TextStyle _blackColor = TextStyle(color: Colors.black);
-const TextStyle _secondaryColor = TextStyle(color: secondaryColor);
-const TextStyle _grey2Color = TextStyle(color: Color(0XFFDDDDDD));
+const TextStyle primaryTextStyle = TextStyle(color: primaryColor);
+const TextStyle whiteTextStyle = TextStyle(color: whiteColor);
+const TextStyle secondaryTextStyle = TextStyle(color: secondaryColorDark);
+const TextStyle greyTextStyle = TextStyle(color: Color(0XFFDDDDDD));
+const TextStyle dangerTextStyle = TextStyle(color: dangerColor);
+const TextStyle blackTextStyle = TextStyle(color: blackColor);
+const TextStyle infoTextStyle = TextStyle(color: infoColor);
 
-//? values
+//? h1 bold
+TextStyle h1Primary = boldWeight.merge(h1Size).merge(primaryTextStyle);
+TextStyle h1Black = boldWeight.merge(h1Size);
 
-//? h1
-TextStyle h1Primary = _boldWeight.merge(_h1Size).merge(_primaryColor);
-TextStyle h1Black = _boldWeight.merge(_h1Size).merge(_blackColor);
+//? h1 large
+TextStyle h1LargePrimary =
+    h1Size.merge(whiteTextStyle).merge(largeWeight).merge(primaryTextStyle);
 
 //? h2
-TextStyle h2 = _boldWeight.merge(_h2Size).merge(_primaryColor);
-TextStyle h2Black = _boldWeight.merge(_h2Size).merge(_blackColor);
+TextStyle h2 = boldWeight.merge(h2Size).merge(primaryTextStyle);
+TextStyle h2Info = boldWeight.merge(h2Size).merge(infoTextStyle);
+TextStyle h2Black = boldWeight.merge(h2Size);
 
 //? h3 regular
-TextStyle h3RegularPrimary = _h3Size.merge(_primaryColor);
-TextStyle h3RegularGrey = _h3Size.merge(_grey2Color);
-TextStyle h3RegularBlack = _h3Size.merge(_blackColor);
-TextStyle h3RegularWhite = _h3Size.merge(_whiteColor);
+TextStyle h3RegularPrimary = h3Size.merge(primaryTextStyle);
+TextStyle h3RegularGrey = h3Size.merge(greyTextStyle);
+TextStyle h3RegularBlack = h3Size;
+TextStyle h3RegularWhite = h3Size.merge(whiteTextStyle);
 
 //? h3 bold
-TextStyle h3BoldGrey = _boldWeight.merge(_h3Size).merge(_secondaryColor);
-TextStyle h3BoldWhite = _boldWeight.merge(_h3Size).merge(_whiteColor);
-TextStyle h3BoldRed = _boldWeight.merge(_h3Size).copyWith(color: dangerColor);
+TextStyle h3BoldGrey = boldWeight.merge(h3Size).merge(secondaryTextStyle);
+TextStyle h3BoldWhite = boldWeight.merge(h3Size).merge(whiteTextStyle);
+TextStyle h3BoldDanger = boldWeight.merge(h3Size).copyWith(color: dangerColor);
 TextStyle h3BoldPrimary =
-    _boldWeight.merge(_h3Size).copyWith(color: primaryColor);
-TextStyle h3BoldBlack = _boldWeight.merge(_h3Size).merge(_blackColor);
+    boldWeight.merge(h3Size).copyWith(color: primaryColor);
+TextStyle h3BoldBlack = boldWeight.merge(h3Size);
 
+//? h3 large
+TextStyle h3LargeTransparent = h3Size.merge(largeWeight).copyWith(
+      color: Colors.white.withOpacity(0.9),
+    );
 //? h4 regular
-TextStyle h4RegularPrimary = _h4Size.merge(_primaryColor);
-TextStyle h4RegularBlack = _h4Size.merge(_blackColor);
-TextStyle h4RegularGrey = _h4Size.merge(_secondaryColor);
-TextStyle h4RegularGrey2 = _h4Size.copyWith(color: const Color(0XFFCBCBCB));
-TextStyle h4RegularWhite = _h4Size.merge(_whiteColor);
-TextStyle h4RegularRed = _h4Size.copyWith(color: dangerColor);
+TextStyle h4RegularPrimary = h4Size.merge(primaryTextStyle);
+TextStyle h4RegularBlack = h4Size;
+TextStyle h4RegularGrey = h4Size.merge(secondaryTextStyle);
+TextStyle h4RegularGrey2 = h4Size.copyWith(color: const Color(0XFFCBCBCB));
+TextStyle h4RegularWhite = h4Size.merge(whiteTextStyle);
+TextStyle h4RegularDanger = h4Size.merge(dangerTextStyle);
+TextStyle h4RegularInfo = h4Size.merge(infoTextStyle);
 
 //? h4 bold
-TextStyle h4BoldWhite = _boldWeight.merge(_h4Size).merge(_whiteColor);
-TextStyle h4BoldBlack = _boldWeight.merge(_h4Size).merge(_blackColor);
-TextStyle h4BoldPrimary = _boldWeight.merge(_h4Size).merge(_primaryColor);
+TextStyle h4BoldWhite = boldWeight.merge(h4Size).merge(whiteTextStyle);
+TextStyle h4BoldBlack = boldWeight.merge(h4Size);
+TextStyle h4BoldPrimary = boldWeight.merge(h4Size).merge(primaryTextStyle);
 TextStyle h4BoldOrange =
-    _boldWeight.merge(_h4Size).copyWith(color: const Color(0xFFFB8C00));
+    boldWeight.merge(h4Size).copyWith(color: const Color(0xFFFB8C00));
 
 //? h5 regular
-const TextStyle h5RegularPrimary = _primaryColor;
-const TextStyle h5RegularBlack = _blackColor;
-const TextStyle h5RegularGrey = _secondaryColor;
-const TextStyle h5RegularGrey2 = _grey2Color;
-const TextStyle h5RegularWhite = _whiteColor;
+const TextStyle h5RegularPrimary = primaryTextStyle;
+const TextStyle h5RegularGrey = secondaryTextStyle;
+const TextStyle h5RegularGrey2 = greyTextStyle;
+const TextStyle h5RegularWhite = whiteTextStyle;
 const TextStyle h5RegularYellow = TextStyle(color: Color(0xFFF0BF41));
 
 //? h5 bold
-TextStyle h5Bold = _boldWeight.merge(_primaryColor);
+TextStyle h5Bold = boldWeight.merge(primaryTextStyle);
 
 //? h6 light
-TextStyle h6Light = _lightWeight.merge(_h6Size).merge(_secondaryColor);
+TextStyle h6Light = lightWeight.merge(h6Size).merge(secondaryTextStyle);
 
 //? h6 regular
-TextStyle h6RegularBlack = _h6Size.merge(_blackColor);
-TextStyle h6RegularGrey = _h6Size.merge(_secondaryColor);
-TextStyle h6RegularWhite = _h6Size.merge(_whiteColor);
+TextStyle h6RegularBlack = h6Size;
+TextStyle h6RegularGrey = h6Size.merge(secondaryTextStyle);
+TextStyle h6RegularWhite = h6Size.merge(whiteTextStyle);
 
 //? h6 bold
-TextStyle h6Bold = _boldWeight.merge(_h6Size).merge(_whiteColor);
+TextStyle h6Bold = boldWeight.merge(h6Size).merge(whiteTextStyle);
 
-TextStyle welcomeTitleTextStyle = TextStyle(
-  color: Colors.white,
-  fontWeight: FontWeight.bold,
-  fontSize: appLocal == AppLocal.ar ? 35.sp : 27.sp,
+//? Large textStyle
+TextStyle xLargeBoldWhite = xLargeSize.merge(whiteTextStyle).merge(boldWeight);
+
+//? custom textStyles
+TextStyle welcomeTitleTextStyle = boldWeight.merge(
+  TextStyle(
+    color: Colors.white,
+    fontSize: appLocal == AppLocal.ar ? 35.sp : 27.sp,
+  ),
 );
 
 TextStyle welcomeBodyTextStyle = TextStyle(
   color: secondaryColorLight,
   fontSize: appLocal == AppLocal.ar ? 20.sp : 17.sp,
-  fontWeight: FontWeight.w400,
-);
-const TextStyle textFormFieldStyle = TextStyle(
-  color: primaryColorLight,
-  fontWeight: FontWeight.bold,
 );

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../constants/styles/text_styles.dart';
+
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});
 
@@ -24,11 +26,7 @@ class NoInternetScreen extends StatelessWidget {
             ),
             Text(
               stepText,
-              style: TextStyle(
-                color: Color.fromARGB(255, 107, 105, 105),
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold,
-              ),
+              style: h4BoldBlack,
             ),
           ],
         );
@@ -47,11 +45,7 @@ class NoInternetScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 "لا يوجد اتصال بالانترنت".tr,
-                style: TextStyle(
-                  color: Color.fromARGB(255, 107, 105, 105),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: h3BoldGrey,
               ),
             ),
             stepWidget("(router or modem) تحقق من جهاز".tr),

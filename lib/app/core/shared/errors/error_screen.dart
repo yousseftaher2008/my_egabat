@@ -31,11 +31,7 @@ class ErrorScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 10.w),
             child: Text(
               "خطأ غير معروف!".tr,
-              style: TextStyle(
-                fontSize: 50.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: xLargeBoldWhite,
               textAlign: TextAlign.center,
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart' as launch;
 
 import '../../constants/styles/colors.dart';
+import '../../constants/styles/text_styles.dart';
 import '../../functions/errors_messages.dart';
 
 class HelpButton extends StatelessWidget {
@@ -41,7 +42,7 @@ class HelpButton extends StatelessWidget {
       },
       label: Text(
         "المساعدة".tr,
-        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+        style: h3BoldBlack,
       ),
     );
   }

@@ -163,8 +163,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       cursorWidth: 2.0,
                       onChanged: widget.onChanged,
                       onSubmitted: widget.onSubmitted,
-                      style:
-                          widget.style ?? const TextStyle(color: Colors.black),
+                      style: widget.style,
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(bottom: 5),
